@@ -1,9 +1,8 @@
-import React, { useState, useMemo, useRef } from 'react'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
 import { Tab, Counter, CurrencyIcon } from 
     '@ya.praktikum/react-developer-burger-ui-components'
 
 import { Ingredient } from '../../types/ingredient'
-import mockIngredients from '../../data/mockData.json'
 import styles from './BurgerIngredients.module.css'
 
 interface BurgerIngredientsProps {
@@ -16,18 +15,28 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
     constructorIngredients = []
 }) => {
     const [currentTab, setCurrentTab] = useState<string>('bun')
+    const [ingredients, setIngredients] = useState<Ingredient[]>([])
     const breadRef = useRef<HTMLDivElement>(null)
     const sauceRef = useRef<HTMLDivElement>(null)
     const fillingRef = useRef<HTMLDivElement>(null)
 
+    useEffect(() => {
+        const data = async () => {
+            fetch('https://norma.nomoreparties.space/api/ingredients')
+                .then(res => res.json())
+                .then(data => setIngredients(data.data))
+        }
+        data()
+    }, [])
+
     const categorizedIngredients = useMemo(() => ({
-        bun: mockIngredients.filter
+        bun: ingredients.filter
             (item => item.type === 'bun') as Ingredient[],
-        sauce: mockIngredients.filter
+        sauce: ingredients.filter
             (item => item.type === 'sauce') as Ingredient[],
-        main: mockIngredients.filter
+        main: ingredients.filter
             (item => item.type === 'main') as Ingredient[]
-    }), [])
+    }), [ingredients])
     
     const getIngredientCount = (ingredient: Ingredient): number => {
         return constructorIngredients.filter
