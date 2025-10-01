@@ -7,11 +7,18 @@ import BurgerConstructor from
     './components/BurgerConstructor/BurgerConstructor'
 import { Ingredient } from './types/ingredient'
 import styles from './App.module.css'
+import Modal from './components/Modal/Modal'
+import { modalContentType } from './components/Modal/Modal.type'
+import Order from './components/Order/Order'
 
 function App() {
     const [
         constructorIngredients, setConstructorIngredients
     ] = useState<Ingredient[]>([])
+    const [modalContent, setModalContent] = useState<modalContentType>({
+        isModal: null,
+        content: undefined
+    })
 
     const handleIngredientClick = (ingredient: Ingredient) => {
         if (ingredient.type === 'bun') {
@@ -39,12 +46,20 @@ function App() {
     }
 
     const handleOrderClick = () => {
-        alert('Заказ оформлен! (демо-версия)')
-        setConstructorIngredients([])
+        console.log(constructorIngredients)
+        setModalContent({
+            isModal: 'order',
+            ingredients: constructorIngredients,
+            content: <Order/>
+        })
     }
 
     return (
         <div className={styles.App}>
+            {modalContent && <Modal 
+                modalContent={modalContent}
+                setModalContent={setModalContent}
+            >{modalContent.content}</ Modal>}
             <AppHeader />
             <main className={styles.mainContent}>
                 <BurgerIngredients 
@@ -55,6 +70,7 @@ function App() {
                     ingredients={constructorIngredients}
                     onRemoveIngredient={handleRemoveIngredient}
                     onOrderClick={handleOrderClick}
+                    setModalContent={setModalContent}
                 />
             </main>
         </div>
