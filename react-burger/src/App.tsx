@@ -12,6 +12,7 @@ import { modalContentType } from './types/Modal'
 import OrderDetails from './components/OrderDetails/OrderDetails'
 
 function App() {
+    
     const [
         constructorIngredients, setConstructorIngredients
     ] = useState<Ingredient[]>([])

@@ -6,6 +6,7 @@ interface IngredientDetailsProps {
 }
 
 const IngredientDetails = ({ingredient}: IngredientDetailsProps) => {
+    
     return (
         <div className={styles.content}>
             <img 

@@ -1,6 +1,7 @@
 import styles from './OrderDetails.module.css'
 
 const OrderDetails = () => {
+    
     return (
         <div className={styles.order}>
             <h1 className={styles.orderNumber}>034536</h1>

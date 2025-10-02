@@ -15,6 +15,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
     onIngredientClick,
     constructorIngredients = []
 }) => {
+    
     const [currentTab, setCurrentTab] = useState<string>('bun')
     const [ingredients, setIngredients] = useState<Ingredient[]>([])
     const [isError, setIsError] = useState<boolean>(false)
@@ -34,9 +35,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
             })
     }
 
-    useEffect(() => {
-        data()
-    }, [])
+    useEffect(() => {data()}, [])
 
     const categorizedIngredients = useMemo(() => ({
         bun: ingredients.filter
@@ -88,9 +87,9 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
         <div className={styles.container}>
             {isError && <div className={styles.update}>
                 <Button 
-                    htmlType="button" 
-                    type="primary" 
-                    size="large"
+                    htmlType='button' 
+                    type='primary' 
+                    size='large'
                     onClick={data}
                 >Обновить</Button>
             </div>}
@@ -99,19 +98,19 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
                 
                 <div className={styles.tabs}>
                     <Tab 
-                        value="bun" active={currentTab === 'bun'} 
+                        value='bun' active={currentTab === 'bun'} 
                         onClick={() => handleScroll('bun')}
                     >
                         Булки
                     </Tab>
                     <Tab
-                        value="sauce" active={currentTab === 'sauce'}
+                        value='sauce' active={currentTab === 'sauce'}
                         onClick={() => handleScroll('sauce')}
                     >
                         Соусы
                     </Tab>
                     <Tab 
-                        value="main" active={currentTab === 'main'} 
+                        value='main' active={currentTab === 'main'} 
                         onClick={() => handleScroll('main')}
                     >
                         Начинки
@@ -137,7 +136,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
                                             count={
                                                 getIngredientCount(ingredient)
                                             }
-                                            size="default" 
+                                            size='default' 
                                         />
                                     )}
                                     <img 
@@ -149,7 +148,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
                                         <span className={styles.price}>
                                             {ingredient.price}
                                         </span>
-                                        <CurrencyIcon type="primary" />
+                                        <CurrencyIcon type='primary' />
                                     </div>
                                     <p className={styles.ingredientName}>
                                         {ingredient.name}
@@ -177,7 +176,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
                                             count={
                                                 getIngredientCount(ingredient)
                                             } 
-                                            size="default" 
+                                            size='default' 
                                         />
                                     )}
                                     <img 
@@ -189,7 +188,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
                                     <span className={styles.price}>
                                         {ingredient.price}
                                     </span>
-                                    <CurrencyIcon type="primary" />
+                                    <CurrencyIcon type='primary' />
                                     </div>
                                     <p className={styles.ingredientName}>
                                         {ingredient.name}
@@ -217,7 +216,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
                                             count={
                                                 getIngredientCount(ingredient)
                                             }
-                                            size="default"
+                                            size='default'
                                         />
                                     )}
                                     <img 
@@ -229,7 +228,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
                                     <span className={styles.price}>
                                         {ingredient.price}
                                     </span>
-                                    <CurrencyIcon type="primary" />
+                                    <CurrencyIcon type='primary' />
                                     </div>
                                     <p className={styles.ingredientName}>
                                         {ingredient.name}

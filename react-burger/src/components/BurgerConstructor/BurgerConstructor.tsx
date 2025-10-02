@@ -25,11 +25,13 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
     onOrderClick,
     setModalContent
 }) => {
+
     const bun = ingredients.find
         ((ingredient: { type: string; }) => ingredient.type === 'bun')
+
     const fillings = ingredients.filter
         ((ingredient: { type: string; }) => ingredient.type !== 'bun')
-    
+        
     const totalPrice = ingredients.reduce
         ((sum: any, ingredient: { type: string; price: number; }) => {
             return sum + (ingredient.type === 'bun'

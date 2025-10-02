@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react'
+import ReactDOM from 'react-dom'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './Modal.module.css'
@@ -15,6 +16,8 @@ const Modal = ({
     modalContent, setModalContent, children
 }: modalProps) => {
 
+    const modalRoot = document.getElementById('modals')!
+
     const closeWindow = useCallback(() => {
         setModalContent({
             isModal: null,
@@ -28,15 +31,14 @@ const Modal = ({
                 closeWindow()
             }
         }
-
-        window.addEventListener('keydown', handleEsc);
+        window.addEventListener('keydown', handleEsc)
         return () => {
             window.removeEventListener('keydown', handleEsc)
         }
     }, [closeWindow])
 
-    return modalContent.isModal 
-        ? <>
+    return ReactDOM.createPortal((modalContent.isModal 
+        && <>
             <ModalOverlay closeWindow={closeWindow}/>
             <div className={styles.window}>
                 <div className={styles.title}>
@@ -49,7 +51,7 @@ const Modal = ({
                 { children }
             </div>
         </>
-        : <></>
+    ), modalRoot)
 }
 
 export default Modal
