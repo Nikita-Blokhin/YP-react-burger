@@ -2,8 +2,9 @@ import React, { useState, useMemo, useRef, useEffect } from 'react'
 import { Tab, Counter, CurrencyIcon, Button } from 
     '@ya.praktikum/react-developer-burger-ui-components'
 
-import { Ingredient } from '../../types/ingredient'
+import { Ingredient } from '../../types/Ingredient'
 import styles from './BurgerIngredients.module.css'
+import { API } from '../../core/API'
 
 interface BurgerIngredientsProps {
     onIngredientClick?: (ingredient: Ingredient) => void
@@ -22,8 +23,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
     const fillingRef = useRef<HTMLDivElement>(null)
 
     const data = async () => {
-        fetch('https://norma.nomoreparties.space/api/ingredients')
-            .then(response => response.json())
+        API.getIngredients()
             .then(data => {
                 setIngredients(data.data)
                 setIsError(false)

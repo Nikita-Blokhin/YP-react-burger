@@ -1,6 +1,6 @@
-import styles from './Order.module.css'
+import styles from './OrderDetails.module.css'
 
-const Order = () => {
+const OrderDetails = () => {
     return (
         <div className={styles.order}>
             <h1 className={styles.orderNumber}>034536</h1>
@@ -14,4 +14,4 @@ const Order = () => {
     )
 }
 
-export default Order
+export default OrderDetails

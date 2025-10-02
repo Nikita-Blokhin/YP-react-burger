@@ -5,11 +5,11 @@ import BurgerIngredients from
     './components/BurgerIngredients/BurgerIngredients'
 import BurgerConstructor from 
     './components/BurgerConstructor/BurgerConstructor'
-import { Ingredient } from './types/ingredient'
+import { Ingredient } from './types/Ingredient'
 import styles from './App.module.css'
 import Modal from './components/Modal/Modal'
-import { modalContentType } from './components/Modal/Modal.type'
-import Order from './components/Order/Order'
+import { modalContentType } from './types/Modal'
+import OrderDetails from './components/OrderDetails/OrderDetails'
 
 function App() {
     const [
@@ -17,7 +17,8 @@ function App() {
     ] = useState<Ingredient[]>([])
     const [modalContent, setModalContent] = useState<modalContentType>({
         isModal: null,
-        content: undefined
+        content: undefined,
+        ingredient: null
     })
 
     const handleIngredientClick = (ingredient: Ingredient) => {
@@ -46,11 +47,10 @@ function App() {
     }
 
     const handleOrderClick = () => {
-        console.log(constructorIngredients)
         setModalContent({
             isModal: 'order',
             ingredients: constructorIngredients,
-            content: <Order/>
+            content: <OrderDetails/>
         })
     }
 
@@ -59,7 +59,7 @@ function App() {
             {modalContent && <Modal 
                 modalContent={modalContent}
                 setModalContent={setModalContent}
-            >{modalContent.content}</ Modal>}
+            >{modalContent.content}</Modal>}
             <AppHeader />
             <main className={styles.mainContent}>
                 <BurgerIngredients 

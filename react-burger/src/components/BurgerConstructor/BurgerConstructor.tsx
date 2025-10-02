@@ -7,9 +7,10 @@ import {
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { Ingredient } from '../../types/ingredient'
+import { Ingredient } from '../../types/Ingredient'
 import styles from './BurgerConstructor.module.css'
-import { modalContentType } from '../Modal/Modal.type'
+import { modalContentType } from '../../types/Modal'
+import IngredientDetails from '../IngredientDetails/IngredientDetails'
 
 interface BurgerConstructorProps {
     ingredients: Ingredient[]
@@ -39,6 +40,10 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
 
     const handleRemove = (index: number) => {
         onRemoveIngredient?.(index)
+        setModalContent({
+            isModal: null,
+            content: undefined
+        })
     }
 
     const handleOrder = () => {
@@ -60,7 +65,14 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
 
             <div className={styles.constructorList}>
                 {bun && (
-                    <div className={clsx(styles.bunContainer, styles.bun)}>
+                    <div className={clsx(styles.bunContainer, styles.bun)}
+                        onClickCapture={() => setModalContent({
+                            isModal: 'ingredient',
+                            content: <IngredientDetails 
+                                ingredient={bun}
+                            />
+                        })}
+                    >
                         <ConstructorElement
                             type="top"
                             isLocked={true}
@@ -74,17 +86,22 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
                 <div className={styles.fillingsContainer}>
                             
                     {fillings.map((
-                        ingredient: {
-                            _id: any; name: string; price: number;
-                            image: string;
-                        }, index: number
+                        ingredient, index
                     ) => (
                         <div
                             key={`${ingredient._id}-${index}`}
                             className={styles.fillingItem}
-                        >
+                                                    >
                             <DragIcon type="primary" />
-                            <div className={styles.bunContainer}>
+                            <div 
+                                className={styles.bunContainer}
+                                onClickCapture={() => setModalContent({
+                                    isModal: 'ingredient',
+                                    content: <IngredientDetails 
+                                        ingredient={ingredient}
+                                    />
+                                })}
+                            >
                                 <ConstructorElement
                                     text={ingredient.name}
                                     price={ingredient.price}
@@ -97,9 +114,17 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
                 </div>
 
                 {bun && (
-                    <div className={clsx(
-                        styles.bunContainer, styles.bottom, styles.bun
-                    )}>
+                    <div 
+                        className={clsx(
+                            styles.bunContainer, styles.bottom, styles.bun
+                        )}
+                        onClickCapture={() => setModalContent({
+                            isModal: 'ingredient',
+                            content: <IngredientDetails 
+                                ingredient={bun}
+                            />
+                        })}
+                    >
                         <ConstructorElement
                             type="bottom"
                             isLocked={true}
