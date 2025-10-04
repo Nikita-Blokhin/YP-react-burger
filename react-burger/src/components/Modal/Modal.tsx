@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './Modal.module.css'
-import { modalContentType } from '../../types/Modal'
+import { ModalContentType } from '../../types/Modal'
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
 
-interface modalProps {
+interface ModalProps {
     children?: JSX.Element | JSX.Element[]
-    modalContent: modalContentType
-    setModalContent: React.Dispatch<React.SetStateAction<modalContentType>>
+    modalContent: ModalContentType
+    setModalContent: React.Dispatch<React.SetStateAction<ModalContentType>>
 }
 
 const Modal = ({
     modalContent, setModalContent, children
-}: modalProps) => {
+}: ModalProps) => {
 
     const modalRoot = document.getElementById('modals')!
 
@@ -26,7 +26,7 @@ const Modal = ({
     }, [setModalContent])
 
     useEffect(() => {
-        const handleEsc = (event: { key: string }) => {
+        const handleEsc = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 closeWindow()
             }
@@ -42,8 +42,8 @@ const Modal = ({
             <ModalOverlay closeWindow={closeWindow}/>
             <div className={styles.window}>
                 <div className={styles.title}>
-                    <h1>{modalContent.isModal === 'ingredient' 
-                        && 'Детали ингредиента'}</h1>
+                    <h2>{modalContent.isModal === 'ingredient' 
+                        && 'Детали ингредиента'}</h2>
                     <button onClick={closeWindow}>
                         <CloseIcon type={'primary'} />
                     </button>

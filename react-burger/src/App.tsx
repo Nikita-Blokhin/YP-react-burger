@@ -8,7 +8,7 @@ import BurgerConstructor from
 import { Ingredient } from './types/Ingredient'
 import styles from './App.module.css'
 import Modal from './components/Modal/Modal'
-import { modalContentType } from './types/Modal'
+import { ModalContentType } from './types/Modal'
 import OrderDetails from './components/OrderDetails/OrderDetails'
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
     const [
         constructorIngredients, setConstructorIngredients
     ] = useState<Ingredient[]>([])
-    const [modalContent, setModalContent] = useState<modalContentType>({
+    const [modalContent, setModalContent] = useState<ModalContentType>({
         isModal: null,
         content: undefined,
         ingredient: null

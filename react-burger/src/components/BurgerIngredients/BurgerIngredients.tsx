@@ -23,7 +23,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
     const sauceRef = useRef<HTMLDivElement>(null)
     const fillingRef = useRef<HTMLDivElement>(null)
 
-    const data = async () => {
+    const getData = async () => {
         API.getIngredients()
             .then(data => {
                 setIngredients(data.data)
@@ -35,7 +35,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
             })
     }
 
-    useEffect(() => {data()}, [])
+    useEffect(() => {getData()}, [])
 
     const categorizedIngredients = useMemo(() => ({
         bun: ingredients.filter
@@ -90,7 +90,7 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
                     htmlType='button' 
                     type='primary' 
                     size='large'
-                    onClick={data}
+                    onClick={getData}
                 >Обновить</Button>
             </div>}
             {!isError && <>

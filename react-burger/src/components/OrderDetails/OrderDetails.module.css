@@ -30,6 +30,9 @@
   }
 }
 
+.wait {
+  color: #8585ad;
+}
 .orderNumber {
   margin: 0;
   padding: 0;

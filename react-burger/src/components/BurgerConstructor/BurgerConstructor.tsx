@@ -9,14 +9,14 @@ import {
 
 import { Ingredient } from '../../types/Ingredient'
 import styles from './BurgerConstructor.module.css'
-import { modalContentType } from '../../types/Modal'
+import { ModalContentType } from '../../types/Modal'
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
 
 interface BurgerConstructorProps {
     ingredients: Ingredient[]
     onRemoveIngredient?: (index: number) => void
     onOrderClick?: () => void
-    setModalContent: React.Dispatch<React.SetStateAction<modalContentType>>
+    setModalContent: React.Dispatch<React.SetStateAction<ModalContentType>>
 }
 
 const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
