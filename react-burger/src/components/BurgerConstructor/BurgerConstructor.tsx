@@ -10,7 +10,6 @@ import {
 import { Ingredient } from '../../types/Ingredient'
 import styles from './BurgerConstructor.module.css'
 import { ModalContentType } from '../../types/Modal'
-import IngredientDetails from '../IngredientDetails/IngredientDetails'
 
 interface BurgerConstructorProps {
     ingredients: Ingredient[]
@@ -67,14 +66,7 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
 
             <div className={styles.constructorList}>
                 {bun && (
-                    <div className={clsx(styles.bunContainer, styles.bun)}
-                        onClickCapture={() => setModalContent({
-                            isModal: 'ingredient',
-                            content: <IngredientDetails 
-                                ingredient={bun}
-                            />
-                        })}
-                    >
+                    <div className={clsx(styles.bunContainer, styles.bun)}>
                         <ConstructorElement
                             type="top"
                             isLocked={true}
@@ -95,15 +87,7 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
                             className={styles.fillingItem}
                                                     >
                             <DragIcon type="primary" />
-                            <div 
-                                className={styles.bunContainer}
-                                onClickCapture={() => setModalContent({
-                                    isModal: 'ingredient',
-                                    content: <IngredientDetails 
-                                        ingredient={ingredient}
-                                    />
-                                })}
-                            >
+                            <div className={styles.bunContainer}>
                                 <ConstructorElement
                                     text={ingredient.name}
                                     price={ingredient.price}
@@ -120,12 +104,6 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
                         className={clsx(
                             styles.bunContainer, styles.bottom, styles.bun
                         )}
-                        onClickCapture={() => setModalContent({
-                            isModal: 'ingredient',
-                            content: <IngredientDetails 
-                                ingredient={bun}
-                            />
-                        })}
                     >
                         <ConstructorElement
                             type="bottom"

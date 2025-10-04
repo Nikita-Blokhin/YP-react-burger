@@ -10,6 +10,7 @@ import styles from './App.module.css'
 import Modal from './components/Modal/Modal'
 import { ModalContentType } from './types/Modal'
 import OrderDetails from './components/OrderDetails/OrderDetails'
+import IngredientDetails from './components/IngredientDetails/IngredientDetails'
 
 function App() {
     
@@ -23,6 +24,12 @@ function App() {
     })
 
     const handleIngredientClick = (ingredient: Ingredient) => {
+        setModalContent({
+            isModal: 'ingredient',
+            content: <IngredientDetails 
+                ingredient={ingredient}
+            />
+        })
         if (ingredient.type === 'bun') {
             setConstructorIngredients(prev => 
                 prev.filter(item => item.type !== 'bun').concat(ingredient)
