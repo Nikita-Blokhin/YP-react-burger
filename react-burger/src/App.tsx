@@ -64,9 +64,13 @@ function App() {
 
     return (
         <div className={styles.App}>
-            {modalContent && <Modal 
+            {modalContent.isModal && <Modal 
                 modalContent={modalContent}
                 setModalContent={setModalContent}
+                title={ modalContent.isModal === 'ingredient'
+                    ? 'Детали ингредиента'
+                    : ''
+                }
             >{modalContent.content}</Modal>}
             <AppHeader />
             <main className={styles.mainContent}>

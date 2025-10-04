@@ -10,10 +10,11 @@ interface ModalProps {
     children?: JSX.Element | JSX.Element[]
     modalContent: ModalContentType
     setModalContent: React.Dispatch<React.SetStateAction<ModalContentType>>
+    title?: string
 }
 
 const Modal = ({
-    modalContent, setModalContent, children
+    setModalContent, children, title
 }: ModalProps) => {
 
     const modalRoot = document.getElementById('modals')!
@@ -37,13 +38,11 @@ const Modal = ({
         }
     }, [closeWindow])
 
-    return ReactDOM.createPortal((modalContent.isModal 
-        && <>
+    return ReactDOM.createPortal((<>
             <ModalOverlay closeWindow={closeWindow}/>
             <div className={styles.window}>
                 <div className={styles.title}>
-                    <h2>{modalContent.isModal === 'ingredient' 
-                        && 'Детали ингредиента'}</h2>
+                    <h2>{title}</h2>
                     <button onClick={closeWindow}>
                         <CloseIcon type={'primary'} />
                     </button>
