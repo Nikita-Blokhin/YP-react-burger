@@ -3,6 +3,16 @@
   width: 600px;
   overflow: hidden;
   padding-bottom: 40px;
+
+  .update {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    button {
+      display: flex;
+      margin-top: 100px;
+    }
+  }
 }
 
 .title {

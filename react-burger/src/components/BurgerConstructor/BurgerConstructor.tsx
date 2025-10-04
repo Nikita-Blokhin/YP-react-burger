@@ -7,25 +7,30 @@ import {
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { Ingredient } from '../../types/ingredient'
+import { Ingredient } from '../../types/Ingredient'
 import styles from './BurgerConstructor.module.css'
+import { ModalContentType } from '../../types/Modal'
 
 interface BurgerConstructorProps {
     ingredients: Ingredient[]
     onRemoveIngredient?: (index: number) => void
     onOrderClick?: () => void
+    setModalContent: React.Dispatch<React.SetStateAction<ModalContentType>>
 }
 
 const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
     ingredients,
     onRemoveIngredient,
-    onOrderClick
+    onOrderClick,
+    setModalContent
 }) => {
+
     const bun = ingredients.find
         ((ingredient: { type: string; }) => ingredient.type === 'bun')
+
     const fillings = ingredients.filter
         ((ingredient: { type: string; }) => ingredient.type !== 'bun')
-    
+        
     const totalPrice = ingredients.reduce
         ((sum: any, ingredient: { type: string; price: number; }) => {
             return sum + (ingredient.type === 'bun'
@@ -36,6 +41,10 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
 
     const handleRemove = (index: number) => {
         onRemoveIngredient?.(index)
+        setModalContent({
+            isModal: null,
+            content: undefined
+        })
     }
 
     const handleOrder = () => {
@@ -71,15 +80,12 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
                 <div className={styles.fillingsContainer}>
                             
                     {fillings.map((
-                        ingredient: {
-                            _id: any; name: string; price: number;
-                            image: string;
-                        }, index: number
+                        ingredient, index
                     ) => (
                         <div
                             key={`${ingredient._id}-${index}`}
                             className={styles.fillingItem}
-                        >
+                                                    >
                             <DragIcon type="primary" />
                             <div className={styles.bunContainer}>
                                 <ConstructorElement
@@ -94,9 +100,11 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
                 </div>
 
                 {bun && (
-                    <div className={clsx(
-                        styles.bunContainer, styles.bottom, styles.bun
-                    )}>
+                    <div 
+                        className={clsx(
+                            styles.bunContainer, styles.bottom, styles.bun
+                        )}
+                    >
                         <ConstructorElement
                             type="bottom"
                             isLocked={true}

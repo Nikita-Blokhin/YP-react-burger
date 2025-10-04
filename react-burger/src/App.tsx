@@ -5,15 +5,31 @@ import BurgerIngredients from
     './components/BurgerIngredients/BurgerIngredients'
 import BurgerConstructor from 
     './components/BurgerConstructor/BurgerConstructor'
-import { Ingredient } from './types/ingredient'
+import { Ingredient } from './types/Ingredient'
 import styles from './App.module.css'
+import Modal from './components/Modal/Modal'
+import { ModalContentType } from './types/Modal'
+import OrderDetails from './components/OrderDetails/OrderDetails'
+import IngredientDetails from './components/IngredientDetails/IngredientDetails'
 
 function App() {
+    
     const [
         constructorIngredients, setConstructorIngredients
     ] = useState<Ingredient[]>([])
+    const [modalContent, setModalContent] = useState<ModalContentType>({
+        isModal: null,
+        content: undefined,
+        ingredient: null
+    })
 
     const handleIngredientClick = (ingredient: Ingredient) => {
+        setModalContent({
+            isModal: 'ingredient',
+            content: <IngredientDetails 
+                ingredient={ingredient}
+            />
+        })
         if (ingredient.type === 'bun') {
             setConstructorIngredients(prev => 
                 prev.filter(item => item.type !== 'bun').concat(ingredient)
@@ -39,12 +55,23 @@ function App() {
     }
 
     const handleOrderClick = () => {
-        alert('Заказ оформлен! (демо-версия)')
-        setConstructorIngredients([])
+        setModalContent({
+            isModal: 'order',
+            ingredients: constructorIngredients,
+            content: <OrderDetails/>
+        })
     }
 
     return (
         <div className={styles.App}>
+            {modalContent.isModal && <Modal 
+                modalContent={modalContent}
+                setModalContent={setModalContent}
+                title={ modalContent.isModal === 'ingredient'
+                    ? 'Детали ингредиента'
+                    : ''
+                }
+            >{modalContent.content}</Modal>}
             <AppHeader />
             <main className={styles.mainContent}>
                 <BurgerIngredients 
@@ -55,6 +82,7 @@ function App() {
                     ingredients={constructorIngredients}
                     onRemoveIngredient={handleRemoveIngredient}
                     onOrderClick={handleOrderClick}
+                    setModalContent={setModalContent}
                 />
             </main>
         </div>
