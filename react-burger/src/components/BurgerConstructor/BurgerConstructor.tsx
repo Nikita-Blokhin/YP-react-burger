@@ -9,20 +9,17 @@ import {
 
 import { Ingredient } from '../../types/Ingredient'
 import styles from './BurgerConstructor.module.css'
-import { ModalContentType } from '../../types/Modal'
 
 interface BurgerConstructorProps {
     ingredients: Ingredient[]
     onRemoveIngredient?: (index: number) => void
     onOrderClick?: () => void
-    setModalContent: React.Dispatch<React.SetStateAction<ModalContentType>>
 }
 
 const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
     ingredients,
     onRemoveIngredient,
-    onOrderClick,
-    setModalContent
+    onOrderClick
 }) => {
 
     const bun = ingredients.find
@@ -41,10 +38,8 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
 
     const handleRemove = (index: number) => {
         onRemoveIngredient?.(index)
-        setModalContent({
-            isModal: null,
-            content: undefined
-        })
+        
+        
     }
 
     const handleOrder = () => {

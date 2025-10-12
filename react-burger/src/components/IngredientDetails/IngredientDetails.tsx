@@ -1,13 +1,13 @@
-import { Ingredient } from '../../types/Ingredient'
+import { useSelector } from 'react-redux'
+import Modal from '../Modal/Modal'
 import styles from './IngredientDetails.module.css'
+import { State } from '../../types/Services'
 
-interface IngredientDetailsProps {
-    ingredient: Ingredient
-}
+const IngredientDetails = () => {
+    const ingredient = useSelector((state: State) => state.ingredientDetail)!
 
-const IngredientDetails = ({ingredient}: IngredientDetailsProps) => {
-    
-    return (
+    return (<Modal title={'Детали ингредиента'}>
+        
         <div className={styles.content}>
             <img 
                 src={ingredient.image} 
@@ -34,7 +34,7 @@ const IngredientDetails = ({ingredient}: IngredientDetailsProps) => {
                 </div>
             </div>
         </div>
-    )
+    </Modal>)
 }
 
 export default IngredientDetails
