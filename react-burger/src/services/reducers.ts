@@ -43,22 +43,36 @@ export const rootReducer = (state = initialState, action: Action) => {
         }
 
         case ADD_INGREDIENT_CONSTRUCTOR: {
-            return {
-                ...state, ingredientsConstructor: [
+            const ingredient = state.ingredients
+                .filter(item => item._id === action.id)[0]
+            if (ingredient.type === 'bun') {
+                return {
+                    ...state, ingredientsConstructor: [
+                    ...state.ingredientsConstructor
+                        .filter(item => item.type !== 'bun')
+                        .concat(ingredient)
+                ]}
+            } else {
+                return {
+                    ...state, ingredientsConstructor: [
                     ...state.ingredientsConstructor,
-                    ...state.ingredients.filter(item => item._id === action.id)
-                ]
+                    ingredient
+                ]}
             }
         }
         case DELETE_INGREDIENT_CONSTRUCTOR: {
-            return {
-                ...state,
-                ingredientsConstructor: [
-                    ...state.ingredientsConstructor,
-                    [...state.ingredients]
-                        .filter(item => item._id !== action.id)
-                ]
+            const newIngredients = [...state.ingredientsConstructor]
+            const actualIndex = newIngredients.findIndex((item, index) => 
+                item.type !== 'bun' 
+                && newIngredients.filter((filterItem, filterIndex) => 
+                    filterIndex < index
+                    && filterItem.type !== 'bun')
+                        .length === action.indexConstructor
+            )
+            if (actualIndex !== -1) {
+                newIngredients.splice(actualIndex, 1)
             }
+            return {...state, ingredientsConstructor: newIngredients}
         }
 
         case MODAL_OPEN_INGREDIENT: {

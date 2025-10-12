@@ -13,5 +13,7 @@ export interface Action {
     type: string
     id?: string
     ingredients?: Ingredient[]
+    ingredient?: Ingredient
     ingredientDetail?: Ingredient
+    indexConstructor?: number
 }

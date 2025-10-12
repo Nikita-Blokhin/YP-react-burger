@@ -6,26 +6,28 @@ import {
     Button, 
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { useDrop } from 'react-dnd'
 
 import { Ingredient } from '../../types/Ingredient'
 import styles from './BurgerConstructor.module.css'
-import { useDrop } from 'react-dnd'
 import { DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
+import { State } from '../../types/Services'
+import { ADD_INGREDIENT_CONSTRUCTOR, DELETE_INGREDIENT_CONSTRUCTOR } from '../../services/actions'
 
-interface BurgerConstructorProps {
-    ingredients: Ingredient[]
-    onRemoveIngredient?: (index: number) => void
-    onOrderClick?: () => void
-    onDropIngredient?: (ingredient: Ingredient) => void
-}
+const BurgerConstructor = () => {
+    const dispatch = useDispatch()
+    const ingredients = useSelector(
+        (state: State) => state.ingredientsConstructor
+    )
 
-const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
-    ingredients,
-    onRemoveIngredient,
-    onOrderClick,
-    onDropIngredient
-}) => {
-    const [{ isOver, canDrop }, dropRef] = useDrop<DragItem, unknown, { isOver: boolean; canDrop: boolean }>({
+    const onDropIngredient = (ingredient: Ingredient) => {
+        dispatch({type: ADD_INGREDIENT_CONSTRUCTOR, id: ingredient._id})
+    }
+    
+    const [{ isOver, canDrop }, dropRef] = useDrop<
+        DragItem, unknown, { isOver: boolean; canDrop: boolean }
+        >({
             accept: INGREDIENT_TYPE,
             drop: (item) => {
             onDropIngredient?.(item.ingredient)
@@ -51,7 +53,9 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
         }, 0)
 
     const handleRemove = (index: number) => {
-        onRemoveIngredient?.(index)
+        dispatch(
+            {type: DELETE_INGREDIENT_CONSTRUCTOR, indexConstructor: index}
+        )
     }
 
     const dropAreaStyle = {
@@ -64,7 +68,7 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
     }
 
     const handleOrder = () => {
-        if (ingredients.length > 0) onOrderClick?.()
+        
     }
 
     return (
@@ -94,10 +98,10 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
                 <div className={styles.fillingsContainer}>
                             
                     {fillings.map((
-                        ingredient, index
+                        ingredient: Ingredient, index
                     ) => (
                         <div
-                            key={`${ingredient._id}-${index}`}
+                            key={`${ingredient._id} -${index}`}
                             className={styles.fillingItem}
                         >
                             <DragIcon type="primary" />
@@ -106,7 +110,9 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
                                     text={ingredient.name}
                                     price={ingredient.price}
                                     thumbnail={ingredient.image}
-                                    handleClose={() => handleRemove(index)}
+                                    handleClose={
+                                        () => handleRemove(index)
+                                    }
                                 />
                             </div>
                         </div>

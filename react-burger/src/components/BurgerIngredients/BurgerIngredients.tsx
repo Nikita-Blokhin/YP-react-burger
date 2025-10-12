@@ -14,18 +14,15 @@ import { State } from '../../types/Services'
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import IngredientCard from './IngredientCard'
 
-interface BurgerIngredientsProps {
-    constructorIngredients?: Ingredient[]
-}
-
-const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
-    constructorIngredients = []
-}) => {
+const BurgerIngredients = () => {
 
     const dispatch = useDispatch()
     const isModal = useSelector((state: State) => state.isModal)
     const ingredients = useSelector((state: State) => state.ingredients)
     const isError = useSelector((state: State) => state.ingredientsFailed)
+    const constructorIngredients = useSelector(
+        (state: State) => state.ingredientsConstructor
+    )
     const [currentTab, setCurrentTab] = useState<string>('bun')
     const [isLoading, setLoading] = useState(false)
     const breadRef = useRef<HTMLDivElement>(null)
