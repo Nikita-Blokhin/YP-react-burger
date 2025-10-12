@@ -17,7 +17,7 @@ import IngredientCard from './IngredientCard'
 const BurgerIngredients = () => {
 
     const dispatch = useDispatch()
-    const isModal = useSelector((state: State) => state.isModal)
+    const isModal = useSelector((state: State) => state.isModalDetail)
     const ingredients = useSelector((state: State) => state.ingredients)
     const isError = useSelector((state: State) => state.ingredientsFailed)
     const constructorIngredients = useSelector(
@@ -65,8 +65,11 @@ const BurgerIngredients = () => {
     }), [ingredients])
     
     const getIngredientCount = (ingredient: Ingredient): number => {
-        return constructorIngredients.filter
-            (item => item._id === ingredient._id).length
+        return ingredient.type === 'bun' 
+            ? constructorIngredients
+                .filter(item => item._id === ingredient._id).length * 2
+            : constructorIngredients
+                .filter(item => item._id === ingredient._id).length
     }
 
     const handleIngredientClick = (ingredient: Ingredient) => {
@@ -103,7 +106,7 @@ const BurgerIngredients = () => {
 
     return (
         <div className={styles.container}>
-            {isModal && <IngredientDetails />}
+            {isModal &&  <IngredientDetails />}
             {isError && <div className={styles.update}>
                 <Button 
                     htmlType='button'

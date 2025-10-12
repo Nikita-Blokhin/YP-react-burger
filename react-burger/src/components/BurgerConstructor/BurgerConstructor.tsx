@@ -13,12 +13,21 @@ import { Ingredient } from '../../types/Ingredient'
 import styles from './BurgerConstructor.module.css'
 import { DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
 import { State } from '../../types/Services'
-import { ADD_INGREDIENT_CONSTRUCTOR, DELETE_INGREDIENT_CONSTRUCTOR } from '../../services/actions'
+import { 
+    ADD_INGREDIENT_CONSTRUCTOR, DELETE_INGREDIENT_CONSTRUCTOR,
+    MODAL_OPEN_ORDER,
+    POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS
+} from '../../services/actions'
+import { API } from '../../core/API'
+import OrderDetails from '../OrderDetails/OrderDetails'
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch()
     const ingredients = useSelector(
         (state: State) => state.ingredientsConstructor
+    )
+    const isModal = useSelector(
+        (state: State) => state.isModalOrder
     )
 
     const onDropIngredient = (ingredient: Ingredient) => {
@@ -26,7 +35,7 @@ const BurgerConstructor = () => {
     }
     
     const [{ isOver, canDrop }, dropRef] = useDrop<
-        DragItem, unknown, { isOver: boolean; canDrop: boolean }
+            DragItem, unknown, { isOver: boolean; canDrop: boolean }
         >({
             accept: INGREDIENT_TYPE,
             drop: (item) => {
@@ -68,12 +77,31 @@ const BurgerConstructor = () => {
     }
 
     const handleOrder = () => {
-        
+        const postOrder = async () => {
+                dispatch({
+                    type: POST_ORDER_REQUEST
+                })
+                API.createOrder(ingredients.map(item => item._id))
+                    .then(data => {
+                        dispatch({
+                            type: POST_ORDER_SUCCESS,
+                            order: data
+                        })
+                        dispatch({type: MODAL_OPEN_ORDER})
+                    })
+                    .catch(error => {
+                        dispatch({
+                            type: POST_ORDER_FAILED
+                        })
+                        alert(error)
+                    })
+            }
+        postOrder()
     }
 
     return (
         <div className={styles.container} ref={dropRef} style={dropAreaStyle}>
-
+            {isModal && <OrderDetails />}
             {fillings.length === 0 && !bun && (
                 <div className={styles.emptyState}>
                     <p className={styles.emptyText}>

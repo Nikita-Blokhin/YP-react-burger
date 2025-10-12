@@ -1,4 +1,5 @@
 import { Ingredient } from './Ingredient'
+import { Order } from './Order'
 
 export interface State {
     ingredients: Ingredient[]
@@ -6,7 +7,11 @@ export interface State {
     ingredientsFailed: boolean
     ingredientDetail: null | Ingredient
     ingredientsConstructor: Ingredient[]
-    isModal: boolean
+    isModalDetail: boolean
+    isModalOrder: boolean
+    order: null | Order
+    orderRequest: boolean,
+    orderFailed: boolean,
 }
 
 export interface Action {
@@ -16,4 +21,5 @@ export interface Action {
     ingredient?: Ingredient
     ingredientDetail?: Ingredient
     indexConstructor?: number
+    order?: Order
 }

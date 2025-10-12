@@ -3,11 +3,16 @@ import {
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
 
+    POST_ORDER_REQUEST,
+    POST_ORDER_SUCCESS,
+    POST_ORDER_FAILED,
+
     ADD_INGREDIENT_CONSTRUCTOR,
     DELETE_INGREDIENT_CONSTRUCTOR,
 
     MODAL_OPEN_INGREDIENT,
-    MODAL_CLOSE
+    MODAL_OPEN_ORDER,
+    MODAL_CLOSE    
 } from './actions'
 import { Action, State } from '../types/Services'
 
@@ -16,10 +21,15 @@ const initialState: State = {
     ingredientsRequest: false,
     ingredientsFailed: false,
 
-    isModal: false,
+    order: null,
+    orderRequest: false,
+    orderFailed: false,
+
+    isModalDetail: false,
+    isModalOrder: false,
     ingredientDetail: null,
 
-    ingredientsConstructor: []
+    ingredientsConstructor: [],
 }
 
 export const rootReducer = (state = initialState, action: Action) => {
@@ -27,7 +37,7 @@ export const rootReducer = (state = initialState, action: Action) => {
         case GET_INGREDIENTS_REQUEST: {
             return {
                 ...state,
-                itemsRequest: true
+                ingredientsRequest: true
             }
         }
         case GET_INGREDIENTS_SUCCESS: {
@@ -39,6 +49,25 @@ export const rootReducer = (state = initialState, action: Action) => {
         case GET_INGREDIENTS_FAILED: {
             return {
                 ...state, ingredientsFailed: true, ingredientsRequest: false
+            }
+        }
+
+        case POST_ORDER_REQUEST: {
+            return {
+                ...state,
+                orderRequest: true
+            }
+        }
+        case POST_ORDER_SUCCESS: {
+            return {
+                ...state, ingredientsFailed: false,
+                order: action.order, orderRequest: false, 
+                ingredientsConstructor: []
+            }
+        }
+        case POST_ORDER_FAILED: {
+            return {
+                ...state, orderFailed: true, orderRequest: false
             }
         }
 
@@ -77,13 +106,19 @@ export const rootReducer = (state = initialState, action: Action) => {
 
         case MODAL_OPEN_INGREDIENT: {
             return {
-                ...state, isModal: true, 
+                ...state, isModalDetail: true, 
                 ingredientDetail: action.ingredientDetail
+            }
+        }
+        case MODAL_OPEN_ORDER: {
+            return {
+                ...state, isModalOrder: true
             }
         }
         case MODAL_CLOSE: {
             return {
-                ...state, isModal: false
+                ...state, isModalOrder: false, ingredientDetail: null,
+                isModalDetail: false
             }
         }
 
