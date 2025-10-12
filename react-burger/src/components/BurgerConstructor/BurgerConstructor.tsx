@@ -9,18 +9,32 @@ import {
 
 import { Ingredient } from '../../types/Ingredient'
 import styles from './BurgerConstructor.module.css'
+import { useDrop } from 'react-dnd'
+import { DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
 
 interface BurgerConstructorProps {
     ingredients: Ingredient[]
     onRemoveIngredient?: (index: number) => void
     onOrderClick?: () => void
+    onDropIngredient?: (ingredient: Ingredient) => void
 }
 
 const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
     ingredients,
     onRemoveIngredient,
-    onOrderClick
+    onOrderClick,
+    onDropIngredient
 }) => {
+    const [{ isOver, canDrop }, dropRef] = useDrop<DragItem, unknown, { isOver: boolean; canDrop: boolean }>({
+            accept: INGREDIENT_TYPE,
+            drop: (item) => {
+            onDropIngredient?.(item.ingredient)
+        },
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        }),
+    })
 
     const bun = ingredients.find
         ((ingredient: { type: string; }) => ingredient.type === 'bun')
@@ -38,18 +52,23 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
 
     const handleRemove = (index: number) => {
         onRemoveIngredient?.(index)
-        
-        
+    }
+
+    const dropAreaStyle = {
+        backgroundColor: isOver && canDrop 
+            ? "rgba(76, 76, 255, 0.1)" 
+            : "transparent",
+        border: canDrop ? "2px dashed rgba(76, 76, 255, 0.5)" : "none",
+        borderRadius: "12px",
+        transition: "all 0.3s ease"
     }
 
     const handleOrder = () => {
-        if (ingredients.length > 0) {
-            onOrderClick?.()
-        }
+        if (ingredients.length > 0) onOrderClick?.()
     }
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} ref={dropRef} style={dropAreaStyle}>
 
             {fillings.length === 0 && !bun && (
                 <div className={styles.emptyState}>
@@ -80,7 +99,7 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
                         <div
                             key={`${ingredient._id}-${index}`}
                             className={styles.fillingItem}
-                                                    >
+                        >
                             <DragIcon type="primary" />
                             <div className={styles.bunContainer}>
                                 <ConstructorElement

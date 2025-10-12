@@ -43,6 +43,16 @@ function App() {
         
     }
 
+    const handleDropIngredient = (ingredient: Ingredient) => {
+    if (ingredient.type === "bun") {
+      // Replace existing bun with new one
+      setConstructorIngredients((prev) => prev.filter((item) => item.type !== "bun").concat(ingredient))
+    } else {
+      // Add sauce or main ingredient
+      setConstructorIngredients((prev) => [...prev, ingredient])
+    }
+  }
+
     return (
         <div className={styles.App}>
             <AppHeader />
@@ -54,6 +64,7 @@ function App() {
                     ingredients={constructorIngredients}
                     onRemoveIngredient={handleRemoveIngredient}
                     onOrderClick={handleOrderClick}
+                    onDropIngredient={handleDropIngredient}
                 />
             </main>
         </div>

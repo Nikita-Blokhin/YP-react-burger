@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { compose, createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { thunk } from 'redux-thunk'
-
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import App from './App'
 import reportWebVitals from './reportWebVitals'
@@ -25,9 +26,11 @@ const store = createStore(rootReducer,
 
 root.render(
     <React.StrictMode>
-        <Provider store={store}>
-            <App />
-        </Provider>
+        <DndProvider backend={HTML5Backend}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </DndProvider>
     </React.StrictMode>
 )
 

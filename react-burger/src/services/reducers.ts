@@ -16,11 +16,10 @@ const initialState: State = {
     ingredientsRequest: false,
     ingredientsFailed: false,
 
+    isModal: false,
     ingredientDetail: null,
 
-    ingredientsConstructor: [],
-
-    isModal: false
+    ingredientsConstructor: []
 }
 
 export const rootReducer = (state = initialState, action: Action) => {

@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react'
-import { Tab, Counter, CurrencyIcon, Button } from 
+import { Tab, Button } from 
     '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -12,6 +12,7 @@ import {
 } from '../../services/actions'
 import { State } from '../../types/Services'
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
+import IngredientCard from './IngredientCard'
 
 interface BurgerIngredientsProps {
     constructorIngredients?: Ingredient[]
@@ -147,36 +148,14 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
                         </h2>
                         <div className={styles.ingredientsList}>
                             {categorizedIngredients.bun.map(ingredient => (
-                                <div 
+                                <IngredientCard 
                                     key={ingredient._id} 
-                                    className={styles.ingredientCard}
+                                    ingredient={ingredient}
                                     onClick={
                                         () => handleIngredientClick(ingredient)
                                     }
-                                >
-                                    {getIngredientCount(ingredient) > 0 && (
-                                        <Counter 
-                                            count={
-                                                getIngredientCount(ingredient)
-                                            }
-                                            size='default' 
-                                        />
-                                    )}
-                                    <img 
-                                        src={ingredient.image} 
-                                        alt={ingredient.name}
-                                        className={styles.ingredientImage}
-                                    />
-                                    <div className={styles.priceContainer}>
-                                        <span className={styles.price}>
-                                            {ingredient.price}
-                                        </span>
-                                        <CurrencyIcon type='primary' />
-                                    </div>
-                                    <p className={styles.ingredientName}>
-                                        {ingredient.name}
-                                    </p>
-                                </div>
+                                    getIngredientCount={getIngredientCount}
+                                />
                             ))}
                         </div>
                     </div>
@@ -187,36 +166,14 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
                         </h2>
                         <div className={styles.ingredientsList}>
                             {categorizedIngredients.sauce.map(ingredient => (
-                                <div 
+                                <IngredientCard 
                                     key={ingredient._id} 
-                                    className={styles.ingredientCard}
+                                    ingredient={ingredient}
                                     onClick={
                                         () => handleIngredientClick(ingredient)
                                     }
-                                >
-                                    {getIngredientCount(ingredient) > 0 && (
-                                        <Counter 
-                                            count={
-                                                getIngredientCount(ingredient)
-                                            } 
-                                            size='default' 
-                                        />
-                                    )}
-                                    <img 
-                                        src={ingredient.image} 
-                                        alt={ingredient.name}
-                                        className={styles.ingredientImage}
-                                    />
-                                    <div className={styles.priceContainer}>
-                                    <span className={styles.price}>
-                                        {ingredient.price}
-                                    </span>
-                                    <CurrencyIcon type='primary' />
-                                    </div>
-                                    <p className={styles.ingredientName}>
-                                        {ingredient.name}
-                                    </p>
-                                </div>
+                                    getIngredientCount={getIngredientCount}
+                                />
                             ))}
                         </div>
                     </div>
@@ -227,36 +184,14 @@ const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({
                         </h2>
                         <div className={styles.ingredientsList}>
                             {categorizedIngredients.main.map(ingredient => (
-                                <div 
+                                <IngredientCard 
                                     key={ingredient._id} 
-                                    className={styles.ingredientCard}
+                                    ingredient={ingredient}
                                     onClick={
                                         () => handleIngredientClick(ingredient)
                                     }
-                                >
-                                    {getIngredientCount(ingredient) > 0 && (
-                                        <Counter 
-                                            count={
-                                                getIngredientCount(ingredient)
-                                            }
-                                            size='default'
-                                        />
-                                    )}
-                                    <img 
-                                        src={ingredient.image} 
-                                        alt={ingredient.name}
-                                        className={styles.ingredientImage}
-                                    />
-                                    <div className={styles.priceContainer}>
-                                    <span className={styles.price}>
-                                        {ingredient.price}
-                                    </span>
-                                    <CurrencyIcon type='primary' />
-                                    </div>
-                                    <p className={styles.ingredientName}>
-                                        {ingredient.name}
-                                    </p>
-                                </div>
+                                    getIngredientCount={getIngredientCount}
+                                />
                             ))}
                         </div>
                     </div>
