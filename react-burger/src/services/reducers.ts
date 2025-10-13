@@ -34,6 +34,7 @@ const initialState: State = {
 }
 
 export const rootReducer = (state = initialState, action: Action) => {
+    
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {
@@ -49,7 +50,8 @@ export const rootReducer = (state = initialState, action: Action) => {
         }
         case GET_INGREDIENTS_FAILED: {
             return {
-                ...state, ingredientsFailed: true, ingredientsRequest: false
+                ...state, ingredientsFailed: true, ingredientsRequest: false,
+                ingredients: []
             }
         }
 
@@ -68,7 +70,7 @@ export const rootReducer = (state = initialState, action: Action) => {
         }
         case POST_ORDER_FAILED: {
             return {
-                ...state, orderFailed: true, orderRequest: false
+                ...state, orderFailed: true, orderRequest: false, order: null
             }
         }
 

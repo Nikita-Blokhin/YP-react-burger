@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useDrop } from 'react-dnd'
 
 import { Ingredient } from '../../types/Ingredient'
-import styles from './BurgerConstructor.module.css'
 import { DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
 import { State } from '../../types/Services'
 import { 
@@ -21,7 +20,10 @@ import { API } from '../../core/API'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import ConstructorIngredient from './ConstructorIngredient'
 
+import styles from './BurgerConstructor.module.css'
+
 const BurgerConstructor = () => {
+
     const dispatch = useDispatch()
     const ingredients = useSelector(
         (state: State) => state.ingredientsConstructor
@@ -99,7 +101,9 @@ const BurgerConstructor = () => {
         postOrder()
     }
 
-    const handleReorderIngredients = (dragIndex: number, hoverIndex: number) => {
+    const handleReorderIngredients = (
+        dragIndex: number, hoverIndex: number
+    ) => {
         dispatch({
             type: MOVE_INGREDIENT_CONSTRUCTOR, dragIndex: dragIndex,
             hoverIndex: hoverIndex 

@@ -1,11 +1,16 @@
 import  { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import type { Identifier, XYCoord } from 'dnd-core'
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { 
+    ConstructorElement, DragIcon 
+} from '@ya.praktikum/react-developer-burger-ui-components'
 
 import type { Ingredient } from '../../types/Ingredient'
+import {
+    ConstructorDragItem, CONSTRUCTOR_INGREDIENT_TYPE
+} from '../../types/DrugItem'
+
 import styles from './BurgerConstructor.module.css'
-import { ConstructorDragItem, CONSTRUCTOR_INGREDIENT_TYPE } from '../../types/DrugItem'
 
 interface ConstructorIngredientProps {
     ingredient: Ingredient
@@ -20,6 +25,7 @@ const ConstructorIngredient = ({
     moveIngredient,
     onRemove,
 }: ConstructorIngredientProps) => {
+
     const ref = useRef<HTMLDivElement>(null)
 
     const [{ handlerId }, drop] = useDrop<
@@ -32,15 +38,13 @@ const ConstructorIngredient = ({
             }
         },
         hover(item: ConstructorDragItem, monitor) {
-            if (!ref.current) {
-                return
-            }
+            if (!ref.current) return
+
             const dragIndex = item.index
             const hoverIndex = index
 
-            if (dragIndex === hoverIndex) {
-                return
-            }
+            if (dragIndex === hoverIndex) return
+
             const hoverBoundingRect = ref.current?.getBoundingClientRect()
 
             const hoverMiddleY = (
@@ -51,13 +55,10 @@ const ConstructorIngredient = ({
             const hoverClientY = (clientOffset as XYCoord).y
                 - hoverBoundingRect.top
 
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return
-            }
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return
 
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return
-            }
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return
+            
             moveIngredient(dragIndex, hoverIndex)
             item.index = hoverIndex
         }

@@ -1,11 +1,10 @@
-import React from 'react'
 import {
     Logo, BurgerIcon, ListIcon, ProfileIcon 
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import styles from './AppHeader.module.css'
 
-const AppHeader: React.FC = () => {
+const AppHeader = () => {
 
     return (
         <header className={styles.header}>

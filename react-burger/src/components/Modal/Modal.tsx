@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch } from 'react-redux'
 
-import styles from './Modal.module.css'
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
 import { MODAL_CLOSE } from '../../services/actions'
+
+import styles from './Modal.module.css'
 
 
 interface ModalProps {

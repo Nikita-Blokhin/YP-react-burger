@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
+
 import { CREATE_ORDER_URL, GET_INGREDIENTS_URL } from './constants'
-import { GET_INGREDIENTS_FAILED } from '../services/actions'
+import { GET_INGREDIENTS_FAILED, POST_ORDER_FAILED } from '../services/actions'
 
 export class API {
     
@@ -25,7 +26,7 @@ export class API {
         if (response.ok) return await response.json()
         const dispatch = useDispatch()
         dispatch({
-            type: GET_INGREDIENTS_FAILED
+            type: POST_ORDER_FAILED
         })
         return Promise.reject(`Ошибка ${response.status}`)
     }

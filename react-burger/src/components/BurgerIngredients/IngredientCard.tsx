@@ -5,8 +5,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import type { Ingredient } from '../../types/Ingredient'
-import styles from './BurgerIngredients.module.css'
 import { DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
+
+import styles from './BurgerIngredients.module.css'
 
 interface IngredientCardProps {
     ingredient: Ingredient
@@ -30,9 +31,7 @@ const IngredientCard: React.FC<IngredientCardProps> = ({
     return (
         <div 
             className={styles.ingredientCard}
-            onClick={
-                () => onClick(ingredient)
-            }
+            onClick={() => onClick(ingredient)}
             ref={dragRef}
             style={{
                 opacity: isDragging ? 0.5 : 1,

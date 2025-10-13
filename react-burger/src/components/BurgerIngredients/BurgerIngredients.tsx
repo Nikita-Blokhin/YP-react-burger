@@ -1,10 +1,10 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react'
-import { Tab, Button } from 
-    '@ya.praktikum/react-developer-burger-ui-components'
+import { useState, useMemo, useRef, useEffect } from 'react'
+import { 
+    Tab, Button 
+} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Ingredient } from '../../types/Ingredient'
-import styles from './BurgerIngredients.module.css'
 import { API } from '../../core/API'
 import { 
     GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, 
@@ -14,17 +14,23 @@ import { State } from '../../types/Services'
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import IngredientCard from './IngredientCard'
 
+import styles from './BurgerIngredients.module.css'
+
 const BurgerIngredients = () => {
 
     const dispatch = useDispatch()
+
     const isModal = useSelector((state: State) => state.isModalDetail)
     const ingredients = useSelector((state: State) => state.ingredients)
     const isError = useSelector((state: State) => state.ingredientsFailed)
     const constructorIngredients = useSelector(
         (state: State) => state.ingredientsConstructor
     )
+
     const [currentTab, setCurrentTab] = useState<string>('bun')
     const [isLoading, setLoading] = useState(false)
+
+    const containerRef = useRef<HTMLDivElement>(null)
     const breadRef = useRef<HTMLDivElement>(null)
     const sauceRef = useRef<HTMLDivElement>(null)
     const fillingRef = useRef<HTMLDivElement>(null)
@@ -54,6 +60,38 @@ const BurgerIngredients = () => {
         getData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        const container = containerRef.current
+        if (!container || isLoading) return
+
+        const observerOptions = {
+            root: container,
+            rootMargin: '0px 0px -90% 0px',
+            threshold: 0,
+        }
+
+        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.getAttribute('data-section')
+                if (sectionId) {
+                    setCurrentTab(sectionId)
+                }
+                }
+            })
+        }
+
+        const observer = new IntersectionObserver(
+            observerCallback, observerOptions
+        )
+
+        if (breadRef.current) observer.observe(breadRef.current)
+        if (sauceRef.current) observer.observe(sauceRef.current)
+        if (fillingRef.current) observer.observe(fillingRef.current)
+
+        return () => observer.disconnect()
+    }, [isLoading])
 
     const categorizedIngredients = useMemo(() => ({
         bun: ingredients.filter
@@ -140,10 +178,13 @@ const BurgerIngredients = () => {
                 </div>
 
                 {isLoading ? <h2>Загрузка...</h2> : <div 
-                    className={styles.ingredientsContainer}
+                    className={styles.ingredientsContainer} ref={containerRef}
                 >
                     <div className={styles.section}>
-                        <h2 className={styles.sectionTitle} ref={breadRef}>
+                        <h2 
+                            className={styles.sectionTitle} ref={breadRef}
+                            data-section='bun'
+                        >
                             Булки
                         </h2>
                         <div className={styles.ingredientsList}>
@@ -161,7 +202,10 @@ const BurgerIngredients = () => {
                     </div>
 
                     <div className={styles.section}>
-                        <h2 className={styles.sectionTitle} ref={sauceRef}>
+                        <h2 
+                            className={styles.sectionTitle} ref={sauceRef}
+                            data-section='sauce'
+                        >
                             Соусы
                         </h2>
                         <div className={styles.ingredientsList}>
@@ -179,7 +223,10 @@ const BurgerIngredients = () => {
                     </div>
 
                     <div className={styles.section}>
-                        <h2 className={styles.sectionTitle} ref={fillingRef}>
+                        <h2 
+                            className={styles.sectionTitle} ref={fillingRef}
+                            data-section='main'
+                        >
                             Начинки
                         </h2>
                         <div className={styles.ingredientsList}>

@@ -1,13 +1,15 @@
 import { useSelector } from 'react-redux'
+
 import Modal from '../Modal/Modal'
-import styles from './IngredientDetails.module.css'
 import { State } from '../../types/Services'
 
+import styles from './IngredientDetails.module.css'
+
 const IngredientDetails = () => {
+
     const ingredient = useSelector((state: State) => state.ingredientDetail)!
 
     return (<Modal title={'Детали ингредиента'}>
-        
         <div className={styles.content}>
             <img 
                 src={ingredient.image} 
