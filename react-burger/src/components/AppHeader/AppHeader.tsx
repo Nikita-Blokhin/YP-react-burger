@@ -12,11 +12,11 @@ const AppHeader: React.FC = () => {
             <nav className={styles.nav}>
                 <div className={styles.leftSection}>
                     <div className={styles.navItem}>
-                        <BurgerIcon type="primary" />
+                        <BurgerIcon type='primary' />
                         <span className={styles.navText}>Конструктор</span>
                     </div>
                     <div className={styles.navItem}>
-                        <ListIcon type="secondary" />
+                        <ListIcon type='secondary' />
                         <span className={styles.navTextSecondary}>
                             Лента заказов
                         </span>
@@ -29,7 +29,7 @@ const AppHeader: React.FC = () => {
                 
                 <div className={styles.rightSection}>
                     <div className={styles.navItem}>
-                        <ProfileIcon type="secondary" />
+                        <ProfileIcon type='secondary' />
                         <span className={styles.navTextSecondary}>
                             Личный кабинет
                         </span>

@@ -22,4 +22,6 @@ export interface Action {
     ingredientDetail?: Ingredient
     indexConstructor?: number
     order?: Order
+    dragIndex?: number
+    hoverIndex?: number
 }

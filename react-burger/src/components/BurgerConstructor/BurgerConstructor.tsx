@@ -1,8 +1,6 @@
-import React from 'react'
 import clsx from 'clsx'
 import { 
     ConstructorElement, 
-    DragIcon, 
     Button, 
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -16,10 +14,12 @@ import { State } from '../../types/Services'
 import { 
     ADD_INGREDIENT_CONSTRUCTOR, DELETE_INGREDIENT_CONSTRUCTOR,
     MODAL_OPEN_ORDER,
+    MOVE_INGREDIENT_CONSTRUCTOR,
     POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS
 } from '../../services/actions'
 import { API } from '../../core/API'
 import OrderDetails from '../OrderDetails/OrderDetails'
+import ConstructorIngredient from './ConstructorIngredient'
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch()
@@ -69,11 +69,11 @@ const BurgerConstructor = () => {
 
     const dropAreaStyle = {
         backgroundColor: isOver && canDrop 
-            ? "rgba(76, 76, 255, 0.1)" 
-            : "transparent",
-        border: canDrop ? "2px dashed rgba(76, 76, 255, 0.5)" : "none",
-        borderRadius: "12px",
-        transition: "all 0.3s ease"
+            ? 'rgba(76, 76, 255, 0.1)' 
+            : 'transparent',
+        border: canDrop ? '2px dashed rgba(76, 76, 255, 0.5)' : 'none',
+        borderRadius: '12px',
+        transition: 'all 0.3s ease'
     }
 
     const handleOrder = () => {
@@ -99,6 +99,13 @@ const BurgerConstructor = () => {
         postOrder()
     }
 
+    const handleReorderIngredients = (dragIndex: number, hoverIndex: number) => {
+        dispatch({
+            type: MOVE_INGREDIENT_CONSTRUCTOR, dragIndex: dragIndex,
+            hoverIndex: hoverIndex 
+        })
+    }
+
     return (
         <div className={styles.container} ref={dropRef} style={dropAreaStyle}>
             {isModal && <OrderDetails />}
@@ -114,7 +121,7 @@ const BurgerConstructor = () => {
                 {bun && (
                     <div className={clsx(styles.bunContainer, styles.bun)}>
                         <ConstructorElement
-                            type="top"
+                            type='top'
                             isLocked={true}
                             text={`${bun.name} (верх)`}
                             price={bun.price}
@@ -128,22 +135,13 @@ const BurgerConstructor = () => {
                     {fillings.map((
                         ingredient: Ingredient, index
                     ) => (
-                        <div
-                            key={`${ingredient._id} -${index}`}
-                            className={styles.fillingItem}
-                        >
-                            <DragIcon type="primary" />
-                            <div className={styles.bunContainer}>
-                                <ConstructorElement
-                                    text={ingredient.name}
-                                    price={ingredient.price}
-                                    thumbnail={ingredient.image}
-                                    handleClose={
-                                        () => handleRemove(index)
-                                    }
-                                />
-                            </div>
-                        </div>
+                        <ConstructorIngredient
+                            key={`${ingredient._id}-${index}`}
+                            ingredient={ingredient}
+                            index={index}
+                            moveIngredient={handleReorderIngredients}
+                            onRemove={handleRemove}
+                        />
                     ))}
                 </div>
 
@@ -154,7 +152,7 @@ const BurgerConstructor = () => {
                         )}
                     >
                         <ConstructorElement
-                            type="bottom"
+                            type='bottom'
                             isLocked={true}
                             text={`${bun.name} (низ)`}
                             price={bun.price}
@@ -167,12 +165,12 @@ const BurgerConstructor = () => {
             <div className={styles.orderSection}>
                 <div className={styles.totalPrice}>
                     <span className={styles.price}>{totalPrice}</span>
-                    <CurrencyIcon type="primary" />
+                    <CurrencyIcon type='primary' />
                 </div>
                 <Button 
-                    htmlType="button" 
-                    type="primary" 
-                    size="large"
+                    htmlType='button' 
+                    type='primary' 
+                    size='large'
                     onClick={handleOrder}
                     disabled={ingredients.length === 0}
                 >

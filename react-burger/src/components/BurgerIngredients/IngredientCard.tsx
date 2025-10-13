@@ -1,11 +1,11 @@
-import type React from "react"
-import { useDrag } from "react-dnd"
+import type React from 'react'
+import { useDrag } from 'react-dnd'
 import { 
     Counter, CurrencyIcon 
-} from "@ya.praktikum/react-developer-burger-ui-components"
+} from '@ya.praktikum/react-developer-burger-ui-components'
 
-import type { Ingredient } from "../../types/Ingredient"
-import styles from "./BurgerIngredients.module.css"
+import type { Ingredient } from '../../types/Ingredient'
+import styles from './BurgerIngredients.module.css'
 import { DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
 
 interface IngredientCardProps {
@@ -36,7 +36,7 @@ const IngredientCard: React.FC<IngredientCardProps> = ({
             ref={dragRef}
             style={{
                 opacity: isDragging ? 0.5 : 1,
-                cursor: "move",
+                cursor: 'move',
             }}
         >
             {getIngredientCount(ingredient) > 0 && (

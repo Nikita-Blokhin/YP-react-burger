@@ -8,6 +8,7 @@ import {
     POST_ORDER_FAILED,
 
     ADD_INGREDIENT_CONSTRUCTOR,
+    MOVE_INGREDIENT_CONSTRUCTOR,
     DELETE_INGREDIENT_CONSTRUCTOR,
 
     MODAL_OPEN_INGREDIENT,
@@ -88,6 +89,22 @@ export const rootReducer = (state = initialState, action: Action) => {
                     ingredient
                 ]}
             }
+        }
+        case MOVE_INGREDIENT_CONSTRUCTOR: {
+            const fillings = state.ingredientsConstructor
+                .filter((item) => item.type !== 'bun')
+            const buns = state.ingredientsConstructor
+                .filter((item) => item.type === 'bun')
+
+            const dragItem = fillings[action.dragIndex as number]
+            const newFillings = [...fillings]
+            newFillings.splice(action.dragIndex as number, 1)
+            newFillings.splice(action.hoverIndex as number, 0, dragItem)
+
+            return {
+                ...state, ingredientsConstructor: [
+                ...buns, ...newFillings
+            ]}
         }
         case DELETE_INGREDIENT_CONSTRUCTOR: {
             const newIngredients = [...state.ingredientsConstructor]
