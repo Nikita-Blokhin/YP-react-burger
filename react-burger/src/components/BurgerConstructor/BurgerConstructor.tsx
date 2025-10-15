@@ -4,33 +4,26 @@ import {
     Button, 
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux'
 import { useDrop } from 'react-dnd'
 
 import { Ingredient } from '../../types/Ingredient'
 import { DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
-import { State } from '../../types/Services'
 import { 
     ADD_INGREDIENT_CONSTRUCTOR, DELETE_INGREDIENT_CONSTRUCTOR,
-    MODAL_OPEN_ORDER,
     MOVE_INGREDIENT_CONSTRUCTOR,
-    POST_ORDER_FAILED, POST_ORDER_REQUEST, POST_ORDER_SUCCESS
+    postOrder
 } from '../../services/actions'
-import { API } from '../../core/API'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import ConstructorIngredient from './ConstructorIngredient'
+import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
 
 import styles from './BurgerConstructor.module.css'
 
 const BurgerConstructor = () => {
 
-    const dispatch = useDispatch()
-    const ingredients = useSelector(
-        (state: State) => state.ingredientsConstructor
-    )
-    const isModal = useSelector(
-        (state: State) => state.isModalOrder
-    )
+    const dispatch = useAppDispatch()
+    const ingredients = useAppSelector(state => state.ingredientsConstructor)
+    const isModal = useAppSelector(state => state.isModalOrder)
 
     const onDropIngredient = (ingredient: Ingredient) => {
         dispatch({type: ADD_INGREDIENT_CONSTRUCTOR, id: ingredient._id})
@@ -78,27 +71,8 @@ const BurgerConstructor = () => {
         transition: 'all 0.3s ease'
     }
 
-    const handleOrder = () => {
-        const postOrder = async () => {
-                dispatch({
-                    type: POST_ORDER_REQUEST
-                })
-                API.createOrder(ingredients.map(item => item._id))
-                    .then(data => {
-                        dispatch({
-                            type: POST_ORDER_SUCCESS,
-                            order: data
-                        })
-                        dispatch({type: MODAL_OPEN_ORDER})
-                    })
-                    .catch(error => {
-                        dispatch({
-                            type: POST_ORDER_FAILED
-                        })
-                        alert(error)
-                    })
-            }
-        postOrder()
+    const handleOrder = async () => {
+        dispatch(postOrder(ingredients))
     }
 
     const handleReorderIngredients = (
@@ -140,7 +114,7 @@ const BurgerConstructor = () => {
                         ingredient: Ingredient, index
                     ) => (
                         <ConstructorIngredient
-                            key={`${ingredient._id}-${index}`}
+                            key={ingredient.uniqueId}
                             ingredient={ingredient}
                             index={index}
                             moveIngredient={handleReorderIngredients}

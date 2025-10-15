@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid'
+
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
@@ -17,7 +19,7 @@ import {
 } from './actions'
 import { Action, State } from '../types/Services'
 
-const initialState: State = {
+export const initialState: State = {
     ingredients: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
@@ -33,7 +35,9 @@ const initialState: State = {
     ingredientsConstructor: [],
 }
 
-export const rootReducer = (state = initialState, action: Action) => {
+export const rootReducer = (
+    state = initialState, action: Action, 
+) => {
     
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
@@ -77,6 +81,7 @@ export const rootReducer = (state = initialState, action: Action) => {
         case ADD_INGREDIENT_CONSTRUCTOR: {
             const ingredient = state.ingredients
                 .filter(item => item._id === action.id)[0]
+            ingredient.uniqueId = uuidv4()
             if (ingredient.type === 'bun') {
                 return {
                     ...state, ingredientsConstructor: [

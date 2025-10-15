@@ -1,14 +1,11 @@
-
-import { useSelector } from 'react-redux'
-
 import Modal from '../Modal/Modal'
-import { State } from '../../types/Services'
+import { useAppSelector } from '../../hooks/reducerHook'
 
 import styles from './OrderDetails.module.css'
 
 const OrderDetails = () => {
     
-    const order = useSelector((state: State) => state.order)
+    const order = useAppSelector(state => state.order)
     
     return (<Modal>
         <div className={styles.order}>

@@ -2,29 +2,27 @@ import { useState, useMemo, useRef, useEffect } from 'react'
 import { 
     Tab, Button 
 } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux'
 
 import { Ingredient } from '../../types/Ingredient'
-import { API } from '../../core/API'
 import { 
-    GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, 
+    getIngredients, 
     MODAL_OPEN_INGREDIENT
 } from '../../services/actions'
-import { State } from '../../types/Services'
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import IngredientCard from './IngredientCard'
+import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
 
 import styles from './BurgerIngredients.module.css'
 
 const BurgerIngredients = () => {
 
-    const dispatch = useDispatch()
-
-    const isModal = useSelector((state: State) => state.isModalDetail)
-    const ingredients = useSelector((state: State) => state.ingredients)
-    const isError = useSelector((state: State) => state.ingredientsFailed)
-    const constructorIngredients = useSelector(
-        (state: State) => state.ingredientsConstructor
+    const dispatch = useAppDispatch()
+    
+    const isModal = useAppSelector(state => state.isModalDetail)
+    const ingredients = useAppSelector(state => state.ingredients)
+    const isError = useAppSelector(state => state.ingredientsFailed)
+    const constructorIngredients = useAppSelector(
+        state => state.ingredientsConstructor
     )
 
     const [currentTab, setCurrentTab] = useState<string>('bun')
@@ -36,23 +34,8 @@ const BurgerIngredients = () => {
     const fillingRef = useRef<HTMLDivElement>(null)
 
     const getData = async () => {
-        dispatch({
-            type: GET_INGREDIENTS_REQUEST
-        })
-        API.getIngredients()
-            .then(data => {
-                dispatch({
-                    type: GET_INGREDIENTS_SUCCESS,
-                    ingredients: data.data
-                })
-                setLoading(false)
-            })
-            .catch(error => {
-                dispatch({
-                    type: GET_INGREDIENTS_FAILED
-                })
-                alert(error)
-            })
+        dispatch(getIngredients())
+        setLoading(false)
     }
 
     useEffect(() => {

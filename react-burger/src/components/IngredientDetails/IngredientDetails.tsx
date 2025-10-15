@@ -1,13 +1,11 @@
-import { useSelector } from 'react-redux'
-
 import Modal from '../Modal/Modal'
-import { State } from '../../types/Services'
+import { useAppSelector } from '../../hooks/reducerHook'
 
 import styles from './IngredientDetails.module.css'
 
 const IngredientDetails = () => {
 
-    const ingredient = useSelector((state: State) => state.ingredientDetail)!
+    const ingredient = useAppSelector(state => state.ingredientDetail)!
 
     return (<Modal title={'Детали ингредиента'}>
         <div className={styles.content}>

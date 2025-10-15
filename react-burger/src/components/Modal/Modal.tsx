@@ -1,13 +1,12 @@
 import { useCallback, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch } from 'react-redux'
 
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
 import { MODAL_CLOSE } from '../../services/actions'
+import { useAppDispatch } from '../../hooks/reducerHook'
 
 import styles from './Modal.module.css'
-
 
 interface ModalProps {
     children?: JSX.Element | JSX.Element[]
@@ -17,7 +16,8 @@ interface ModalProps {
 const Modal = ({
     children, title
 }: ModalProps) => {
-    const dispatch = useDispatch()
+    
+    const dispatch = useAppDispatch()
     const modalRoot = document.getElementById('modals')!
 
     const closeWindow = useCallback(() => {

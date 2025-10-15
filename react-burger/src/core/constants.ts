@@ -1,4 +1,6 @@
+export const BASE_URL = 
+    'https://norma.nomoreparties.space/api/'
 export const GET_INGREDIENTS_URL = 
-    'https://norma.nomoreparties.space/api/ingredients'
+    `${BASE_URL}ingredients`
 export const CREATE_ORDER_URL = 
-    'https://norma.nomoreparties.space/api/orders'
+    `${BASE_URL}orders`
