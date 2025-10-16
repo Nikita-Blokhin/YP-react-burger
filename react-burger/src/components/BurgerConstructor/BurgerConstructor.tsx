@@ -9,7 +9,8 @@ import { useDrop } from 'react-dnd'
 import { Ingredient } from '../../types/Ingredient'
 import { DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
 import { 
-    ADD_INGREDIENT_CONSTRUCTOR, DELETE_INGREDIENT_CONSTRUCTOR,
+    addIngridient,
+    DELETE_INGREDIENT_CONSTRUCTOR,
     MOVE_INGREDIENT_CONSTRUCTOR,
     postOrder
 } from '../../services/actions'
@@ -26,7 +27,7 @@ const BurgerConstructor = () => {
     const isModal = useAppSelector(state => state.isModalOrder)
 
     const onDropIngredient = (ingredient: Ingredient) => {
-        dispatch({type: ADD_INGREDIENT_CONSTRUCTOR, id: ingredient._id})
+        dispatch(addIngridient(ingredient))
     }
     
     const [{ isOver, canDrop }, dropRef] = useDrop<

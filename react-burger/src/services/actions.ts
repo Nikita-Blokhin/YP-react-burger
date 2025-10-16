@@ -1,9 +1,10 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
+import { v4 as uuidv4 } from 'uuid'
 
-import { API } from '../core/API'
 import { Ingredient } from '../types/Ingredient'
 import { State } from '../types/Services'
 import { Order } from '../types/Order'
+import { request } from '../utils'
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST'
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS'
@@ -51,18 +52,19 @@ export const getIngredients = (): ThunkAction<
     dispatch({
         type: GET_INGREDIENTS_REQUEST
     })
-    API.getIngredients().then(res => {
-        if (res && res.success) {
+    request('ingredients')
+        .then(data => {
             dispatch({
                 type: GET_INGREDIENTS_SUCCESS,
-                ingredients: res.data
+                ingredients: data.data
             })
-        } else {
+        })
+        .catch(error => {
             dispatch({
                 type: GET_INGREDIENTS_FAILED
             })
-        }
-    })
+            alert(error)
+        })
 }
 
 export const postOrder = (ingredients: Ingredient[]): ThunkAction<
@@ -76,14 +78,20 @@ export const postOrder = (ingredients: Ingredient[]): ThunkAction<
     dispatch({
         type: GET_INGREDIENTS_REQUEST
     })
-
-    return API.createOrder(ingredients.map(item => item._id))
+    const data = ingredients.map(item => item._id)
+    request('orders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({'ingredients': data})
+    })
         .then(data => {
             dispatch({
                 type: POST_ORDER_SUCCESS,
                 order: data
             })
-            dispatch({ type: MODAL_OPEN_ORDER });
+            dispatch({ type: MODAL_OPEN_ORDER })
         })
         .catch(error => {
             dispatch({
@@ -91,4 +99,14 @@ export const postOrder = (ingredients: Ingredient[]): ThunkAction<
             })
             alert(error)
         })
+}
+
+export const addIngridient = (item: Ingredient) => {
+    return {
+        type: ADD_INGREDIENT_CONSTRUCTOR,
+        ingredient: {
+            ...item,
+            uniqueId: uuidv4()
+        }
+    }
 }

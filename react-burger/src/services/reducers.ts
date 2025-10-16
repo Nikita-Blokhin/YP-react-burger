@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
-
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
@@ -79,9 +77,7 @@ export const rootReducer = (
         }
 
         case ADD_INGREDIENT_CONSTRUCTOR: {
-            const ingredient = state.ingredients
-                .filter(item => item._id === action.id)[0]
-            ingredient.uniqueId = uuidv4()
+            const ingredient = action.ingredient!
             if (ingredient.type === 'bun') {
                 return {
                     ...state, ingredientsConstructor: [
