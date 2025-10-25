@@ -12,7 +12,7 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED'
 
 export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST'
 export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS'
-export const POST_ORDER_FAILED  = 'POST_ORDER_FAILED'
+export const POST_ORDER_FAILED = 'POST_ORDER_FAILED'
 
 export const GET_INGREDIENTS_CONSTRUCTOR = 'GET_INGREDIENTS_CONSTRUCTOR'
 export const ADD_INGREDIENT_CONSTRUCTOR = 'ADD_INGREDIENT_CONSTRUCTOR'
@@ -40,73 +40,64 @@ interface PostOrderAction {
 
 type APIAction = GetIngredientsAction | PostOrderAction
 
-export const getIngredients = (): ThunkAction<
-    void,
-    State,
-    unknown,
-    APIAction
-> => async (
-    dispatch: ThunkDispatch<State, unknown, APIAction>
-) => {
-    
-    dispatch({
-        type: GET_INGREDIENTS_REQUEST
-    })
-    request('ingredients')
-        .then(data => {
-            dispatch({
-                type: GET_INGREDIENTS_SUCCESS,
-                ingredients: data.data
-            })
+export const getIngredients =
+    (): ThunkAction<void, State, unknown, APIAction> =>
+    async (dispatch: ThunkDispatch<State, unknown, APIAction>) => {
+        dispatch({
+            type: GET_INGREDIENTS_REQUEST,
         })
-        .catch(error => {
-            dispatch({
-                type: GET_INGREDIENTS_FAILED
+        request('ingredients')
+            .then((data) => {
+                dispatch({
+                    type: GET_INGREDIENTS_SUCCESS,
+                    ingredients: data.data,
+                })
             })
-            alert(error)
-        })
-}
+            .catch((error) => {
+                dispatch({
+                    type: GET_INGREDIENTS_FAILED,
+                })
+                alert(error)
+            })
+    }
 
-export const postOrder = (ingredients: Ingredient[]): ThunkAction<
-    void,
-    State,
-    unknown,
-    APIAction
-> => async (
-    dispatch: ThunkDispatch<State, unknown, APIAction>
-) => {
-    dispatch({
-        type: GET_INGREDIENTS_REQUEST
-    })
-    const data = ingredients.map(item => item._id)
-    request('orders', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({'ingredients': data})
-    })
-        .then(data => {
-            dispatch({
-                type: POST_ORDER_SUCCESS,
-                order: data
-            })
-            dispatch({ type: MODAL_OPEN_ORDER })
+export const postOrder =
+    (
+        ingredients: Ingredient[]
+    ): ThunkAction<void, State, unknown, APIAction> =>
+    async (dispatch: ThunkDispatch<State, unknown, APIAction>) => {
+        dispatch({
+            type: GET_INGREDIENTS_REQUEST,
         })
-        .catch(error => {
-            dispatch({
-                type: POST_ORDER_FAILED
-            })
-            alert(error)
+        const data = ingredients.map((item) => item._id)
+        request('orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ingredients: data }),
         })
-}
+            .then((data) => {
+                dispatch({
+                    type: POST_ORDER_SUCCESS,
+                    order: data,
+                })
+                dispatch({ type: MODAL_OPEN_ORDER })
+            })
+            .catch((error) => {
+                dispatch({
+                    type: POST_ORDER_FAILED,
+                })
+                alert(error)
+            })
+    }
 
 export const addIngridient = (item: Ingredient) => {
     return {
         type: ADD_INGREDIENT_CONSTRUCTOR,
         ingredient: {
             ...item,
-            uniqueId: uuidv4()
-        }
+            uniqueId: uuidv4(),
+        },
     }
 }

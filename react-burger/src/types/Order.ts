@@ -1,5 +1,5 @@
 export interface Order {
     name: string
-    order: {number: number}
+    order: { number: number }
     succsess: boolean
 }

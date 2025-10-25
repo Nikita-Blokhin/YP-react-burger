@@ -1,4 +1,3 @@
-// customHooks.ts
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import { State } from '../types/Services'

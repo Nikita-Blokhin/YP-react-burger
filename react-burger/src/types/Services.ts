@@ -10,8 +10,8 @@ export interface State {
     isModalDetail: boolean
     isModalOrder: boolean
     order: null | Order
-    orderRequest: boolean,
-    orderFailed: boolean,
+    orderRequest: boolean
+    orderFailed: boolean
 }
 
 export interface Action {

@@ -1,7 +1,8 @@
 import type React from 'react'
 import { useDrag } from 'react-dnd'
-import { 
-    Counter, CurrencyIcon 
+import {
+    Counter,
+    CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import type { Ingredient } from '../../types/Ingredient'
@@ -15,21 +16,25 @@ interface IngredientCardProps {
     getIngredientCount: (ingredient: Ingredient) => number
 }
 
-const IngredientCard: React.FC<IngredientCardProps> = ({ 
-    ingredient, getIngredientCount, onClick 
+const IngredientCard: React.FC<IngredientCardProps> = ({
+    ingredient,
+    getIngredientCount,
+    onClick,
 }) => {
     const [{ isDragging }, dragRef] = useDrag<
-        DragItem, unknown, {isDragging: boolean}
-    > ({
+        DragItem,
+        unknown,
+        { isDragging: boolean }
+    >({
         type: INGREDIENT_TYPE,
         item: { type: INGREDIENT_TYPE, ingredient },
         collect: (monitor) => ({
-            isDragging: monitor.isDragging()
-        })
+            isDragging: monitor.isDragging(),
+        }),
     })
 
     return (
-        <div 
+        <div
             className={styles.ingredientCard}
             onClick={() => onClick(ingredient)}
             ref={dragRef}
@@ -39,18 +44,19 @@ const IngredientCard: React.FC<IngredientCardProps> = ({
             }}
         >
             {getIngredientCount(ingredient) > 0 && (
-                <Counter count={getIngredientCount(ingredient)}
-                    size='default' 
+                <Counter
+                    count={getIngredientCount(ingredient)}
+                    size="default"
                 />
             )}
-            <img 
-                src={ingredient.image} 
+            <img
+                src={ingredient.image}
                 alt={ingredient.name}
                 className={styles.ingredientImage}
             />
             <div className={styles.priceContainer}>
                 <span className={styles.price}>{ingredient.price}</span>
-                <CurrencyIcon type='primary' />
+                <CurrencyIcon type="primary" />
             </div>
             <p className={styles.ingredientName}>{ingredient.name}</p>
         </div>

@@ -1,14 +1,10 @@
 import AppHeader from './components/AppHeader/AppHeader'
-import BurgerIngredients from 
-    './components/BurgerIngredients/BurgerIngredients'
-import BurgerConstructor from 
-    './components/BurgerConstructor/BurgerConstructor'
-    
+import BurgerIngredients from './components/BurgerIngredients/BurgerIngredients'
+import BurgerConstructor from './components/BurgerConstructor/BurgerConstructor'
+
 import styles from './App.module.css'
 
-
 function App() {
-
     return (
         <div className={styles.App}>
             <AppHeader />

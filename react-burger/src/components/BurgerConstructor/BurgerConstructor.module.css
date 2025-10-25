@@ -1,132 +1,132 @@
 .container {
-  width: 600px;
-  height: 912px;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 40px;
-  padding-top: 100px;
+    width: 600px;
+    height: 912px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 40px;
+    padding-top: 100px;
 }
 
 .constructorList {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 16px;
-  gap: 16px;
-  align-items: end;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 16px;
+    gap: 16px;
+    align-items: end;
 }
 
 .constructorList::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 .constructorList::-webkit-scrollbar-button {
-  display: none;
+    display: none;
 }
 
 .constructorList::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
 }
 
 .constructorList::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #4c4cff 0%, #00cccc 100%);
-  border-radius: 4px;
+    background: linear-gradient(180deg, #4c4cff 0%, #00cccc 100%);
+    border-radius: 4px;
 }
 
 .bunContainer {
-  width: 536px;
-  min-height: 80px;
-  padding-right: 16px;
-  justify-self: end;
+    width: 536px;
+    min-height: 80px;
+    padding-right: 16px;
+    justify-self: end;
 
-  &.bun {
-    margin-right: 12px;
-  }
-
-  &.bottom {
-    img {
-      transform: rotate(180deg);
+    &.bun {
+        margin-right: 12px;
     }
-  }
+
+    &.bottom {
+        img {
+            transform: rotate(180deg);
+        }
+    }
 }
 
 .fillingsContainer {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  max-height: 400px;
-  overflow-y: auto;
-  gap: 16px;
-  overflow-y: auto;
-  align-self: start;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    gap: 16px;
+    overflow-y: auto;
+    align-self: start;
 }
 
 .fillingsContainer::-webkit-scrollbar {
-  width: 4px;
+    width: 4px;
 }
 
 .fillingsContainer::-webkit-scrollbar-button {
-  display: none;
+    display: none;
 }
 
 .fillingsContainer::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 .fillingsContainer::-webkit-scrollbar-thumb {
-  background: rgba(79, 79, 255, 0.3);
-  border-radius: 2px;
+    background: rgba(79, 79, 255, 0.3);
+    border-radius: 2px;
 }
 
 .fillingItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
 }
 
 .emptyState {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-  border: 2px dashed rgba(79, 79, 255, 0.3);
-  border-radius: 16px;
-  background: rgba(28, 28, 33, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    border: 2px dashed rgba(79, 79, 255, 0.3);
+    border-radius: 16px;
+    background: rgba(28, 28, 33, 0.3);
 }
 
 .emptyText {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 16px;
-  color: #8585ad;
-  text-align: center;
-  margin: 0;
-  line-height: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    color: #8585ad;
+    text-align: center;
+    margin: 0;
+    line-height: 24px;
 }
 
 .orderSection {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 40px;
-  padding: 32px 0 50px 0;
-  border-top: 1px solid rgba(79, 79, 255, 0.2);
-  margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 40px;
+    padding: 32px 0 50px 0;
+    border-top: 1px solid rgba(79, 79, 255, 0.2);
+    margin-top: 24px;
 }
 
 .totalPrice {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .price {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 36px;
-  font-weight: 700;
-  color: #f2f2f3;
-  line-height: 48px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: #f2f2f3;
+    line-height: 48px;
 }

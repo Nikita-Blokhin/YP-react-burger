@@ -13,15 +13,12 @@ interface ModalProps {
     title?: string
 }
 
-const Modal = ({
-    children, title
-}: ModalProps) => {
-    
+const Modal = ({ children, title }: ModalProps) => {
     const dispatch = useAppDispatch()
     const modalRoot = document.getElementById('modals')!
 
     const closeWindow = useCallback(() => {
-        dispatch({type: MODAL_CLOSE})
+        dispatch({ type: MODAL_CLOSE })
     }, [dispatch])
 
     useEffect(() => {
@@ -36,18 +33,21 @@ const Modal = ({
         }
     }, [closeWindow])
 
-    return ReactDOM.createPortal((<>
-        <ModalOverlay closeWindow={closeWindow}/>
-        <div className={styles.window}>
-            <div className={styles.title}>
-                <h2>{title}</h2>
-                <button onClick={closeWindow}>
-                    <CloseIcon type={'primary'} />
-                </button>
+    return ReactDOM.createPortal(
+        <>
+            <ModalOverlay closeWindow={closeWindow} />
+            <div className={styles.window}>
+                <div className={styles.title}>
+                    <h2>{title}</h2>
+                    <button onClick={closeWindow}>
+                        <CloseIcon type={'primary'} />
+                    </button>
+                </div>
+                {children}
             </div>
-            { children }
-        </div>
-    </>), modalRoot)
+        </>,
+        modalRoot
+    )
 }
 
 export default Modal
