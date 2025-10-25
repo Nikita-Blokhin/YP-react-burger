@@ -4,11 +4,8 @@ interface ModalOverlayProps {
     closeWindow: () => void
 }
 
-const ModalOverlay = ({closeWindow}: ModalOverlayProps) => {
-    
-    return (
-        <div className={styles.background} onClick={closeWindow}/>
-    )
+const ModalOverlay = ({ closeWindow }: ModalOverlayProps) => {
+    return <div className={styles.background} onClick={closeWindow} />
 }
 
 export default ModalOverlay

@@ -2,29 +2,24 @@ import { useCallback, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import styles from './Modal.module.css'
-import { ModalContentType } from '../../types/Modal'
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
+import { MODAL_CLOSE } from '../../services/actions'
+import { useAppDispatch } from '../../hooks/reducerHook'
+
+import styles from './Modal.module.css'
 
 interface ModalProps {
     children?: JSX.Element | JSX.Element[]
-    modalContent: ModalContentType
-    setModalContent: React.Dispatch<React.SetStateAction<ModalContentType>>
     title?: string
 }
 
-const Modal = ({
-    setModalContent, children, title
-}: ModalProps) => {
-
+const Modal = ({ children, title }: ModalProps) => {
+    const dispatch = useAppDispatch()
     const modalRoot = document.getElementById('modals')!
 
     const closeWindow = useCallback(() => {
-        setModalContent({
-            isModal: null,
-            content: undefined
-        })
-    }, [setModalContent])
+        dispatch({ type: MODAL_CLOSE })
+    }, [dispatch])
 
     useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {
@@ -38,8 +33,9 @@ const Modal = ({
         }
     }, [closeWindow])
 
-    return ReactDOM.createPortal((<>
-            <ModalOverlay closeWindow={closeWindow}/>
+    return ReactDOM.createPortal(
+        <>
+            <ModalOverlay closeWindow={closeWindow} />
             <div className={styles.window}>
                 <div className={styles.title}>
                     <h2>{title}</h2>
@@ -47,10 +43,11 @@ const Modal = ({
                         <CloseIcon type={'primary'} />
                     </button>
                 </div>
-                { children }
+                {children}
             </div>
-        </>
-    ), modalRoot)
+        </>,
+        modalRoot
+    )
 }
 
 export default Modal

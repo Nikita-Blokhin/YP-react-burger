@@ -1,61 +1,102 @@
-import React from 'react'
 import clsx from 'clsx'
-import { 
-    ConstructorElement, 
-    DragIcon, 
-    Button, 
-    CurrencyIcon
+import {
+    ConstructorElement,
+    Button,
+    CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useDrop } from 'react-dnd'
 
 import { Ingredient } from '../../types/Ingredient'
+import { DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
+import {
+    addIngridient,
+    DELETE_INGREDIENT_CONSTRUCTOR,
+    MOVE_INGREDIENT_CONSTRUCTOR,
+    postOrder,
+} from '../../services/actions'
+import OrderDetails from '../OrderDetails/OrderDetails'
+import ConstructorIngredient from './ConstructorIngredient'
+import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
+
 import styles from './BurgerConstructor.module.css'
-import { ModalContentType } from '../../types/Modal'
 
-interface BurgerConstructorProps {
-    ingredients: Ingredient[]
-    onRemoveIngredient?: (index: number) => void
-    onOrderClick?: () => void
-    setModalContent: React.Dispatch<React.SetStateAction<ModalContentType>>
-}
+const BurgerConstructor = () => {
+    const dispatch = useAppDispatch()
+    const ingredients = useAppSelector((state) => state.ingredientsConstructor)
+    const isModal = useAppSelector((state) => state.isModalOrder)
 
-const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
-    ingredients,
-    onRemoveIngredient,
-    onOrderClick,
-    setModalContent
-}) => {
+    const onDropIngredient = (ingredient: Ingredient) => {
+        dispatch(addIngridient(ingredient))
+    }
 
-    const bun = ingredients.find
-        ((ingredient: { type: string; }) => ingredient.type === 'bun')
+    const [{ isOver, canDrop }, dropRef] = useDrop<
+        DragItem,
+        unknown,
+        { isOver: boolean; canDrop: boolean }
+    >({
+        accept: INGREDIENT_TYPE,
+        drop: (item) => {
+            onDropIngredient?.(item.ingredient)
+        },
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        }),
+    })
 
-    const fillings = ingredients.filter
-        ((ingredient: { type: string; }) => ingredient.type !== 'bun')
-        
-    const totalPrice = ingredients.reduce
-        ((sum: any, ingredient: { type: string; price: number; }) => {
-            return sum + (ingredient.type === 'bun'
-                ? ingredient.price * 2
-                : ingredient.price
+    const bun = ingredients.find(
+        (ingredient: { type: string }) => ingredient.type === 'bun'
+    )
+
+    const fillings = ingredients.filter(
+        (ingredient: { type: string }) => ingredient.type !== 'bun'
+    )
+
+    const totalPrice = ingredients.reduce(
+        (sum: any, ingredient: { type: string; price: number }) => {
+            return (
+                sum +
+                (ingredient.type === 'bun'
+                    ? ingredient.price * 2
+                    : ingredient.price)
             )
-        }, 0)
+        },
+        0
+    )
 
     const handleRemove = (index: number) => {
-        onRemoveIngredient?.(index)
-        setModalContent({
-            isModal: null,
-            content: undefined
+        dispatch({
+            type: DELETE_INGREDIENT_CONSTRUCTOR,
+            indexConstructor: index,
         })
     }
 
-    const handleOrder = () => {
-        if (ingredients.length > 0) {
-            onOrderClick?.()
-        }
+    const dropAreaStyle = {
+        backgroundColor:
+            isOver && canDrop ? 'rgba(76, 76, 255, 0.1)' : 'transparent',
+        border: canDrop ? '2px dashed rgba(76, 76, 255, 0.5)' : 'none',
+        borderRadius: '12px',
+        transition: 'all 0.3s ease',
+    }
+
+    const handleOrder = async () => {
+        dispatch(postOrder(ingredients))
+    }
+
+    const handleReorderIngredients = (
+        dragIndex: number,
+        hoverIndex: number
+    ) => {
+        dispatch({
+            type: MOVE_INGREDIENT_CONSTRUCTOR,
+            dragIndex: dragIndex,
+            hoverIndex: hoverIndex,
+        })
     }
 
     return (
-        <div className={styles.container}>
-
+        <div className={styles.container} ref={dropRef} style={dropAreaStyle}>
+            {isModal && <OrderDetails />}
             {fillings.length === 0 && !bun && (
                 <div className={styles.emptyState}>
                     <p className={styles.emptyText}>
@@ -78,31 +119,23 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
                 )}
 
                 <div className={styles.fillingsContainer}>
-                            
-                    {fillings.map((
-                        ingredient, index
-                    ) => (
-                        <div
-                            key={`${ingredient._id}-${index}`}
-                            className={styles.fillingItem}
-                                                    >
-                            <DragIcon type="primary" />
-                            <div className={styles.bunContainer}>
-                                <ConstructorElement
-                                    text={ingredient.name}
-                                    price={ingredient.price}
-                                    thumbnail={ingredient.image}
-                                    handleClose={() => handleRemove(index)}
-                                />
-                            </div>
-                        </div>
+                    {fillings.map((ingredient: Ingredient, index) => (
+                        <ConstructorIngredient
+                            key={ingredient.uniqueId}
+                            ingredient={ingredient}
+                            index={index}
+                            moveIngredient={handleReorderIngredients}
+                            onRemove={handleRemove}
+                        />
                     ))}
                 </div>
 
                 {bun && (
-                    <div 
+                    <div
                         className={clsx(
-                            styles.bunContainer, styles.bottom, styles.bun
+                            styles.bunContainer,
+                            styles.bottom,
+                            styles.bun
                         )}
                     >
                         <ConstructorElement
@@ -121,9 +154,9 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = ({
                     <span className={styles.price}>{totalPrice}</span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button 
-                    htmlType="button" 
-                    type="primary" 
+                <Button
+                    htmlType="button"
+                    type="primary"
                     size="large"
                     onClick={handleOrder}
                     disabled={ingredients.length === 0}
