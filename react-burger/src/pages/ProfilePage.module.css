@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    gap: 60px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 120px 40px 40px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 320px;
+}
+
+.link,
+.linkActive {
+    font-size: 18px;
+    line-height: 24px;
+    padding: 12px 0;
+    text-decoration: none;
+    color: #8585ad;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.2s;
+}
+
+.linkActive {
+    color: #f2f2f3;
+}
+
+.link:hover {
+    color: #f2f2f3;
+}
+
+.description {
+    font-size: 16px;
+    line-height: 24px;
+    color: #8585ad;
+    margin-top: 80px;
+}
+
+.content {
+    flex: 1;
+}

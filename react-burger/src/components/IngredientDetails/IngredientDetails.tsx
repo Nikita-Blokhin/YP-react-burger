@@ -4,13 +4,15 @@ import { useAppSelector } from '../../hooks/reducerHook'
 import styles from './IngredientDetails.module.css'
 
 const IngredientDetails = () => {
-    const ingredient = useAppSelector((state) => state.ingredientDetail)!
+    const ingredient = useAppSelector((state) => state.modal.ingredientDetail)!
+
+    if (!ingredient) return null
 
     return (
         <Modal title={'Детали ингредиента'}>
             <div className={styles.content}>
                 <img
-                    src={ingredient.image}
+                    src={ingredient.image_large || '/images/placeholder.svg'}
                     alt={ingredient.name}
                     className={styles.ingredientImage}
                 />
