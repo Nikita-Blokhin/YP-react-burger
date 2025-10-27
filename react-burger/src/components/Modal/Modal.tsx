@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
-import { MODAL_CLOSE } from '../../services/actions'
+import { MODAL_CLOSE } from '../../services/modalActions'
 import { useAppDispatch } from '../../hooks/reducerHook'
 
 import styles from './Modal.module.css'

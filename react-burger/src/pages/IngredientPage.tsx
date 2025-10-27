@@ -2,8 +2,9 @@ import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { getIngredients } from '../services/actions'
 import { useAppSelector } from '../hooks/reducerHook'
+import { getIngredients } from '../services/ingredientActions'
+
 import styles from './IngredientPage.module.css'
 
 const IngredientPage = () => {

@@ -8,15 +8,16 @@ import { useDrop } from 'react-dnd'
 
 import type { Ingredient } from '../../types/Ingredient'
 import { type DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
+
+import OrderDetails from '../OrderDetails/OrderDetails'
+import ConstructorIngredient from './ConstructorIngredient'
+import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
 import {
     addIngridient,
     DELETE_INGREDIENT_CONSTRUCTOR,
     MOVE_INGREDIENT_CONSTRUCTOR,
-    postOrder,
-} from '../../services/actions'
-import OrderDetails from '../OrderDetails/OrderDetails'
-import ConstructorIngredient from './ConstructorIngredient'
-import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
+} from '../../services/constructorActions'
+import { postOrder } from '../../services/orderActions'
 
 import styles from './BurgerConstructor.module.css'
 

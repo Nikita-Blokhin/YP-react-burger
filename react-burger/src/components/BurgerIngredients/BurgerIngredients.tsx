@@ -6,10 +6,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import type { Ingredient } from '../../types/Ingredient'
-import { getIngredients, MODAL_OPEN_INGREDIENT } from '../../services/actions'
+import { MODAL_OPEN_INGREDIENT } from '../../services/modalActions'
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import IngredientCard from './IngredientCard'
 import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
+import { getIngredients } from '../../services/ingredientActions'
 
 import styles from './BurgerIngredients.module.css'
 
