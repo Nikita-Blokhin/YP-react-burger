@@ -21,7 +21,7 @@ const Modal = ({ children, title }: ModalProps) => {
 
     const closeWindow = useCallback(() => {
         dispatch({ type: MODAL_CLOSE })
-        navigate(-1)
+        navigate('/')
     }, [dispatch, navigate])
 
     useEffect(() => {

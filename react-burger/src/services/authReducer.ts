@@ -53,6 +53,7 @@ export const authReducer = (
         case RESET_PASSWORD_REQUEST:
             return {
                 ...state,
+                isAuthenticated: false,
                 isLoading: true,
                 error: false,
             }
@@ -78,6 +79,7 @@ export const authReducer = (
             return {
                 ...state,
                 isLoading: false,
+                isAuthenticated: false,
                 error: true,
             }
 
@@ -85,6 +87,7 @@ export const authReducer = (
         case RESET_PASSWORD_SUCCESS:
             return {
                 ...state,
+                isAuthenticated: false,
                 isLoading: false,
                 error: false,
             }

@@ -5,6 +5,7 @@ import {
     CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDrop } from 'react-dnd'
+import { useNavigate } from 'react-router-dom'
 
 import type { Ingredient } from '../../types/Ingredient'
 import { type DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
@@ -22,11 +23,18 @@ import { postOrder } from '../../services/orderActions'
 import styles from './BurgerConstructor.module.css'
 
 const BurgerConstructor = () => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const ingredients = useAppSelector(
         (state) => state.constructor.ingredientsConstructor
     )
     const isModal = useAppSelector((state) => state.modal.isModalOrder)
+    const isAuthenticated = useAppSelector(
+        (state) => state.auth.isAuthenticated
+    )
+    const isPostOrderLoaded = useAppSelector(
+        (state) => state.order.orderRequest
+    )
 
     const onDropIngredient = (ingredient: Ingredient) => {
         dispatch(addIngridient(ingredient))
@@ -83,7 +91,9 @@ const BurgerConstructor = () => {
     }
 
     const handleOrder = async () => {
-        dispatch(postOrder(ingredients))
+        isAuthenticated
+            ? dispatch(postOrder(ingredients))
+            : navigate('/login', { replace: true })
     }
 
     const handleReorderIngredients = (
@@ -162,9 +172,9 @@ const BurgerConstructor = () => {
                     type="primary"
                     size="large"
                     onClick={handleOrder}
-                    disabled={ingredients?.length === 0}
+                    disabled={ingredients?.length === 0 || isPostOrderLoaded}
                 >
-                    Оформить заказ
+                    {isPostOrderLoaded ? 'Оформление...' : 'Оформить заказ'}
                 </Button>
             </div>
         </div>

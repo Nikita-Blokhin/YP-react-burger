@@ -7,7 +7,6 @@ import {
 
 import type { Ingredient } from '../../types/Ingredient'
 import { MODAL_OPEN_INGREDIENT } from '../../services/modalActions'
-import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import IngredientCard from './IngredientCard'
 import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
 import { getIngredients } from '../../services/ingredientActions'
@@ -19,7 +18,6 @@ const BurgerIngredients = () => {
     const navigate = useNavigate()
     const location = useLocation()
 
-    const isModal = useAppSelector((state) => state.modal.isModalDetail)
     const ingredients = useAppSelector(
         (state) => state.ingredients.ingredients
     )
@@ -144,7 +142,6 @@ const BurgerIngredients = () => {
 
     return (
         <div className={styles.container}>
-            {isModal && <IngredientDetails />}
             {isError && (
                 <div className={styles.update}>
                     <Button

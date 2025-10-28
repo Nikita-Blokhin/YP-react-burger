@@ -22,6 +22,8 @@ import { getUser } from './services/authActions'
 import { getAccessToken } from './utils/auth'
 
 import styles from './App.module.css'
+import Modal from './components/Modal/Modal'
+import IngredientDetails from './components/IngredientDetails/IngredientDetails'
 
 const AppRoutes = () => {
     const location = useLocation()
@@ -81,7 +83,14 @@ const AppRoutes = () => {
 
             {background && (
                 <Routes>
-                    <Route path="/ingredients/:id" element={<HomePage />} />
+                    <Route
+                        path="/ingredients/:id"
+                        element={
+                            <Modal title={'Детали ингредиента'}>
+                                <IngredientDetails />
+                            </Modal>
+                        }
+                    />
                 </Routes>
             )}
         </>
