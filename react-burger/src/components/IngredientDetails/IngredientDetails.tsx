@@ -1,12 +1,14 @@
+import { useParams } from 'react-router-dom'
+
 import { useAppSelector } from '../../hooks/reducerHook'
 
 import styles from './IngredientDetails.module.css'
 
 const IngredientDetails = () => {
-    const ingredientId = document.location.pathname.split('/').pop()
+    const { id } = useParams<{ id: string }>()
     const ingredient = useAppSelector(
         (state) => state.ingredients.ingredients
-    )!.find((ingredient) => ingredientId === ingredient._id)
+    )!.find((ingredient) => id === ingredient._id)
 
     return (
         <div className={styles.content}>
