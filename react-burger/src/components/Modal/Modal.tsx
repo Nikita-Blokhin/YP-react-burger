@@ -1,9 +1,10 @@
 import { useCallback, useEffect } from 'react'
 import ReactDOM from 'react-dom'
+import { useNavigate } from 'react-router-dom'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
-import { MODAL_CLOSE } from '../../services/actions'
+import { MODAL_CLOSE } from '../../services/modalActions'
 import { useAppDispatch } from '../../hooks/reducerHook'
 
 import styles from './Modal.module.css'
@@ -15,11 +16,13 @@ interface ModalProps {
 
 const Modal = ({ children, title }: ModalProps) => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const modalRoot = document.getElementById('modals')!
 
     const closeWindow = useCallback(() => {
         dispatch({ type: MODAL_CLOSE })
-    }, [dispatch])
+        navigate('/')
+    }, [dispatch, navigate])
 
     useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {

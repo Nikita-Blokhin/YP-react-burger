@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 import {
     Logo,
     BurgerIcon,
@@ -12,10 +13,29 @@ const AppHeader = () => {
         <header className={styles.header}>
             <nav className={styles.nav}>
                 <div className={styles.leftSection}>
-                    <div className={styles.navItem}>
-                        <BurgerIcon type="primary" />
-                        <span className={styles.navText}>Конструктор</span>
-                    </div>
+                    <NavLink
+                        to="/"
+                        className={({ isActive }) =>
+                            isActive ? styles.navItemActive : styles.navItem
+                        }
+                    >
+                        {({ isActive }) => (
+                            <>
+                                <BurgerIcon
+                                    type={isActive ? 'primary' : 'secondary'}
+                                />
+                                <span
+                                    className={
+                                        isActive
+                                            ? styles.navText
+                                            : styles.navTextSecondary
+                                    }
+                                >
+                                    Конструктор
+                                </span>
+                            </>
+                        )}
+                    </NavLink>
                     <div className={styles.navItem}>
                         <ListIcon type="secondary" />
                         <span className={styles.navTextSecondary}>
@@ -24,17 +44,34 @@ const AppHeader = () => {
                     </div>
                 </div>
 
-                <div className={styles.logoContainer}>
+                <NavLink to="/" className={styles.logoContainer}>
                     <Logo />
-                </div>
+                </NavLink>
 
                 <div className={styles.rightSection}>
-                    <div className={styles.navItem}>
-                        <ProfileIcon type="secondary" />
-                        <span className={styles.navTextSecondary}>
-                            Личный кабинет
-                        </span>
-                    </div>
+                    <NavLink
+                        to="/profile"
+                        className={({ isActive }) =>
+                            isActive ? styles.navItemActive : styles.navItem
+                        }
+                    >
+                        {({ isActive }) => (
+                            <>
+                                <ProfileIcon
+                                    type={isActive ? 'primary' : 'secondary'}
+                                />
+                                <span
+                                    className={
+                                        isActive
+                                            ? styles.navText
+                                            : styles.navTextSecondary
+                                    }
+                                >
+                                    Личный кабинет
+                                </span>
+                            </>
+                        )}
+                    </NavLink>
                 </div>
             </nav>
         </header>

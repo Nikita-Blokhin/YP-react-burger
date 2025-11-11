@@ -22,7 +22,9 @@
     gap: 8px;
 }
 
-.navItem {
+/* Add styles for NavLink wrapper and active state */
+.navItem,
+.navItemActive {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -31,6 +33,7 @@
     border-radius: 8px;
     transition: all 0.3s ease;
     position: relative;
+    text-decoration: none;
 }
 
 .navItem:hover {
@@ -38,7 +41,11 @@
 }
 
 .navItem:hover .navTextSecondary {
-    color: #4c4cff;
+    color: #c1c1c4;
+}
+
+.navItemActive {
+    background: rgba(79, 79, 255, 0.15);
 }
 
 .navText {
@@ -62,4 +69,6 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    cursor: pointer;
+    text-decoration: none;
 }

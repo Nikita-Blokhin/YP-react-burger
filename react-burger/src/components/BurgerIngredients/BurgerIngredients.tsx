@@ -1,29 +1,35 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import {
     Tab,
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { Ingredient } from '../../types/Ingredient'
-import { getIngredients, MODAL_OPEN_INGREDIENT } from '../../services/actions'
-import IngredientDetails from '../IngredientDetails/IngredientDetails'
+import type { Ingredient } from '../../types/Ingredient'
+import { MODAL_OPEN_INGREDIENT } from '../../services/modalActions'
 import IngredientCard from './IngredientCard'
 import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
+import { getIngredients } from '../../services/ingredientActions'
 
 import styles from './BurgerIngredients.module.css'
 
 const BurgerIngredients = () => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
 
-    const isModal = useAppSelector((state) => state.isModalDetail)
-    const ingredients = useAppSelector((state) => state.ingredients)
-    const isError = useAppSelector((state) => state.ingredientsFailed)
+    const ingredients = useAppSelector(
+        (state) => state.ingredients.ingredients
+    )
+    const isError = useAppSelector(
+        (state) => state.ingredients.ingredientsFailed
+    )
     const constructorIngredients = useAppSelector(
-        (state) => state.ingredientsConstructor
+        (state) => state.constructor.ingredientsConstructor
     )
 
     const [currentTab, setCurrentTab] = useState<string>('bun')
-    const [isLoading, setLoading] = useState(false)
+    const [isLoading, setLoading] = useState(true)
 
     const containerRef = useRef<HTMLDivElement>(null)
     const breadRef = useRef<HTMLDivElement>(null)
@@ -91,16 +97,19 @@ const BurgerIngredients = () => {
 
     const getIngredientCount = (ingredient: Ingredient): number => {
         return ingredient.type === 'bun'
-            ? constructorIngredients.filter(
+            ? constructorIngredients?.filter(
                   (item) => item._id === ingredient._id
               ).length * 2
-            : constructorIngredients.filter(
+            : constructorIngredients?.filter(
                   (item) => item._id === ingredient._id
               ).length
     }
 
     const handleIngredientClick = (ingredient: Ingredient) => {
         dispatch({ type: MODAL_OPEN_INGREDIENT, ingredientDetail: ingredient })
+        navigate(`/ingredients/${ingredient._id}`, {
+            state: { background: location },
+        })
     }
 
     const handleScroll = (theme: 'bun' | 'sauce' | 'main') => {
@@ -133,7 +142,6 @@ const BurgerIngredients = () => {
 
     return (
         <div className={styles.container}>
-            {isModal && <IngredientDetails />}
             {isError && (
                 <div className={styles.update}>
                     <Button

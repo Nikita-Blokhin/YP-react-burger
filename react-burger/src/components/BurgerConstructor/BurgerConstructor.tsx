@@ -5,25 +5,36 @@ import {
     CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDrop } from 'react-dnd'
+import { useNavigate } from 'react-router-dom'
 
-import { Ingredient } from '../../types/Ingredient'
-import { DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
+import type { Ingredient } from '../../types/Ingredient'
+import { type DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
+
+import OrderDetails from '../OrderDetails/OrderDetails'
+import ConstructorIngredient from './ConstructorIngredient'
+import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
 import {
     addIngridient,
     DELETE_INGREDIENT_CONSTRUCTOR,
     MOVE_INGREDIENT_CONSTRUCTOR,
-    postOrder,
-} from '../../services/actions'
-import OrderDetails from '../OrderDetails/OrderDetails'
-import ConstructorIngredient from './ConstructorIngredient'
-import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
+} from '../../services/constructorActions'
+import { postOrder } from '../../services/orderActions'
 
 import styles from './BurgerConstructor.module.css'
 
 const BurgerConstructor = () => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const ingredients = useAppSelector((state) => state.ingredientsConstructor)
-    const isModal = useAppSelector((state) => state.isModalOrder)
+    const ingredients = useAppSelector(
+        (state) => state.constructor.ingredientsConstructor
+    )
+    const isModal = useAppSelector((state) => state.modal.isModalOrder)
+    const isAuthenticated = useAppSelector(
+        (state) => state.auth.isAuthenticated
+    )
+    const isPostOrderLoaded = useAppSelector(
+        (state) => state.order.orderRequest
+    )
 
     const onDropIngredient = (ingredient: Ingredient) => {
         dispatch(addIngridient(ingredient))
@@ -44,15 +55,15 @@ const BurgerConstructor = () => {
         }),
     })
 
-    const bun = ingredients.find(
+    const bun = ingredients?.find(
         (ingredient: { type: string }) => ingredient.type === 'bun'
     )
 
-    const fillings = ingredients.filter(
+    const fillings = ingredients?.filter(
         (ingredient: { type: string }) => ingredient.type !== 'bun'
     )
 
-    const totalPrice = ingredients.reduce(
+    const totalPrice = ingredients?.reduce(
         (sum: any, ingredient: { type: string; price: number }) => {
             return (
                 sum +
@@ -80,7 +91,9 @@ const BurgerConstructor = () => {
     }
 
     const handleOrder = async () => {
-        dispatch(postOrder(ingredients))
+        isAuthenticated
+            ? dispatch(postOrder(ingredients))
+            : navigate('/login', { replace: true })
     }
 
     const handleReorderIngredients = (
@@ -97,7 +110,7 @@ const BurgerConstructor = () => {
     return (
         <div className={styles.container} ref={dropRef} style={dropAreaStyle}>
             {isModal && <OrderDetails />}
-            {fillings.length === 0 && !bun && (
+            {fillings?.length === 0 && !bun && (
                 <div className={styles.emptyState}>
                     <p className={styles.emptyText}>
                         Выберите ингредиенты для создания бургера
@@ -119,7 +132,7 @@ const BurgerConstructor = () => {
                 )}
 
                 <div className={styles.fillingsContainer}>
-                    {fillings.map((ingredient: Ingredient, index) => (
+                    {fillings?.map((ingredient: Ingredient, index) => (
                         <ConstructorIngredient
                             key={ingredient.uniqueId}
                             ingredient={ingredient}
@@ -159,9 +172,9 @@ const BurgerConstructor = () => {
                     type="primary"
                     size="large"
                     onClick={handleOrder}
-                    disabled={ingredients.length === 0}
+                    disabled={ingredients?.length === 0 || isPostOrderLoaded}
                 >
-                    Оформить заказ
+                    {isPostOrderLoaded ? 'Оформление...' : 'Оформить заказ'}
                 </Button>
             </div>
         </div>
