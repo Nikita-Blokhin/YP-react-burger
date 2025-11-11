@@ -1,15 +1,14 @@
 import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
-import { useAppSelector } from '../hooks/reducerHook'
+import { useAppDispatch, useAppSelector } from '../hooks/reducerHook'
 import { getIngredients } from '../services/ingredientActions'
 
 import styles from './IngredientPage.module.css'
 
 const IngredientPage = () => {
     const { id } = useParams<{ id: string }>()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const ingredients = useAppSelector(
         (state) => state.ingredients.ingredients

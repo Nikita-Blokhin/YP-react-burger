@@ -1,6 +1,5 @@
 import { useState, type FormEvent, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import {
     Input,
     Button,
@@ -8,6 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { resetPassword } from '../services/authActions'
+import { useAppDispatch } from '../hooks/reducerHook'
 
 import styles from './AuthPages.module.css'
 
@@ -15,7 +15,7 @@ const ResetPasswordPage = () => {
     const [password, setPassword] = useState('')
     const [code, setCode] = useState('')
     const [error, setError] = useState('')
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const location = useLocation()
 
