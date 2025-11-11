@@ -1,17 +1,16 @@
 import { useState, type FormEvent, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import {
     Input,
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { updateUser } from '../services/authActions'
-import { useAppSelector } from '../hooks/reducerHook'
+import { useAppDispatch, useAppSelector } from '../hooks/reducerHook'
 
 import styles from './ProfileInfoPage.module.css'
 
 const ProfileInfoPage = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const user = useAppSelector((state) => state.auth.user)
 
     const [name, setName] = useState('')

@@ -1,20 +1,19 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import {
-    Tab,
-    Button,
-} from '@ya.praktikum/react-developer-burger-ui-components'
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import type { Ingredient } from '../../types/Ingredient'
 import { MODAL_OPEN_INGREDIENT } from '../../services/modalActions'
 import IngredientCard from './IngredientCard'
 import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
-import { getIngredients } from '../../services/ingredientActions'
 
 import styles from './BurgerIngredients.module.css'
 
 const BurgerIngredients = () => {
     const dispatch = useAppDispatch()
+    const isLoading = useAppSelector(
+        (state) => state.ingredients.ingredientsRequest
+    )
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -29,23 +28,11 @@ const BurgerIngredients = () => {
     )
 
     const [currentTab, setCurrentTab] = useState<string>('bun')
-    const [isLoading, setLoading] = useState(true)
 
     const containerRef = useRef<HTMLDivElement>(null)
     const breadRef = useRef<HTMLDivElement>(null)
     const sauceRef = useRef<HTMLDivElement>(null)
     const fillingRef = useRef<HTMLDivElement>(null)
-
-    const getData = async () => {
-        dispatch(getIngredients())
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        setLoading(true)
-        getData()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     useEffect(() => {
         const container = containerRef.current
@@ -142,18 +129,6 @@ const BurgerIngredients = () => {
 
     return (
         <div className={styles.container}>
-            {isError && (
-                <div className={styles.update}>
-                    <Button
-                        htmlType="button"
-                        type="primary"
-                        size="large"
-                        onClick={getData}
-                    >
-                        Обновить
-                    </Button>
-                </div>
-            )}
             {!isError && (
                 <>
                     <h1 className={styles.title}>Соберите бургер</h1>

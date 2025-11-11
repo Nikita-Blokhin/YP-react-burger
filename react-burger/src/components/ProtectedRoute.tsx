@@ -1,10 +1,9 @@
 import type React from 'react'
 import { useEffect } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 import { getUser } from '../services/authActions'
-import { useAppSelector } from '../hooks/reducerHook'
+import { useAppDispatch, useAppSelector } from '../hooks/reducerHook'
 import { getAccessToken } from '../utils/auth'
 
 interface ProtectedRouteProps {
@@ -16,7 +15,7 @@ const ProtectedRoute = ({
     children,
     onlyUnauth = false,
 }: ProtectedRouteProps) => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const location = useLocation()
     const { isAuthenticated, isLoading } = useAppSelector(
         (state) => state.auth

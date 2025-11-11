@@ -1,19 +1,19 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import {
     Input,
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { forgotPassword } from '../services/authActions'
+import { useAppDispatch } from '../hooks/reducerHook'
 
 import styles from './AuthPages.module.css'
 
 const ForgotPasswordPage = () => {
     const [email, setEmail] = useState('')
     const [error, setError] = useState('')
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const handleSubmit = async (e: FormEvent) => {

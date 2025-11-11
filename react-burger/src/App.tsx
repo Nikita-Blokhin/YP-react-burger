@@ -5,7 +5,6 @@ import {
     useLocation,
 } from 'react-router-dom'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 
 import AppHeader from './components/AppHeader/AppHeader'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -24,10 +23,15 @@ import { getAccessToken } from './utils/auth'
 import styles from './App.module.css'
 import Modal from './components/Modal/Modal'
 import IngredientDetails from './components/IngredientDetails/IngredientDetails'
+import { useAppDispatch } from './hooks/reducerHook'
+import { getIngredients } from './services/ingredientActions'
 
 const AppRoutes = () => {
     const location = useLocation()
+    const dispatch = useAppDispatch()
     const background = location.state?.background
+
+    dispatch(getIngredients())
 
     return (
         <>
@@ -98,7 +102,7 @@ const AppRoutes = () => {
 }
 
 const App = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         const token = getAccessToken()
