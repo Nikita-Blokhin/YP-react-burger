@@ -1,19 +1,19 @@
-import { Ingredient } from '../types/Ingredient'
-import { Action } from '../types/Services'
+import { TConstructorActions } from '../../types'
+import { IIngredient } from '../../types/Ingredient'
 import {
     ADD_INGREDIENT_CONSTRUCTOR,
     DELETE_INGREDIENT_CONSTRUCTOR,
     MOVE_INGREDIENT_CONSTRUCTOR,
-} from './constructorActions'
-import { POST_ORDER_SUCCESS } from './orderActions'
+} from '../actions/constructorActions'
+import { POST_ORDER_SUCCESS } from '../actions/orderActions'
 
 const constructorInitialState = {
-    ingredientsConstructor: [] as Ingredient[],
+    ingredientsConstructor: [] as IIngredient[],
 }
 
 export const constructorReducer = (
     state = constructorInitialState,
-    action: Action
+    action: TConstructorActions
 ) => {
     if (state.ingredientsConstructor === undefined)
         state.ingredientsConstructor = []
@@ -46,10 +46,10 @@ export const constructorReducer = (
             const buns = state.ingredientsConstructor.filter(
                 (item) => item.type === 'bun'
             )
-            const dragItem = fillings[action.dragIndex as number]
+            const dragItem = fillings[action.dragIndex]
             const newFillings = [...fillings]
-            newFillings.splice(action.dragIndex as number, 1)
-            newFillings.splice(action.hoverIndex as number, 0, dragItem)
+            newFillings.splice(action.dragIndex, 1)
+            newFillings.splice(action.hoverIndex, 0, dragItem)
             return {
                 ...state,
                 ingredientsConstructor: [...buns, ...newFillings],

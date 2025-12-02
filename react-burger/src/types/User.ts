@@ -1,16 +1,16 @@
-export interface User {
+export interface IUser {
     email: string
     name: string
 }
 
-export interface AuthResponse {
+export interface IAuthResponse {
     success: boolean
-    user: User
+    user: IUser
     accessToken: string
     refreshToken: string
 }
 
-export interface RefreshTokenResponse {
+export interface IRefreshTokenResponse {
     success: boolean
     accessToken: string
     refreshToken: string

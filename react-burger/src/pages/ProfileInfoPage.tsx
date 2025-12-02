@@ -4,7 +4,7 @@ import {
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { updateUser } from '../services/authActions'
+import { updateUser } from '../services/actions/authActions'
 import { useAppDispatch, useAppSelector } from '../hooks/reducerHook'
 
 import styles from './ProfileInfoPage.module.css'

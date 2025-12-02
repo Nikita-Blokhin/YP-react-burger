@@ -1,11 +1,23 @@
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 400px;
+    padding: 0;
 }
 
-.text {
-    font-size: 18px;
-    color: #8585ad;
+.ordersSection {
+    margin-bottom: 40px;
+}
+
+.ordersList {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 16px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.emptyMessage {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    padding: 40px 20px;
 }

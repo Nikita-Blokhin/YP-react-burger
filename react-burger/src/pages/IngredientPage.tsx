@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../hooks/reducerHook'
-import { getIngredients } from '../services/ingredientActions'
+import { getIngredients } from '../services/actions/ingredientActions'
 
 import styles from './IngredientPage.module.css'
 

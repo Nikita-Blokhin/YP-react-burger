@@ -4,25 +4,28 @@ import { useNavigate } from 'react-router-dom'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import ModalOverlay from '../ModalOverlay/ModalOverlay'
-import { MODAL_CLOSE } from '../../services/modalActions'
-import { useAppDispatch } from '../../hooks/reducerHook'
+import { MODAL_CLOSE } from '../../services/actions/modalActions'
+import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
 
 import styles from './Modal.module.css'
 
-interface ModalProps {
+interface IModalProps {
     children?: JSX.Element | JSX.Element[]
     title?: string
+    isPostOrder?: boolean
 }
 
-const Modal = ({ children, title }: ModalProps) => {
+const Modal = ({ children, title, isPostOrder = false }: IModalProps) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const titleState = useAppSelector((state) => state.modal.title)
+
     const modalRoot = document.getElementById('modals')!
 
     const closeWindow = useCallback(() => {
         dispatch({ type: MODAL_CLOSE })
-        navigate('/')
-    }, [dispatch, navigate])
+        !isPostOrder && navigate(-1)
+    }, [dispatch, isPostOrder, navigate])
 
     useEffect(() => {
         const handleEsc = (event: KeyboardEvent) => {
@@ -41,7 +44,7 @@ const Modal = ({ children, title }: ModalProps) => {
             <ModalOverlay closeWindow={closeWindow} />
             <div className={styles.window}>
                 <div className={styles.title}>
-                    <h2>{title}</h2>
+                    <h2>{titleState ? titleState : title}</h2>
                     <button onClick={closeWindow}>
                         <CloseIcon type={'primary'} />
                     </button>

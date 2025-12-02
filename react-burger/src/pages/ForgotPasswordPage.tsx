@@ -5,7 +5,7 @@ import {
     Button,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { forgotPassword } from '../services/authActions'
+import { forgotPassword } from '../services/actions/authActions'
 import { useAppDispatch } from '../hooks/reducerHook'
 
 import styles from './AuthPages.module.css'

@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 
-import { logout } from '../services/authActions'
+import { logout } from '../services/actions/authActions'
 import { useAppDispatch } from '../hooks/reducerHook'
 
 import styles from './ProfilePage.module.css'

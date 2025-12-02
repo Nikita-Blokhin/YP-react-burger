@@ -7,8 +7,8 @@ import {
 import { useDrop } from 'react-dnd'
 import { useNavigate } from 'react-router-dom'
 
-import type { Ingredient } from '../../types/Ingredient'
-import { type DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
+import type { IIngredient } from '../../types/Ingredient'
+import { type IDragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
 
 import OrderDetails from '../OrderDetails/OrderDetails'
 import ConstructorIngredient from './ConstructorIngredient'
@@ -17,8 +17,8 @@ import {
     addIngridient,
     DELETE_INGREDIENT_CONSTRUCTOR,
     MOVE_INGREDIENT_CONSTRUCTOR,
-} from '../../services/constructorActions'
-import { postOrder } from '../../services/orderActions'
+} from '../../services/actions/constructorActions'
+import { postOrder } from '../../services/actions/orderActions'
 
 import styles from './BurgerConstructor.module.css'
 
@@ -36,12 +36,12 @@ const BurgerConstructor = () => {
         (state) => state.order.orderRequest
     )
 
-    const onDropIngredient = (ingredient: Ingredient) => {
+    const onDropIngredient = (ingredient: IIngredient) => {
         dispatch(addIngridient(ingredient))
     }
 
     const [{ isOver, canDrop }, dropRef] = useDrop<
-        DragItem,
+        IDragItem,
         unknown,
         { isOver: boolean; canDrop: boolean }
     >({
@@ -132,7 +132,7 @@ const BurgerConstructor = () => {
                 )}
 
                 <div className={styles.fillingsContainer}>
-                    {fillings?.map((ingredient: Ingredient, index) => (
+                    {fillings?.map((ingredient: IIngredient, index) => (
                         <ConstructorIngredient
                             key={ingredient.uniqueId}
                             ingredient={ingredient}

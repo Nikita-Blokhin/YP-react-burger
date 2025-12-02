@@ -1,6 +1,7 @@
 import { BASE_URL } from '../core/constants'
-import type { Ingredient } from '../types/Ingredient'
-import { User } from '../types/User'
+import { IOrder } from '../types'
+import type { IIngredient } from '../types/Ingredient'
+import { IUser } from '../types/User'
 import {
     getAccessToken,
     getRefreshToken,
@@ -8,10 +9,11 @@ import {
     clearTokens,
 } from './auth'
 
-interface SuccessResponse {
+interface ISuccessResponse {
     success: boolean
-    data: Ingredient[]
-    user: User
+    data: IIngredient[]
+    orders: IOrder[]
+    user: IUser
     accessToken: string
     refreshToken: string
 }
@@ -21,7 +23,7 @@ export const checkResponse = (response: Response) => {
     return Promise.reject(`Ошибка ${response.status}`)
 }
 
-const checkSuccess = (response: SuccessResponse) => {
+const checkSuccess = (response: ISuccessResponse) => {
     if (response && response.success) return response
     return Promise.reject(`Ответ не success: ${response}`)
 }

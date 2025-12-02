@@ -5,24 +5,24 @@ import {
     CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import type { Ingredient } from '../../types/Ingredient'
-import { DragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
+import type { IIngredient } from '../../types/Ingredient'
+import { IDragItem, INGREDIENT_TYPE } from '../../types/DrugItem'
 
 import styles from './BurgerIngredients.module.css'
 
-interface IngredientCardProps {
-    ingredient: Ingredient
-    onClick: (ingredient: Ingredient) => void
-    getIngredientCount: (ingredient: Ingredient) => number
+interface IIngredientCardProps {
+    ingredient: IIngredient
+    onClick: (ingredient: IIngredient) => void
+    getIngredientCount: (ingredient: IIngredient) => number
 }
 
-const IngredientCard: React.FC<IngredientCardProps> = ({
+const IngredientCard: React.FC<IIngredientCardProps> = ({
     ingredient,
     getIngredientCount,
     onClick,
 }) => {
     const [{ isDragging }, dragRef] = useDrag<
-        DragItem,
+        IDragItem,
         unknown,
         { isDragging: boolean }
     >({

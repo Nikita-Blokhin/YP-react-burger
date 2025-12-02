@@ -2,11 +2,11 @@ import type React from 'react'
 import { useEffect } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
-import { getUser } from '../services/authActions'
+import { getUser } from '../services/actions/authActions'
 import { useAppDispatch, useAppSelector } from '../hooks/reducerHook'
 import { getAccessToken } from '../utils/auth'
 
-interface ProtectedRouteProps {
+interface IProtectedRouteProps {
     children: React.ReactNode
     onlyUnauth?: boolean
 }
@@ -14,7 +14,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({
     children,
     onlyUnauth = false,
-}: ProtectedRouteProps) => {
+}: IProtectedRouteProps) => {
     const dispatch = useAppDispatch()
     const location = useLocation()
     const { isAuthenticated, isLoading } = useAppSelector(

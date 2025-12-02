@@ -9,7 +9,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { rootReducer } from './services/reducers'
+import { rootReducer } from './services/reducers/reducers'
+import { socketMiddleware } from './services/middleware'
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -17,7 +18,7 @@ const root = ReactDOM.createRoot(
 
 export const store = createStore(
     rootReducer as Reducer,
-    composeWithDevTools(applyMiddleware(thunk))
+    composeWithDevTools(applyMiddleware(thunk, socketMiddleware))
 )
 
 root.render(
