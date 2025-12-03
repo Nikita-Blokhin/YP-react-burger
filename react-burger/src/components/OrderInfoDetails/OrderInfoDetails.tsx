@@ -18,7 +18,7 @@ const OrderInfoDetails = () => {
     const dispatch = useAppDispatch()
     const orderId = useParams<{ id: string }>()
     const location = useLocation()
-    const orderProfile = useAppSelector((state) => state.ws.userOrders)
+    const orderProfile = useAppSelector((state) => state.ws.allOrders)
     const orderFeed = useAppSelector((state) => state.ws.allOrders)
     const ingredients = useAppSelector(
         (state) => state.ingredients.ingredients
@@ -60,15 +60,23 @@ const OrderInfoDetails = () => {
             <div className={styles.ingredientesContainer}>
                 <h5>Состав:</h5>
                 <div className={styles.ingredients}>
-                    {currentOrder.ingredients.map((item, index) => {
+                    {Object.entries(
+                        currentOrder?.ingredients.reduce(
+                            (acc, item) => {
+                                acc[item] = (acc[item] || 0) + 1
+                                return acc
+                            },
+                            {} as { [s: string]: number }
+                        )!
+                    ).map(([element, count]) => {
                         const ingredient = ingredients.find(
-                            (ingr) => ingr._id === item
+                            (item) => item._id === element
                         )
                         return (
-                            <div className={styles.card} key={index}>
+                            <div className={styles.card} key={element}>
                                 <div
                                     className={styles.ingredientImg}
-                                    key={item}
+                                    key={element}
                                 >
                                     <img
                                         src={ingredient!.image_mobile!}
@@ -80,10 +88,7 @@ const OrderInfoDetails = () => {
                                 </span>
                                 <div className={styles.price}>
                                     <span>
-                                        {ingredient?.type === 'bun'
-                                            ? '2 '
-                                            : '1 '}
-                                        x {ingredient?.price}
+                                        {count} x {ingredient?.price}
                                     </span>
                                     <CurrencyIcon
                                         type="primary"

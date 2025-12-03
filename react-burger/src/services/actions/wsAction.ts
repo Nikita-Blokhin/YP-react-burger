@@ -3,6 +3,7 @@ import type { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import type { IState } from '../../types/Services'
 import type { IOrder } from '../../types/Order'
 import { request } from '../../utils'
+import { TWSStoreActions } from '../../types/Ws'
 
 export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START'
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' =
@@ -17,13 +18,6 @@ export const GET_ORDERS_REQUEST: 'GET_ORDERS_REQUEST' = 'GET_ORDERS_REQUEST'
 export const GET_ORDERS_SUCCESS: 'GET_ORDERS_SUCCESS' = 'GET_ORDERS_SUCCESS'
 export const GET_ORDERS_FAILED: 'GET_ORDERS_FAILED' = 'GET_ORDERS_FAILED'
 
-export const GET_USER_ORDERS_REQUEST: 'GET_USER_ORDERS_REQUEST' =
-    'GET_USER_ORDERS_REQUEST'
-export const GET_USER_ORDERS_SUCCESS: 'GET_USER_ORDERS_SUCCESS' =
-    'GET_USER_ORDERS_SUCCESS'
-export const GET_USER_ORDERS_FAILED: 'GET_USER_ORDERS_FAILED' =
-    'GET_USER_ORDERS_FAILED'
-
 export const UPDATE_ORDERS: 'UPDATE_ORDERS' = 'UPDATE_ORDERS'
 export const UPDATE_USER_ORDERS: 'UPDATE_USER_ORDERS' = 'UPDATE_USER_ORDERS'
 
@@ -34,6 +28,15 @@ export const GET_ORDER_BY_ID_SUCCESS: 'GET_ORDER_BY_ID_SUCCESS' =
 export const GET_ORDER_BY_ID_FAILED: 'GET_ORDER_BY_ID_FAILED' =
     'GET_ORDER_BY_ID_FAILED'
 
+export const WSStoreActions: TWSStoreActions = {
+    wsInit: WS_CONNECTION_START,
+    onOpen: WS_CONNECTION_SUCCESS,
+    onClose: WS_CONNECTION_CLOSED,
+    onError: WS_CONNECTION_ERROR,
+    onMessage: WS_GET_MESSAGE,
+    close: WS_CLOSE,
+    updateOrder: UPDATE_ORDERS,
+}
 export interface IGetOrderAction {
     type: string
     order?: IOrder

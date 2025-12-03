@@ -1,4 +1,3 @@
-import { TTypeConnected } from '../services/reducers/wsReducer'
 import type { IIngredient } from './Ingredient'
 import type { IOrder } from './Order'
 import type { IUser } from './User'
@@ -32,16 +31,12 @@ export interface IState {
     }
     ws: {
         wsConnected: boolean
-        typeConnected: TTypeConnected
         messages: IMessageResponse[]
         error?: Event
         allOrders: IOrder[]
-        userOrders: IOrder[]
         selectedOrder: IOrder | null
         allOrdersRequest: boolean
         allOrdersFailed: boolean
-        userOrdersRequest: boolean
-        userOrdersFailed: boolean
         total: number
         totalToday: number
     }

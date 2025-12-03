@@ -7,6 +7,7 @@ import CompletedOrder from '../components/CompletedOrder/CompletedOrder'
 import { WS_CLOSE, WS_CONNECTION_START } from '../services/actions/wsAction'
 
 import styles from './OrdersFeedPage.module.css'
+import { BASE_WS } from '../core/constants'
 
 const OrdersFeedPage = () => {
     const dispatch = useAppDispatch()
@@ -15,7 +16,7 @@ const OrdersFeedPage = () => {
     )
 
     useEffect(() => {
-        dispatch({ type: WS_CONNECTION_START, typeConnected: 'feed' })
+        dispatch({ type: WS_CONNECTION_START, wsURL: `${BASE_WS}/all` })
 
         return () => {
             dispatch({ type: WS_CLOSE })
@@ -79,8 +80,11 @@ const OrdersFeedPage = () => {
                         <div className={styles.column}>
                             <h2 className={styles.columnTitle}>В работе:</h2>
                             <div className={styles.orderNumbersList}>
-                                {organizedOrders.inWork.map((order) => (
-                                    <span className={styles.OrderNumber}>
+                                {organizedOrders.inWork.map((order, index) => (
+                                    <span
+                                        className={styles.OrderNumber}
+                                        key={index}
+                                    >
                                         {order.number}
                                     </span>
                                 ))}

@@ -7,17 +7,12 @@ import {
     GET_ORDERS_REQUEST,
     GET_ORDERS_FAILED,
     GET_ORDERS_SUCCESS,
-    GET_USER_ORDERS_FAILED,
-    GET_USER_ORDERS_REQUEST,
-    GET_USER_ORDERS_SUCCESS,
     GET_ORDER_BY_ID_FAILED,
     GET_ORDER_BY_ID_REQUEST,
     GET_ORDER_BY_ID_SUCCESS,
     UPDATE_ORDERS,
-    UPDATE_USER_ORDERS,
     WS_CLOSE,
 } from '../services/actions/wsAction'
-import { TTypeConnected } from '../services/reducers/wsReducer'
 import { IOrder } from './Order'
 
 export interface IMessageResponse {
@@ -27,12 +22,11 @@ export interface IMessageResponse {
 
 export interface IWSConnectionStart {
     readonly type: typeof WS_CONNECTION_START
-    readonly typeConnected: TTypeConnected
+    readonly wsURL: string
 }
 
 export interface IWSConnectionSuccessAction {
     readonly type: typeof WS_CONNECTION_SUCCESS
-    readonly typeConnected: TTypeConnected
 }
 
 export interface IWSConnectionErrorAction {
@@ -65,23 +59,6 @@ export interface IGetOrdersFailedAction {
     readonly type: typeof GET_ORDERS_FAILED
 }
 
-export interface IGetUserOrdersRequestAction {
-    readonly type: typeof GET_USER_ORDERS_REQUEST
-}
-
-export interface IGetUserOrdersSuccessAction {
-    readonly type: typeof GET_USER_ORDERS_SUCCESS
-}
-
-export interface IGetUserOrdersFailedAction {
-    readonly type: typeof GET_USER_ORDERS_FAILED
-}
-
-export interface IUpdateUserOrdersAction {
-    readonly type: typeof UPDATE_USER_ORDERS
-    readonly orders: IOrder[]
-}
-
 export interface IUpdateOrdersAction {
     readonly type: typeof UPDATE_ORDERS
     readonly orders: IOrder[]
@@ -108,6 +85,8 @@ export type TWSStoreActions = {
     onClose: typeof WS_CONNECTION_CLOSED
     onError: typeof WS_CONNECTION_ERROR
     onMessage: typeof WS_GET_MESSAGE
+    close: typeof WS_CLOSE
+    updateOrder: typeof UPDATE_ORDERS
 }
 
 export type TWSActions =
@@ -120,10 +99,6 @@ export type TWSActions =
     | IGetOrdersRequestAction
     | IGetOrdersSuccessAction
     | IGetOrdersFailedAction
-    | IGetUserOrdersRequestAction
-    | IGetUserOrdersSuccessAction
-    | IGetUserOrdersFailedAction
-    | IUpdateUserOrdersAction
     | IUpdateOrdersAction
     | IGetOrderByIdRequestAction
     | IGetOrderByIdSuccestAction

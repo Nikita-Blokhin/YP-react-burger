@@ -1,107 +1,76 @@
 import type { Middleware, MiddlewareAPI, Dispatch, Action } from 'redux'
-import type { TWSActions, IOrdersResponse, IState } from '../../types'
-import { BASE_WS } from '../../core/constants'
-import { getAccessToken } from '../../utils/auth'
-import {
-    GET_USER_ORDERS_FAILED,
-    UPDATE_ORDERS,
-    UPDATE_USER_ORDERS,
-    WS_CONNECTION_START,
-    WS_CONNECTION_SUCCESS,
-    WS_CONNECTION_CLOSED,
-    WS_CONNECTION_ERROR,
-    WS_CLOSE,
-} from '../actions/wsAction'
-import { TTypeConnected } from '../reducers/wsReducer'
-
-export const socketMiddleware: Middleware<
-    {},
+import type {
+    TWSActions,
+    IOrdersResponse,
     IState,
-    Dispatch<Action<string>>
-> = (storeAPI: MiddlewareAPI<Dispatch<TWSActions>, IState>) => {
-    let socket: WebSocket | null = null
-    let typeConnected: string | null = null
+    TWSStoreActions,
+} from '../../types'
 
-    return (next: (action: unknown) => unknown) => {
-        return (action: unknown): unknown => {
-            if (!isTWSActions(action)) {
-                return next(action)
-            }
+export const socketMiddleware =
+    (
+        WSStoreActions: TWSStoreActions
+    ): Middleware<{}, IState, Dispatch<Action<string>>> =>
+    (storeAPI: MiddlewareAPI<Dispatch<TWSActions>, IState>) => {
+        let socket: WebSocket | null = null
 
-            const typedAction = action as TWSActions
-            const { type } = typedAction
-
-            if (type === WS_CONNECTION_START) {
-                typeConnected = typedAction.typeConnected
-
-                const token = getAccessToken()
-                if (!token) {
-                    console.error('отсутствует токен')
-                    storeAPI.dispatch({ type: GET_USER_ORDERS_FAILED })
-                    return
+        return (next: (action: unknown) => unknown) => {
+            return (action: unknown): unknown => {
+                if (!isTWSActions(action)) {
+                    return next(action)
                 }
 
-                const wsURL =
-                    typeConnected === 'feed'
-                        ? `${BASE_WS}/all`
-                        : `${BASE_WS}?token=${token}`
+                const typedAction = action as TWSActions
+                const { type } = typedAction
 
-                socket = new WebSocket(wsURL)
+                if (type === WSStoreActions.wsInit) {
+                    const wsURL = typedAction.wsURL
 
-                socket.onopen = (event) => {
-                    storeAPI.dispatch({
-                        type: WS_CONNECTION_SUCCESS,
-                        typeConnected: typeConnected as TTypeConnected,
-                    })
-                }
+                    socket = new WebSocket(wsURL)
 
-                socket.onerror = (event) => {
-                    storeAPI.dispatch({
-                        type: WS_CONNECTION_ERROR,
-                        payload: event,
-                    })
-                }
-
-                socket.onmessage = (event) => {
-                    const data: IOrdersResponse = JSON.parse(event.data)
-                    if (typeConnected === 'feed') {
+                    socket.onopen = (event) => {
                         storeAPI.dispatch({
-                            type: UPDATE_ORDERS,
-                            orders: data.orders,
-                            total: data.total,
-                            totalToday: data.totalToday,
+                            type: WSStoreActions.onOpen,
                         })
-                    } else {
+                    }
+
+                    socket.onerror = (event) => {
                         storeAPI.dispatch({
-                            type: UPDATE_USER_ORDERS,
+                            type: WSStoreActions.onError,
+                            payload: event,
+                        })
+                    }
+
+                    socket.onmessage = (event) => {
+                        const data: IOrdersResponse = JSON.parse(event.data)
+
+                        storeAPI.dispatch({
+                            type: WSStoreActions.updateOrder,
                             orders: data.orders,
                             total: data.total,
                             totalToday: data.totalToday,
                         })
                     }
+
+                    socket.onclose = (event) => {
+                        storeAPI.dispatch({
+                            type: WSStoreActions.onClose,
+                            payload: event,
+                        })
+                    }
                 }
 
-                socket.onclose = (event) => {
-                    storeAPI.dispatch({
-                        type: WS_CONNECTION_CLOSED,
-                        payload: event,
-                    })
+                if (type === WSStoreActions.close) {
+                    if (socket) {
+                        socket.close()
+                        socket = null
+                    }
+                    return
                 }
+
+                return next(action)
             }
-
-            if (type === WS_CLOSE) {
-                if (socket) {
-                    socket.close()
-                    socket = null
-                    typeConnected = null
-                }
-                return
-            }
-
-            return next(action)
         }
     }
-}
 
 const isTWSActions = (action: unknown): action is TWSActions => {
     return typeof action === 'object' && action !== null && 'type' in action

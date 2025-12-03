@@ -23,7 +23,7 @@ const OrderDetailsPage = () => {
 
     useEffect(() => {
         dispatch(getOrder(orderId.id!))
-    }, [dispatch, orderId.id, selectedOrder])
+    }, [dispatch, orderId.id])
 
     return selectedOrder ? (
         <div className={styles.order}>
@@ -39,32 +39,35 @@ const OrderDetailsPage = () => {
             <div className={styles.ingredientesContainer}>
                 <h5>Состав:</h5>
                 <div className={styles.ingredients}>
-                    {selectedOrder.ingredients.map((item, index) => {
+                    {Object.entries(
+                        selectedOrder?.ingredients.reduce(
+                            (acc, item) => {
+                                acc[item] = (acc[item] || 0) + 1
+                                return acc
+                            },
+                            {} as { [s: string]: number }
+                        )!
+                    ).map(([element, count]) => {
                         const ingredient = ingredients.find(
-                            (ingr) => ingr._id === item
+                            (item) => item._id === element
                         )
-                        return !ingredient ? (
-                            <h3 key={'loading'}>Загрузка...</h3>
-                        ) : (
-                            <div className={styles.card} key={index}>
+                        return (
+                            <div className={styles.card} key={element}>
                                 <div
                                     className={styles.ingredientImg}
-                                    key={item}
+                                    key={element}
                                 >
                                     <img
-                                        src={ingredient?.image}
+                                        src={ingredient!.image_mobile!}
                                         alt="ingr_img"
                                     />
                                 </div>
                                 <span className={styles.name}>
-                                    {ingredient?.name}
+                                    {ingredient!.name}
                                 </span>
                                 <div className={styles.price}>
                                     <span>
-                                        {ingredient?.type === 'bun'
-                                            ? '2 '
-                                            : '1 '}
-                                        x {ingredient?.price}
+                                        {count} x {ingredient?.price}
                                     </span>
                                     <CurrencyIcon
                                         type="primary"

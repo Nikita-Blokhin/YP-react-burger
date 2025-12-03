@@ -11,28 +11,19 @@ import {
     GET_ORDERS_REQUEST,
     UPDATE_ORDERS,
     GET_ORDERS_FAILED,
-    GET_USER_ORDERS_REQUEST,
-    UPDATE_USER_ORDERS,
-    GET_USER_ORDERS_FAILED,
     GET_ORDER_BY_ID_REQUEST,
     GET_ORDER_BY_ID_SUCCESS,
     GET_ORDER_BY_ID_FAILED,
 } from '../actions/wsAction'
 
-export type TTypeConnected = 'feed' | 'profile' | null
-
 type TWSState = {
     wsConnected: boolean
-    typeConnected: TTypeConnected
     messages: IMessageResponse[]
 
     allOrders: IOrder[]
-    userOrders: IOrder[]
     selectedOrder: IOrder | null
     allOrdersRequest: boolean
     allOrdersFailed: boolean
-    userOrdersRequest: boolean
-    userOrdersFailed: boolean
     total: number
     totalToday: number
 
@@ -41,15 +32,11 @@ type TWSState = {
 
 const initialState: TWSState = {
     wsConnected: false,
-    typeConnected: null,
     messages: [],
     allOrders: [],
-    userOrders: [],
     selectedOrder: null,
     allOrdersRequest: false,
     allOrdersFailed: false,
-    userOrdersRequest: false,
-    userOrdersFailed: false,
     total: 0,
     totalToday: 0,
 }
@@ -59,14 +46,12 @@ export const wsReducer = (state = initialState, action: TWSActions) => {
         case WS_CONNECTION_START:
             return {
                 ...state,
-                typeConnected: action.typeConnected,
             }
         case WS_CONNECTION_SUCCESS:
             return {
                 ...state,
                 error: undefined,
                 wsConnected: true,
-                typeConnected: action.typeConnected,
             }
 
         case WS_CONNECTION_ERROR:
@@ -109,30 +94,7 @@ export const wsReducer = (state = initialState, action: TWSActions) => {
                 ...state,
                 allOrdersRequest: false,
                 allOrdersFailed: true,
-                allOrders: [],
-            }
-
-        case GET_USER_ORDERS_REQUEST:
-            return {
-                ...state,
-                userOrdersRequest: true,
-                userOrdersFailed: false,
-            }
-
-        case UPDATE_USER_ORDERS:
-            return {
-                ...state,
-                userOrders: action.orders || [],
-                userOrdersRequest: false,
-                userOrdersFailed: false,
-            }
-
-        case GET_USER_ORDERS_FAILED:
-            return {
-                ...state,
-                userOrdersRequest: false,
-                userOrdersFailed: true,
-                userOrders: [],
+                // allOrders: [],
             }
 
         case GET_ORDER_BY_ID_REQUEST:

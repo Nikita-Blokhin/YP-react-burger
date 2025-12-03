@@ -11,6 +11,7 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { rootReducer } from './services/reducers/reducers'
 import { socketMiddleware } from './services/middleware'
+import { WSStoreActions } from './services/actions/wsAction'
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -18,7 +19,9 @@ const root = ReactDOM.createRoot(
 
 export const store = createStore(
     rootReducer as Reducer,
-    composeWithDevTools(applyMiddleware(thunk, socketMiddleware))
+    composeWithDevTools(
+        applyMiddleware(thunk, socketMiddleware(WSStoreActions))
+    )
 )
 
 root.render(
