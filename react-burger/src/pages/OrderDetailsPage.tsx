@@ -22,10 +22,10 @@ const OrderDetailsPage = () => {
     const selectedOrder = useAppSelector((state) => state.ws.selectedOrder)
 
     useEffect(() => {
-        dispatch(getOrder(orderId.id!))
+        orderId.id && dispatch(getOrder(orderId.id))
     }, [dispatch, orderId.id])
 
-    return selectedOrder ? (
+    return selectedOrder && ingredients ? (
         <div className={styles.order}>
             <div className={styles.header}>
                 <h2>#{selectedOrder.number}</h2>
@@ -39,44 +39,50 @@ const OrderDetailsPage = () => {
             <div className={styles.ingredientesContainer}>
                 <h5>Состав:</h5>
                 <div className={styles.ingredients}>
-                    {Object.entries(
-                        selectedOrder?.ingredients.reduce(
-                            (acc, item) => {
-                                acc[item] = (acc[item] || 0) + 1
-                                return acc
-                            },
-                            {} as { [s: string]: number }
-                        )!
-                    ).map(([element, count]) => {
-                        const ingredient = ingredients.find(
-                            (item) => item._id === element
-                        )
-                        return (
-                            <div className={styles.card} key={element}>
-                                <div
-                                    className={styles.ingredientImg}
-                                    key={element}
-                                >
-                                    <img
-                                        src={ingredient!.image_mobile!}
-                                        alt="ingr_img"
-                                    />
-                                </div>
-                                <span className={styles.name}>
-                                    {ingredient!.name}
-                                </span>
-                                <div className={styles.price}>
-                                    <span>
-                                        {count} x {ingredient?.price}
+                    {selectedOrder.ingredients ? (
+                        Object.entries(
+                            selectedOrder.ingredients.reduce(
+                                (acc, item) => {
+                                    acc[item] = (acc[item] || 0) + 1
+                                    return acc
+                                },
+                                {} as { [s: string]: number }
+                            )!
+                        ).map(([element, count]) => {
+                            const ingredient = ingredients.find(
+                                (item) => item._id === element
+                            )
+                            return ingredient ? (
+                                <div className={styles.card} key={element}>
+                                    <div
+                                        className={styles.ingredientImg}
+                                        key={element}
+                                    >
+                                        <img
+                                            src={ingredient.image}
+                                            alt="ingr_img"
+                                        />
+                                    </div>
+                                    <span className={styles.name}>
+                                        {ingredient.name}
                                     </span>
-                                    <CurrencyIcon
-                                        type="primary"
-                                        className={styles.icon}
-                                    />
+                                    <div className={styles.price}>
+                                        <span>
+                                            {count} x {ingredient.price}
+                                        </span>
+                                        <CurrencyIcon
+                                            type="primary"
+                                            className={styles.icon}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    })}
+                            ) : (
+                                <h3 key={`load${element}`}>Загрузка...</h3>
+                            )
+                        })
+                    ) : (
+                        <></>
+                    )}
                 </div>
             </div>
             <div className={styles.footer}>
@@ -92,7 +98,7 @@ const OrderDetailsPage = () => {
             </div>
         </div>
     ) : (
-        <h6>Загрузка...</h6>
+        <h3>Загрузка...</h3>
     )
 }
 

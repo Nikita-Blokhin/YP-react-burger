@@ -45,7 +45,7 @@ export const totalPrice = (
         if (current?.type === 'bun') {
             return (price += current?.price! * 2)
         }
-        return (price += current?.price!)
+        return String((price += current?.price!))
     })
-    return price
+    return String(price)
 }
