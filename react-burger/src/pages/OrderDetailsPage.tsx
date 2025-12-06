@@ -77,7 +77,12 @@ const OrderDetailsPage = () => {
                                     </div>
                                 </div>
                             ) : (
-                                <h3 key={`load${element}`}>Загрузка...</h3>
+                                <h3
+                                    className={styles.loading}
+                                    key={`load${element}`}
+                                >
+                                    Загрузка...
+                                </h3>
                             )
                         })
                     ) : (
@@ -98,7 +103,7 @@ const OrderDetailsPage = () => {
             </div>
         </div>
     ) : (
-        <h3>Загрузка...</h3>
+        <h3 className={styles.loading}>Загрузка...</h3>
     )
 }
 
