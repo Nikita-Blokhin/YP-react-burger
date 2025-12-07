@@ -2,8 +2,8 @@ import { useState, useMemo, useRef, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import type { Ingredient } from '../../types/Ingredient'
-import { MODAL_OPEN_INGREDIENT } from '../../services/modalActions'
+import type { IIngredient } from '../../types/Ingredient'
+import { MODAL_OPEN_INGREDIENT } from '../../services/actions/modalActions'
 import IngredientCard from './IngredientCard'
 import { useAppDispatch, useAppSelector } from '../../hooks/reducerHook'
 
@@ -70,19 +70,19 @@ const BurgerIngredients = () => {
     const categorizedIngredients = useMemo(
         () => ({
             bun: ingredients.filter(
-                (item: Ingredient) => item.type === 'bun'
-            ) as Ingredient[],
+                (item: IIngredient) => item.type === 'bun'
+            ) as IIngredient[],
             sauce: ingredients.filter(
-                (item: Ingredient) => item.type === 'sauce'
-            ) as Ingredient[],
+                (item: IIngredient) => item.type === 'sauce'
+            ) as IIngredient[],
             main: ingredients.filter(
-                (item: Ingredient) => item.type === 'main'
-            ) as Ingredient[],
+                (item: IIngredient) => item.type === 'main'
+            ) as IIngredient[],
         }),
         [ingredients]
     )
 
-    const getIngredientCount = (ingredient: Ingredient): number => {
+    const getIngredientCount = (ingredient: IIngredient): number => {
         return ingredient.type === 'bun'
             ? constructorIngredients?.filter(
                   (item) => item._id === ingredient._id
@@ -92,7 +92,7 @@ const BurgerIngredients = () => {
               ).length
     }
 
-    const handleIngredientClick = (ingredient: Ingredient) => {
+    const handleIngredientClick = (ingredient: IIngredient) => {
         dispatch({ type: MODAL_OPEN_INGREDIENT, ingredientDetail: ingredient })
         navigate(`/ingredients/${ingredient._id}`, {
             state: { background: location },

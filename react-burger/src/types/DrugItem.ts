@@ -1,15 +1,16 @@
-import type { Ingredient } from './Ingredient'
+import type { IIngredient } from './Ingredient'
 
-export const INGREDIENT_TYPE = 'ingredient'
-export const CONSTRUCTOR_INGREDIENT_TYPE = 'constructor-ingredient'
+export const INGREDIENT_TYPE: 'ingredient' = 'ingredient'
+export const CONSTRUCTOR_INGREDIENT_TYPE: 'constructor-ingredient' =
+    'constructor-ingredient'
 
-export interface DragItem {
+export interface IDragItem {
     type: typeof INGREDIENT_TYPE
-    ingredient: Ingredient
+    ingredient: IIngredient
 }
 
-export interface ConstructorDragItem {
+export interface IConstructorDragItem {
     type: typeof CONSTRUCTOR_INGREDIENT_TYPE
-    ingredient: Ingredient
+    ingredient: IIngredient
     index: number
 }

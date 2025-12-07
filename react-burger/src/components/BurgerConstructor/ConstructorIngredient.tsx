@@ -6,16 +6,16 @@ import {
     DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import type { Ingredient } from '../../types/Ingredient'
+import type { IIngredient } from '../../types/Ingredient'
 import {
-    ConstructorDragItem,
+    IConstructorDragItem,
     CONSTRUCTOR_INGREDIENT_TYPE,
 } from '../../types/DrugItem'
 
 import styles from './BurgerConstructor.module.css'
 
-interface ConstructorIngredientProps {
-    ingredient: Ingredient
+interface IConstructorIngredientProps {
+    ingredient: IIngredient
     index: number
     moveIngredient: (dragIndex: number, hoverIndex: number) => void
     onRemove: (index: number) => void
@@ -26,11 +26,11 @@ const ConstructorIngredient = ({
     index,
     moveIngredient,
     onRemove,
-}: ConstructorIngredientProps) => {
+}: IConstructorIngredientProps) => {
     const ref = useRef<HTMLDivElement>(null)
 
     const [{ handlerId }, drop] = useDrop<
-        ConstructorDragItem,
+        IConstructorDragItem,
         void,
         { handlerId: Identifier | null }
     >({
@@ -40,7 +40,7 @@ const ConstructorIngredient = ({
                 handlerId: monitor.getHandlerId(),
             }
         },
-        hover(item: ConstructorDragItem, monitor) {
+        hover(item: IConstructorDragItem, monitor) {
             if (!ref.current) return
 
             const dragIndex = item.index

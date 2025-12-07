@@ -18,22 +18,18 @@ import {
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAILED,
-} from './authActions'
-import type { User } from '../types/User'
+} from '../actions/authActions'
+import type { IUser } from '../../types/User'
+import { TAuthActions } from '../../types/Auth'
 
-interface AuthState {
-    user: User | null
+interface IAuthState {
+    user: IUser | null
     isAuthenticated: boolean
     isLoading: boolean
     error: boolean
 }
 
-interface AuthAction {
-    type: string
-    user?: User
-}
-
-export const initialAuthState: AuthState = {
+export const initialAuthState: IAuthState = {
     user: null,
     isAuthenticated: false,
     isLoading: false,
@@ -42,8 +38,8 @@ export const initialAuthState: AuthState = {
 
 export const authReducer = (
     state = initialAuthState,
-    action: AuthAction
-): AuthState => {
+    action: TAuthActions
+): IAuthState => {
     switch (action.type) {
         case REGISTER_REQUEST:
         case LOGIN_REQUEST:
@@ -64,7 +60,7 @@ export const authReducer = (
         case UPDATE_USER_SUCCESS:
             return {
                 ...state,
-                user: action.user!,
+                user: action.user,
                 isAuthenticated: true,
                 isLoading: false,
                 error: false,

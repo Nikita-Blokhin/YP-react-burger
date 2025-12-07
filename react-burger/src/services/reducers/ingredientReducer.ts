@@ -2,19 +2,18 @@ import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
-} from './ingredientActions'
-import type { Action } from '../types/Services'
-import { Ingredient } from '../types/Ingredient'
+} from '../actions/ingredientActions'
+import { IIngredient, TIngredientActions } from '../../types/Ingredient'
 
 const ingredientsInitialState = {
-    ingredients: [] as Ingredient[],
+    ingredients: [] as IIngredient[],
     ingredientsRequest: false,
     ingredientsFailed: false,
 }
 
 export const ingredientsReducer = (
     state = ingredientsInitialState,
-    action: Action
+    action: TIngredientActions
 ) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:

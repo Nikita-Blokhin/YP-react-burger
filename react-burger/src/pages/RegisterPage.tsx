@@ -6,7 +6,7 @@ import {
     PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { register } from '../services/authActions'
+import { register } from '../services/actions/authActions'
 import { useAppDispatch } from '../hooks/reducerHook'
 
 import styles from './AuthPages.module.css'

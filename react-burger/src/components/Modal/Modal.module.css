@@ -5,6 +5,8 @@
     z-index: 1002;
     width: 720px;
     height: max-content;
+    max-height: 90vh;
+    overflow-y: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

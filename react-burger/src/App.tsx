@@ -17,27 +17,33 @@ import ProfilePage from './pages/ProfilePage'
 import ProfileInfoPage from './pages/ProfileInfoPage'
 import ProfileOrdersPage from './pages/ProfileOrdersPage'
 import IngredientPage from './pages/IngredientPage'
-import { getUser } from './services/authActions'
+import { getUser } from './services/actions/authActions'
 import { getAccessToken } from './utils/auth'
-
-import styles from './App.module.css'
 import Modal from './components/Modal/Modal'
 import IngredientDetails from './components/IngredientDetails/IngredientDetails'
 import { useAppDispatch } from './hooks/reducerHook'
-import { getIngredients } from './services/ingredientActions'
+import { getIngredients } from './services/actions/ingredientActions'
+import OrdersFeedPage from './pages/OrdersFeedPage'
+import OrderDetailsPage from './pages/OrderDetailsPage'
+import OrderInfoDetails from './components/OrderInfoDetails/OrderInfoDetails'
+
+import styles from './App.module.css'
 
 const AppRoutes = () => {
     const location = useLocation()
     const dispatch = useAppDispatch()
     const background = location.state?.background
-
-    dispatch(getIngredients())
+    useEffect(() => {
+        dispatch(getIngredients())
+    }, [dispatch])
 
     return (
         <>
             <Routes location={background || location}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/ingredients/:id" element={<IngredientPage />} />
+                <Route path="/feed" element={<OrdersFeedPage />} />
+                <Route path="/feed/:id" element={<OrderDetailsPage />} />
 
                 <Route
                     path="/login"
@@ -83,6 +89,14 @@ const AppRoutes = () => {
                     <Route index element={<ProfileInfoPage />} />
                     <Route path="orders" element={<ProfileOrdersPage />} />
                 </Route>
+                <Route
+                    path="/profile/orders/:id"
+                    element={
+                        <ProtectedRoute>
+                            <OrderDetailsPage />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
 
             {background && (
@@ -93,6 +107,24 @@ const AppRoutes = () => {
                             <Modal title={'Детали ингредиента'}>
                                 <IngredientDetails />
                             </Modal>
+                        }
+                    />
+                    <Route
+                        path="/feed/:id"
+                        element={
+                            <Modal>
+                                <OrderInfoDetails />
+                            </Modal>
+                        }
+                    />
+                    <Route
+                        path="/profile/orders/:id"
+                        element={
+                            <ProtectedRoute>
+                                <Modal>
+                                    <OrderInfoDetails />
+                                </Modal>
+                            </ProtectedRoute>
                         }
                     />
                 </Routes>

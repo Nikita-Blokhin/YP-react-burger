@@ -1,49 +1,56 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk'
-import type { User, AuthResponse } from '../types/User'
-import type { State } from '../types/Services'
-import { request, requestWithAuth } from '../utils'
-import { saveTokens, clearTokens } from '../utils/auth'
 
-export const REGISTER_REQUEST = 'REGISTER_REQUEST'
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
-export const REGISTER_FAILED = 'REGISTER_FAILED'
+import type { IUser, IAuthResponse } from '../../types/User'
+import type { IState } from '../../types/Services'
+import { request, requestWithAuth } from '../../utils'
+import { saveTokens, clearTokens } from '../../utils/auth'
 
-export const LOGIN_REQUEST = 'LOGIN_REQUEST'
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-export const LOGIN_FAILED = 'LOGIN_FAILED'
+export const REGISTER_REQUEST: 'REGISTER_REQUEST' = 'REGISTER_REQUEST'
+export const REGISTER_SUCCESS: 'REGISTER_SUCCESS' = 'REGISTER_SUCCESS'
+export const REGISTER_FAILED: 'REGISTER_FAILED' = 'REGISTER_FAILED'
 
-export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+export const LOGIN_REQUEST: 'LOGIN_REQUEST' = 'LOGIN_REQUEST'
+export const LOGIN_SUCCESS: 'LOGIN_SUCCESS' = 'LOGIN_SUCCESS'
+export const LOGIN_FAILED: 'LOGIN_FAILED' = 'LOGIN_FAILED'
 
-export const GET_USER_REQUEST = 'GET_USER_REQUEST'
-export const GET_USER_SUCCESS = 'GET_USER_SUCCESS'
-export const GET_USER_FAILED = 'GET_USER_FAILED'
+export const LOGOUT_REQUEST: 'LOGOUT_REQUEST' = 'LOGOUT_REQUEST'
+export const LOGOUT_SUCCESS: 'LOGOUT_SUCCESS' = 'LOGOUT_SUCCESS'
 
-export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST'
-export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS'
-export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED'
+export const GET_USER_REQUEST: 'GET_USER_REQUEST' = 'GET_USER_REQUEST'
+export const GET_USER_SUCCESS: 'GET_USER_SUCCESS' = 'GET_USER_SUCCESS'
+export const GET_USER_FAILED: 'GET_USER_FAILED' = 'GET_USER_FAILED'
 
-export const FORGOT_PASSWORD_REQUEST = 'FORGOT_PASSWORD_REQUEST'
-export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS'
-export const FORGOT_PASSWORD_FAILED = 'FORGOT_PASSWORD_FAILED'
+export const UPDATE_USER_REQUEST: 'UPDATE_USER_REQUEST' = 'UPDATE_USER_REQUEST'
+export const UPDATE_USER_SUCCESS: 'UPDATE_USER_SUCCESS' = 'UPDATE_USER_SUCCESS'
+export const UPDATE_USER_FAILED: 'UPDATE_USER_FAILED' = 'UPDATE_USER_FAILED'
 
-export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST'
-export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS'
-export const RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED'
+export const FORGOT_PASSWORD_REQUEST: 'FORGOT_PASSWORD_REQUEST' =
+    'FORGOT_PASSWORD_REQUEST'
+export const FORGOT_PASSWORD_SUCCESS: 'FORGOT_PASSWORD_SUCCESS' =
+    'FORGOT_PASSWORD_SUCCESS'
+export const FORGOT_PASSWORD_FAILED: 'FORGOT_PASSWORD_FAILED' =
+    'FORGOT_PASSWORD_FAILED'
 
-interface AuthAction {
+export const RESET_PASSWORD_REQUEST: 'RESET_PASSWORD_REQUEST' =
+    'RESET_PASSWORD_REQUEST'
+export const RESET_PASSWORD_SUCCESS: 'RESET_PASSWORD_SUCCESS' =
+    'RESET_PASSWORD_SUCCESS'
+export const RESET_PASSWORD_FAILED: 'RESET_PASSWORD_FAILED' =
+    'RESET_PASSWORD_FAILED'
+
+interface IAuthAction {
     type: string
-    user?: User
+    user?: IUser
 }
 
-type AuthThunk = ThunkAction<void, State, unknown, AuthAction>
+type TAuthThunk = ThunkAction<void, IState, unknown, IAuthAction>
 
 export const register =
-    (email: string, password: string, name: string): AuthThunk =>
-    async (dispatch: ThunkDispatch<State, unknown, AuthAction>) => {
+    (email: string, password: string, name: string): TAuthThunk =>
+    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
         dispatch({ type: REGISTER_REQUEST })
         try {
-            const data: AuthResponse = await request('auth/register', {
+            const data: IAuthResponse = await request('auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password, name }),
@@ -57,11 +64,11 @@ export const register =
     }
 
 export const login =
-    (email: string, password: string): AuthThunk =>
-    async (dispatch: ThunkDispatch<State, unknown, AuthAction>) => {
+    (email: string, password: string): TAuthThunk =>
+    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
         dispatch({ type: LOGIN_REQUEST })
         try {
-            const data: AuthResponse = await request('auth/login', {
+            const data: IAuthResponse = await request('auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -75,8 +82,8 @@ export const login =
     }
 
 export const logout =
-    (): AuthThunk =>
-    async (dispatch: ThunkDispatch<State, unknown, AuthAction>) => {
+    (): TAuthThunk =>
+    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
         dispatch({ type: LOGOUT_REQUEST })
         try {
             await requestWithAuth('auth/logout', {
@@ -91,11 +98,11 @@ export const logout =
     }
 
 export const getUser =
-    (): AuthThunk =>
-    async (dispatch: ThunkDispatch<State, unknown, AuthAction>) => {
+    (): TAuthThunk =>
+    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
         dispatch({ type: GET_USER_REQUEST })
         try {
-            const data: { success: boolean; user: User } =
+            const data: { success: boolean; user: IUser } =
                 await requestWithAuth('auth/user')
             dispatch({ type: GET_USER_SUCCESS, user: data.user })
         } catch (error) {
@@ -105,11 +112,11 @@ export const getUser =
     }
 
 export const updateUser =
-    (email?: string, name?: string, password?: string): AuthThunk =>
-    async (dispatch: ThunkDispatch<State, unknown, AuthAction>) => {
+    (email?: string, name?: string, password?: string): TAuthThunk =>
+    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
         dispatch({ type: UPDATE_USER_REQUEST })
         try {
-            const data: { success: boolean; user: User } =
+            const data: { success: boolean; user: IUser } =
                 await requestWithAuth('auth/user', {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
@@ -123,8 +130,8 @@ export const updateUser =
     }
 
 export const forgotPassword =
-    (email: string): AuthThunk =>
-    async (dispatch: ThunkDispatch<State, unknown, AuthAction>) => {
+    (email: string): TAuthThunk =>
+    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
         dispatch({ type: FORGOT_PASSWORD_REQUEST })
         try {
             await request('password-reset', {
@@ -140,8 +147,8 @@ export const forgotPassword =
     }
 
 export const resetPassword =
-    (password: string, token: string): AuthThunk =>
-    async (dispatch: ThunkDispatch<State, unknown, AuthAction>) => {
+    (password: string, token: string): TAuthThunk =>
+    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
         dispatch({ type: RESET_PASSWORD_REQUEST })
         try {
             await request('password-reset/reset', {

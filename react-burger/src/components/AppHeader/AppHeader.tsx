@@ -36,12 +36,29 @@ const AppHeader = () => {
                             </>
                         )}
                     </NavLink>
-                    <div className={styles.navItem}>
-                        <ListIcon type="secondary" />
-                        <span className={styles.navTextSecondary}>
-                            Лента заказов
-                        </span>
-                    </div>
+                    <NavLink
+                        to="/feed"
+                        className={({ isActive }) =>
+                            isActive ? styles.navItemActive : styles.navItem
+                        }
+                    >
+                        {({ isActive }) => (
+                            <>
+                                <ListIcon
+                                    type={isActive ? 'primary' : 'secondary'}
+                                />
+                                <span
+                                    className={
+                                        isActive
+                                            ? styles.navText
+                                            : styles.navTextSecondary
+                                    }
+                                >
+                                    Лента заказов
+                                </span>
+                            </>
+                        )}
+                    </NavLink>
                 </div>
 
                 <NavLink to="/" className={styles.logoContainer}>

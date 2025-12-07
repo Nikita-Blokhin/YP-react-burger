@@ -1,10 +1,10 @@
 import styles from './ModalOverlay.module.css'
 
-interface ModalOverlayProps {
+interface IModalOverlayProps {
     closeWindow: () => void
 }
 
-const ModalOverlay = ({ closeWindow }: ModalOverlayProps) => {
+const ModalOverlay = ({ closeWindow }: IModalOverlayProps) => {
     return <div className={styles.background} onClick={closeWindow} />
 }
 

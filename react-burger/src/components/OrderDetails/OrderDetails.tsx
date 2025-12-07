@@ -4,14 +4,14 @@ import { useAppSelector } from '../../hooks/reducerHook'
 import styles from './OrderDetails.module.css'
 
 const OrderDetails = () => {
-    const order = useAppSelector((state) => state.order.order)
+    const order = useAppSelector((state) => state.order)
 
     return (
         order && (
-            <Modal>
+            <Modal isPostOrder={true}>
                 <div className={styles.order}>
                     <h2 className={styles.orderNumber}>
-                        {order.order?.number}
+                        {order.order.order?.number}
                     </h2>
                     <h5>идентификатор заказа</h5>
                     <img src="/images/ok.svg" alt="ok" />

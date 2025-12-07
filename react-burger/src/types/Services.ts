@@ -1,42 +1,43 @@
-import type { Ingredient } from './Ingredient'
-import type { Order } from './Order'
-import type { User } from './User'
+import type { IIngredient } from './Ingredient'
+import type { IOrder } from './Order'
+import type { IUser } from './User'
+import { IMessageResponse } from './Ws'
 
-export interface State {
+export interface IState {
     ingredients: {
-        ingredients: Ingredient[]
+        ingredients: IIngredient[]
         ingredientsRequest: boolean
         ingredientsFailed: boolean
     }
     order: {
-        order: null | Order
+        order: { order: null | IOrder }
         orderRequest: boolean
         orderFailed: boolean
     }
     modal: {
         isModalDetail: boolean
         isModalOrder: boolean
-        ingredientDetail: null | Ingredient
+        ingredientDetail: null | IIngredient
+        title: string
     }
     constructor: {
-        ingredientsConstructor: Ingredient[]
+        ingredientsConstructor: IIngredient[]
     }
     auth: {
-        user: User | null
+        user: IUser | null
         isAuthenticated: boolean
         isLoading: boolean
         error: boolean
     }
-}
-
-export interface Action {
-    type: string
-    id?: string
-    ingredients?: Ingredient[]
-    ingredient?: Ingredient
-    ingredientDetail?: Ingredient
-    indexConstructor?: number
-    order?: Order
-    dragIndex?: number
-    hoverIndex?: number
+    ws: {
+        wsConnected: boolean
+        messages: IMessageResponse[]
+        error?: Event
+        allOrders: IOrder[]
+        selectedOrder: IOrder | null
+        allOrdersRequest: boolean
+        allOrdersFailed: boolean
+        total: number
+        totalToday: number
+    }
 }

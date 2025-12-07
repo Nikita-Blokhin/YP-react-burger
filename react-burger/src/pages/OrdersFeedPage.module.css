@@ -1,0 +1,174 @@
+.container {
+    max-width: 1240px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #f2f2f3;
+    margin-bottom: 40px;
+    font-family: 'JetBrains Mono', monospace;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    gap: 60px;
+}
+
+.ordersList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    width: 608px;
+    height: 852px;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    width: 580px;
+    height: 626px;
+    gap: 60px;
+}
+
+.ordersColumns {
+    display: flex;
+    flex-direction: row;
+    width: 580px;
+    height: 306px;
+    gap: 36px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    width: 272px;
+}
+
+.columnTitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: #f2f2f3;
+    margin: 0;
+    margin-bottom: 24px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.orderNumbersList {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8px;
+    overflow-y: auto;
+}
+
+.OrderNumber {
+    font-size: 28px;
+    font-weight: 400;
+    color: #f2f2f3;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.done {
+    color: #00cccc;
+}
+
+.statCard {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    width: 580px;
+    height: 150px;
+}
+
+.statLabel {
+    font-size: 24px;
+    color: #f2f2f3;
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+}
+
+.statValue {
+    height: 120px;
+    font-size: 100px;
+    font-weight: 400;
+    color: #f2f2f3;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 10px 0;
+    text-shadow: 0 0 30px rgb(59, 59, 247);
+}
+
+@media (max-width: 1024px) {
+    .content {
+        flex-wrap: wrap;
+    }
+
+    .ordersColumns {
+        gap: 40px;
+    }
+
+    .statistics {
+        width: 100%;
+        flex-direction: row;
+    }
+
+    .ordersList {
+        flex: 0 0 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 16px;
+    }
+
+    .title {
+        font-size: 22px;
+        margin-bottom: 24px;
+    }
+
+    .content {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .centerContent {
+        order: 2;
+    }
+
+    .ordersColumns {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .statistics {
+        order: 3;
+        flex-direction: column;
+    }
+
+    .ordersList {
+        order: 1;
+        flex: 1;
+        max-height: 400px;
+    }
+
+    .columnTitle {
+        font-size: 16px;
+    }
+
+    .bigOrderNumber {
+        font-size: 28px;
+    }
+
+    .statValue {
+        font-size: 36px;
+    }
+}

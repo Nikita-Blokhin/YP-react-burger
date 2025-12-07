@@ -1,29 +1,29 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
-import { Ingredient } from '../types/Ingredient'
-import { State } from '../types/Services'
-import { Order } from '../types/Order'
-import { requestWithAuth } from '../utils'
-import { GetIngredientsAction } from './ingredientActions'
+import { IIngredient } from '../../types/Ingredient'
+import { IState } from '../../types/Services'
+import { IOrder } from '../../types/Order'
+import { requestWithAuth } from '../../utils'
+import { IGetIngredientsAction } from './ingredientActions'
 import { MODAL_OPEN_ORDER } from './modalActions'
 
-export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST'
-export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS'
-export const POST_ORDER_FAILED = 'POST_ORDER_FAILED'
+export const POST_ORDER_REQUEST: 'POST_ORDER_REQUEST' = 'POST_ORDER_REQUEST'
+export const POST_ORDER_SUCCESS: 'POST_ORDER_SUCCESS' = 'POST_ORDER_SUCCESS'
+export const POST_ORDER_FAILED: 'POST_ORDER_FAILED' = 'POST_ORDER_FAILED'
 
-interface PostOrderAction {
+interface IPostOrderAction {
     type: string
-    ingredients?: Ingredient[]
-    order?: Order
+    ingredients?: IIngredient[]
+    order?: IOrder
 }
 
-type APIAction = PostOrderAction | GetIngredientsAction
+type TAPIAction = IPostOrderAction | IGetIngredientsAction
 
 export const postOrder =
     (
-        ingredients: Ingredient[]
-    ): ThunkAction<void, State, unknown, APIAction> =>
-    async (dispatch: ThunkDispatch<State, unknown, APIAction>) => {
+        ingredients: IIngredient[]
+    ): ThunkAction<void, IState, unknown, TAPIAction> =>
+    async (dispatch: ThunkDispatch<IState, unknown, TAPIAction>) => {
         dispatch({
             type: POST_ORDER_REQUEST,
         })
