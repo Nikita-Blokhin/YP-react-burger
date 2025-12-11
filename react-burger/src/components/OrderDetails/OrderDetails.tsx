@@ -11,7 +11,7 @@ const OrderDetails = () => {
             <Modal isPostOrder={true}>
                 <div className={styles.order}>
                     <h2 className={styles.orderNumber}>
-                        {order.order.order?.number}
+                        {order.order?.number}
                     </h2>
                     <h5>идентификатор заказа</h5>
                     <img src="/images/ok.svg" alt="ok" />

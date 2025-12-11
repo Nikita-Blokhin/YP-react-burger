@@ -33,7 +33,7 @@ export interface IPostOrderRequest {
 
 export interface IPostOrderSucces {
     readonly type: typeof POST_ORDER_SUCCESS
-    readonly order: IOrder
+    readonly order: { order: IOrder }
 }
 
 export interface IPostOrderFailed {

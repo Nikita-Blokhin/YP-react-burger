@@ -1,11 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { applyMiddleware, createStore, Reducer } from 'redux'
 import { Provider } from 'react-redux'
-import { thunk } from 'redux-thunk'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { configureStore } from '@reduxjs/toolkit'
 
 import App from './App'
 import reportWebVitals from './reportWebVitals'
@@ -17,12 +15,11 @@ const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 )
 
-export const store = createStore(
-    rootReducer as Reducer,
-    composeWithDevTools(
-        applyMiddleware(thunk, socketMiddleware(WSStoreActions))
-    )
-)
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(socketMiddleware(WSStoreActions)),
+})
 
 root.render(
     <React.StrictMode>

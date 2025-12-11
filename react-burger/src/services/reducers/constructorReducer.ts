@@ -16,7 +16,7 @@ export const constructorReducer = (
     action: TConstructorActions
 ) => {
     if (state.ingredientsConstructor === undefined)
-        state.ingredientsConstructor = []
+        state.ingredientsConstructor = [] as IIngredient[]
     switch (action.type) {
         case ADD_INGREDIENT_CONSTRUCTOR: {
             const ingredient = action.ingredient!
@@ -71,7 +71,7 @@ export const constructorReducer = (
             return { ...state, ingredientsConstructor: newIngredients }
         }
         case POST_ORDER_SUCCESS:
-            return { ...state, ingredientsConstructor: [] }
+            return { ...state, ingredientsConstructor: [] as IIngredient[] }
         default:
             return state
     }

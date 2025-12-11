@@ -30,7 +30,7 @@ export const ingredientsReducer = (
                 ...state,
                 ingredientsFailed: true,
                 ingredientsRequest: false,
-                ingredients: [],
+                ingredients: [] as IIngredient[],
             }
         default:
             return state

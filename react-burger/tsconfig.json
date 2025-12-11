@@ -9,14 +9,14 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
-        "module": "esnext",
-        "ignoreDeprecations": "6.0",
-        "moduleResolution": "node",
+        "module": "nodenext",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "react-jsx",
-        "types": ["node", "react", "jest"]
+        "types": ["node", "react", "jest"],
+        "allowImportingTsExtensions": true,
+        "moduleResolution": "nodenext"
     },
     "include": ["src"]
 }

@@ -1,11 +1,11 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { IIngredient } from '../../types/Ingredient'
-import { IState } from '../../types/Services'
 import { IOrder } from '../../types/Order'
 import { requestWithAuth } from '../../utils'
 import { IGetIngredientsAction } from './ingredientActions'
 import { MODAL_OPEN_ORDER } from './modalActions'
+import { RootState } from '../../hooks/reducerHook'
 
 export const POST_ORDER_REQUEST: 'POST_ORDER_REQUEST' = 'POST_ORDER_REQUEST'
 export const POST_ORDER_SUCCESS: 'POST_ORDER_SUCCESS' = 'POST_ORDER_SUCCESS'
@@ -17,13 +17,13 @@ interface IPostOrderAction {
     order?: IOrder
 }
 
-type TAPIAction = IPostOrderAction | IGetIngredientsAction
+export type TAPIAction = IPostOrderAction | IGetIngredientsAction
 
 export const postOrder =
     (
         ingredients: IIngredient[]
-    ): ThunkAction<void, IState, unknown, TAPIAction> =>
-    async (dispatch: ThunkDispatch<IState, unknown, TAPIAction>) => {
+    ): ThunkAction<void, RootState, unknown, TAPIAction> =>
+    async (dispatch: ThunkDispatch<RootState, unknown, TAPIAction>) => {
         dispatch({
             type: POST_ORDER_REQUEST,
         })

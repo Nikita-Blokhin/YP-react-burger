@@ -3,10 +3,10 @@ import {
     POST_ORDER_SUCCESS,
     POST_ORDER_FAILED,
 } from '../actions/orderActions'
-import { IOrder, TOrderActions } from '../../types/Order'
+import { TOrderActions } from '../../types/Order'
 
 const orderInitialState = {
-    order: null as IOrder | null,
+    order: null,
     orderRequest: false,
     orderFailed: false,
 }
@@ -22,7 +22,7 @@ export const orderReducer = (
             return {
                 ...state,
                 orderFailed: false,
-                order: action.order,
+                order: action.order.order,
                 orderRequest: false,
             }
         case POST_ORDER_FAILED:

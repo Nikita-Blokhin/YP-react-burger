@@ -1,8 +1,8 @@
-import { ThunkAction, ThunkDispatch } from 'redux-thunk'
-
+import { ThunkAction, ThunkDispatch } from '@reduxjs/toolkit/react'
 import { IIngredient } from '../../types/Ingredient'
-import { IState } from '../../types/Services'
+
 import { request } from '../../utils'
+import { RootState } from '../../hooks/reducerHook'
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' =
     'GET_INGREDIENTS_REQUEST'
@@ -21,8 +21,8 @@ export interface IGetIngredientsAction {
 export type TAPIAction = IGetIngredientsAction
 
 export const getIngredients =
-    (): ThunkAction<void, IState, unknown, TAPIAction> =>
-    async (dispatch: ThunkDispatch<IState, unknown, TAPIAction>) => {
+    (): ThunkAction<void, RootState, unknown, TAPIAction> =>
+    async (dispatch: ThunkDispatch<RootState, unknown, TAPIAction>) => {
         dispatch({
             type: GET_INGREDIENTS_REQUEST,
         })

@@ -26,7 +26,7 @@ const BurgerConstructor = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const ingredients = useAppSelector(
-        (state) => state.constructor.ingredientsConstructor
+        (state) => state.burgerConstructor.ingredientsConstructor
     )
     const isModal = useAppSelector((state) => state.modal.isModalOrder)
     const isAuthenticated = useAppSelector(

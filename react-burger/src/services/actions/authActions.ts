@@ -1,9 +1,8 @@
-import type { ThunkAction, ThunkDispatch } from 'redux-thunk'
-
+import { RootState } from '../../hooks/reducerHook'
 import type { IUser, IAuthResponse } from '../../types/User'
-import type { IState } from '../../types/Services'
 import { request, requestWithAuth } from '../../utils'
 import { saveTokens, clearTokens } from '../../utils/auth'
+import { ThunkAction, ThunkDispatch } from '@reduxjs/toolkit/react'
 
 export const REGISTER_REQUEST: 'REGISTER_REQUEST' = 'REGISTER_REQUEST'
 export const REGISTER_SUCCESS: 'REGISTER_SUCCESS' = 'REGISTER_SUCCESS'
@@ -43,11 +42,11 @@ interface IAuthAction {
     user?: IUser
 }
 
-type TAuthThunk = ThunkAction<void, IState, unknown, IAuthAction>
+type TAuthThunk = ThunkAction<void, RootState, unknown, IAuthAction>
 
 export const register =
     (email: string, password: string, name: string): TAuthThunk =>
-    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
+    async (dispatch: ThunkDispatch<RootState, unknown, IAuthAction>) => {
         dispatch({ type: REGISTER_REQUEST })
         try {
             const data: IAuthResponse = await request('auth/register', {
@@ -65,7 +64,7 @@ export const register =
 
 export const login =
     (email: string, password: string): TAuthThunk =>
-    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
+    async (dispatch: ThunkDispatch<RootState, unknown, IAuthAction>) => {
         dispatch({ type: LOGIN_REQUEST })
         try {
             const data: IAuthResponse = await request('auth/login', {
@@ -83,7 +82,7 @@ export const login =
 
 export const logout =
     (): TAuthThunk =>
-    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
+    async (dispatch: ThunkDispatch<RootState, unknown, IAuthAction>) => {
         dispatch({ type: LOGOUT_REQUEST })
         try {
             await requestWithAuth('auth/logout', {
@@ -99,7 +98,7 @@ export const logout =
 
 export const getUser =
     (): TAuthThunk =>
-    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
+    async (dispatch: ThunkDispatch<RootState, unknown, IAuthAction>) => {
         dispatch({ type: GET_USER_REQUEST })
         try {
             const data: { success: boolean; user: IUser } =
@@ -113,7 +112,7 @@ export const getUser =
 
 export const updateUser =
     (email?: string, name?: string, password?: string): TAuthThunk =>
-    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
+    async (dispatch: ThunkDispatch<RootState, unknown, IAuthAction>) => {
         dispatch({ type: UPDATE_USER_REQUEST })
         try {
             const data: { success: boolean; user: IUser } =
@@ -131,7 +130,7 @@ export const updateUser =
 
 export const forgotPassword =
     (email: string): TAuthThunk =>
-    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
+    async (dispatch: ThunkDispatch<RootState, unknown, IAuthAction>) => {
         dispatch({ type: FORGOT_PASSWORD_REQUEST })
         try {
             await request('password-reset', {
@@ -148,7 +147,7 @@ export const forgotPassword =
 
 export const resetPassword =
     (password: string, token: string): TAuthThunk =>
-    async (dispatch: ThunkDispatch<IState, unknown, IAuthAction>) => {
+    async (dispatch: ThunkDispatch<RootState, unknown, IAuthAction>) => {
         dispatch({ type: RESET_PASSWORD_REQUEST })
         try {
             await request('password-reset/reset', {
