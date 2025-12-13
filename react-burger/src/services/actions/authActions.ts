@@ -37,6 +37,8 @@ export const RESET_PASSWORD_SUCCESS: 'RESET_PASSWORD_SUCCESS' =
 export const RESET_PASSWORD_FAILED: 'RESET_PASSWORD_FAILED' =
     'RESET_PASSWORD_FAILED'
 
+export const INITIAL_STATE: 'INITIAL_STATE' = 'INITIAL_STATE'
+
 interface IAuthAction {
     type: string
     user?: IUser

@@ -14,6 +14,7 @@ import {
     WS_CLOSE,
 } from '../services/actions/wsAction'
 import { IOrder } from './Order'
+import { IInitialState } from './Services'
 
 export interface IMessageResponse {
     message: string
@@ -103,3 +104,4 @@ export type TWSActions =
     | IGetOrderByIdRequestAction
     | IGetOrderByIdSuccestAction
     | IGetOrderByIdFailedAction
+    | IInitialState

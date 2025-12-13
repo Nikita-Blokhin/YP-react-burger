@@ -3,6 +3,7 @@ import {
     POST_ORDER_SUCCESS,
     POST_ORDER_FAILED,
 } from '../services/actions/orderActions'
+import { IInitialState } from './Services'
 
 export interface IOrderItem {
     _id: string
@@ -44,3 +45,4 @@ export type TOrderActions =
     | IPostOrderRequest
     | IPostOrderSucces
     | IPostOrderFailed
+    | IInitialState

@@ -4,6 +4,7 @@ import {
     GET_INGREDIENTS_SUCCESS,
     VIEW_INGREDIENT,
 } from '../services/actions/ingredientActions'
+import { IInitialState } from './Services'
 
 export interface IIngredient {
     _id: string
@@ -43,3 +44,4 @@ export type TIngredientActions =
     | IGetIngredientsSucces
     | IGetIngredientsFailed
     | IViewIngredient
+    | IInitialState

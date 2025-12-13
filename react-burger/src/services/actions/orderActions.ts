@@ -17,7 +17,7 @@ interface IPostOrderAction {
     order?: IOrder
 }
 
-export type TAPIAction = IPostOrderAction | IGetIngredientsAction
+type TAPIAction = IPostOrderAction | IGetIngredientsAction
 
 export const postOrder =
     (

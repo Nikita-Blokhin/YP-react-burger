@@ -40,6 +40,8 @@ export const constructorReducer = (
             }
         }
         case MOVE_INGREDIENT_CONSTRUCTOR: {
+            if (state.ingredientsConstructor[action.dragIndex].type === 'bun')
+                return state
             const fillings = state.ingredientsConstructor.filter(
                 (item) => item.type !== 'bun'
             )

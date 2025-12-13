@@ -3,10 +3,10 @@ import {
     POST_ORDER_SUCCESS,
     POST_ORDER_FAILED,
 } from '../actions/orderActions'
-import { TOrderActions } from '../../types/Order'
+import { IOrder, TOrderActions } from '../../types/Order'
 
 const orderInitialState = {
-    order: null,
+    order: null as IOrder | null,
     orderRequest: false,
     orderFailed: false,
 }

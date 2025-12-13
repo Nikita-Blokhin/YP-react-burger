@@ -42,7 +42,7 @@ export interface IGetOrderAction {
     order?: IOrder
 }
 
-export type TAPIAction = IGetOrderAction
+type TAPIAction = IGetOrderAction
 
 export const getOrder =
     (orderNum: string): ThunkAction<void, RootState, unknown, TAPIAction> =>

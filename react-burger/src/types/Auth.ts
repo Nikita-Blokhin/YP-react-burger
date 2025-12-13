@@ -20,6 +20,7 @@ import {
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAILED,
 } from '../services/actions/authActions'
+import { IInitialState } from './Services'
 import { IUser } from './User'
 
 export interface IRegisterRequest {
@@ -127,3 +128,4 @@ export type TAuthActions =
     | IResetPasswordRequest
     | IResetPasswordSucces
     | IResetPasswordFailed
+    | IInitialState

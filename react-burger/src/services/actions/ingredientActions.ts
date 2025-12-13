@@ -18,7 +18,7 @@ export interface IGetIngredientsAction {
     ingredients?: IIngredient[]
 }
 
-export type TAPIAction = IGetIngredientsAction
+type TAPIAction = IGetIngredientsAction
 
 export const getIngredients =
     (): ThunkAction<void, RootState, unknown, TAPIAction> =>
