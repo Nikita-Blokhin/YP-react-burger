@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/YP-react-burger/static/css/main.d6f0d3dd.css",
-    "main.js": "/YP-react-burger/static/js/main.2f76cc0c.js",
+    "main.js": "/YP-react-burger/static/js/main.0a333457.js",
     "static/js/488.6cfa5c5a.chunk.js": "/YP-react-burger/static/js/488.6cfa5c5a.chunk.js",
     "static/media/JetBrainsMono-Bold.woff": "/YP-react-burger/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
     "static/media/JetBrainsMono-Regular.woff": "/YP-react-burger/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
@@ -11,11 +11,11 @@
     "static/media/iceland.woff2": "/YP-react-burger/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
     "index.html": "/YP-react-burger/index.html",
     "main.d6f0d3dd.css.map": "/YP-react-burger/static/css/main.d6f0d3dd.css.map",
-    "main.2f76cc0c.js.map": "/YP-react-burger/static/js/main.2f76cc0c.js.map",
+    "main.0a333457.js.map": "/YP-react-burger/static/js/main.0a333457.js.map",
     "488.6cfa5c5a.chunk.js.map": "/YP-react-burger/static/js/488.6cfa5c5a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d6f0d3dd.css",
-    "static/js/main.2f76cc0c.js"
+    "static/js/main.0a333457.js"
   ]
 }
