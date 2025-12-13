@@ -14,6 +14,10 @@
 
 -   `npm run build` — cборка стабильной версии
 
+-   `npm run test` — запуск jest тестов
+
+-   `npm run cypress:open` — запуск cypress тестов
+
 ## Используемые технологии
 
 -   typescript

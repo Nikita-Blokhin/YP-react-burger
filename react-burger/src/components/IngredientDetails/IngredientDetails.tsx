@@ -11,7 +11,7 @@ const IngredientDetails = () => {
     )!.find((ingredient) => id === ingredient._id)
 
     return (
-        <div className={styles.content}>
+        <div className={styles.content} data-testid="ingredient-details">
             {!ingredient ? (
                 <h3>Загрузка...</h3>
             ) : (
@@ -22,24 +22,33 @@ const IngredientDetails = () => {
                         }
                         alt={ingredient.name}
                         className={styles.ingredientImage}
+                        data-testid="ingredient-image"
                     />
-                    <h3>{ingredient.name}</h3>
+                    <h3 data-testid="ingredient-name">{ingredient.name}</h3>
                     <div className={styles.structure}>
                         <div className={styles.comp}>
                             <span>Каллории, ккал</span>
-                            <span>{ingredient.calories}</span>
+                            <span data-testid="ingredient-calories">
+                                {ingredient.calories}
+                            </span>
                         </div>
                         <div className={styles.comp}>
                             <span>Белки, г</span>
-                            <span>{ingredient.proteins}</span>
+                            <span data-testid="ingredient-proteins">
+                                {ingredient.proteins}
+                            </span>
                         </div>
                         <div className={styles.comp}>
                             <span>Жиры, г</span>
-                            <span>{ingredient.fat}</span>
+                            <span data-testid="ingredient-fat">
+                                {ingredient.fat}
+                            </span>
                         </div>
                         <div className={styles.comp}>
                             <span>Углеводы, г</span>
-                            <span>{ingredient.carbohydrates}</span>
+                            <span data-testid="ingredient-carbohydrates">
+                                {ingredient.carbohydrates}
+                            </span>
                         </div>
                     </div>
                 </>

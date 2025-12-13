@@ -42,6 +42,9 @@ const IngredientCard: React.FC<IIngredientCardProps> = ({
                 opacity: isDragging ? 0.5 : 1,
                 cursor: 'move',
             }}
+            data-testid="ingredient-card"
+            data-ingredient-id={ingredient._id}
+            data-ingredient-type={ingredient.type}
         >
             {getIngredientCount(ingredient) > 0 && (
                 <Counter

@@ -9,8 +9,11 @@ const OrderDetails = () => {
     return (
         order && (
             <Modal isPostOrder={true}>
-                <div className={styles.order}>
-                    <h2 className={styles.orderNumber}>
+                <div className={styles.order} data-testid="order-details">
+                    <h2
+                        className={styles.orderNumber}
+                        data-testid="order-number"
+                    >
                         {order.order?.number}
                     </h2>
                     <h5>идентификатор заказа</h5>

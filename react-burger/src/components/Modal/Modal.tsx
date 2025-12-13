@@ -42,10 +42,13 @@ const Modal = ({ children, title, isPostOrder = false }: IModalProps) => {
     return ReactDOM.createPortal(
         <>
             <ModalOverlay closeWindow={closeWindow} />
-            <div className={styles.window}>
+            <div className={styles.window} data-testid="modal">
                 <div className={styles.title}>
                     <h2>{titleState ? titleState : title}</h2>
-                    <button onClick={closeWindow}>
+                    <button
+                        onClick={closeWindow}
+                        data-testid="modal-close-button"
+                    >
                         <CloseIcon type={'primary'} />
                     </button>
                 </div>

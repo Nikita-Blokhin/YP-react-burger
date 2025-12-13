@@ -1,17 +1,56 @@
-// ***********************************************************
-// This example support/e2e.ts is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+/// <reference types="cypress" />
+import '@4tw/cypress-drag-drop'
 
-// Import commands.js using ES2015 syntax:
-import './commands'
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            waitForIngredients(): Chainable<void>
+
+            addBunToConstructor(name: string): Chainable<void>
+
+            dragIngredientToConstructor(index: number): Chainable<void>
+
+            loginUser(): Chainable<void>
+
+            getIngredient(name: string): Chainable<JQuery<HTMLElement>>
+
+            shouldHaveCounter(name: string, count: number): Chainable<void>
+        }
+    }
+}
+
+Cypress.Commands.add('waitForIngredients', () => {
+    cy.wait('@getIngredients', { timeout: 10000 })
+})
+
+Cypress.Commands.add('loginUser', () => {
+    window.localStorage.setItem('accessToken', 'Bearer test-access-token')
+    window.localStorage.setItem('refreshToken', 'test-refresh-token')
+
+    cy.visit('/')
+    cy.waitForIngredients()
+})
+
+Cypress.Commands.add('addBunToConstructor', (name: string) => {
+    cy.contains('[data-ingredient-type="bun"]', name, {
+        timeout: 10000,
+    }).trigger('dragstart')
+
+    cy.get('[data-testid="burger-constructor"]').trigger('drop', {
+        force: true,
+    })
+})
+
+Cypress.Commands.add('dragIngredientToConstructor', (index: number) => {
+    cy.get('[data-testid="ingredient-card"]')
+        .eq(index)
+        .drag('[data-testid="burger-constructor"]')
+})
+
+Cypress.Commands.add('getIngredient', (name: string) => {
+    return cy.contains('[data-testid="ingredient-card"]', name)
+})
+
+Cypress.Commands.add('shouldHaveCounter', (name: string, count: number) => {
+    cy.getIngredient(name).find('[class*="counter"]').should('contain', count)
+})
