@@ -8,7 +8,8 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "cypress:open": "npx cypress open"
+        "cypress:open": "npx cypress open",
+        "deploy": "gh-pages -d build"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^2.9.0",
@@ -61,6 +62,7 @@
         "eslint": "^8.57.1",
         "eslint-plugin-cypress": "^5.2.0",
         "fetch-mock": "^12.6.0",
+        "gh-pages": "^6.3.0",
         "glob": "^11.0.3",
         "husky": "^9.1.7",
         "i": "^0.3.7",
@@ -92,5 +94,6 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
-    }
+    },
+    "homepage": "https://nikita-blokhin.github.io/YP-react-burger"
 }
