@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 
 import { useAppSelector } from '../../hooks/reducerHook'
+import placeholderImage from '../../assets/images/placeholder.svg'
 
 import styles from './IngredientDetails.module.css'
 
@@ -17,9 +18,7 @@ const IngredientDetails = () => {
             ) : (
                 <>
                     <img
-                        src={
-                            ingredient.image_large || '/images/placeholder.svg'
-                        }
+                        src={ingredient.image_large || placeholderImage}
                         alt={ingredient.name}
                         className={styles.ingredientImage}
                         data-testid="ingredient-image"

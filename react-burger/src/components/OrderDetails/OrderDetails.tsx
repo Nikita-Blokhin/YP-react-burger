@@ -1,5 +1,6 @@
 import Modal from '../Modal/Modal'
 import { useAppSelector } from '../../hooks/reducerHook'
+import okImage from '../../assets/images/ok.svg'
 
 import styles from './OrderDetails.module.css'
 
@@ -17,7 +18,7 @@ const OrderDetails = () => {
                         {order.order?.number}
                     </h2>
                     <h5>идентификатор заказа</h5>
-                    <img src="/images/ok.svg" alt="ok" />
+                    <img src={okImage} alt="ok" />
                     <h6>Ваш заказ начали готовить</h6>
                     <h6 className={styles.wait}>
                         Дождитесь готовности на орбитальной станции
