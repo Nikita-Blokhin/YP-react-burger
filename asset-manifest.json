@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/YP-react-burger/static/css/main.d6f0d3dd.css",
+    "main.css": "/YP-react-burger/static/css/main.7aef927b.css",
     "main.js": "/YP-react-burger/static/js/main.a6ae3667.js",
     "static/js/488.6cfa5c5a.chunk.js": "/YP-react-burger/static/js/488.6cfa5c5a.chunk.js",
     "static/media/JetBrainsMono-Bold.woff": "/YP-react-burger/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
@@ -12,12 +12,12 @@
     "static/media/placeholder.svg": "/YP-react-burger/static/media/placeholder.980c1a612fabf875cfd14ad73802ea79.svg",
     "static/media/ok.svg": "/YP-react-burger/static/media/ok.499d938974ea8c334854a7cc2b6edb06.svg",
     "index.html": "/YP-react-burger/index.html",
-    "main.d6f0d3dd.css.map": "/YP-react-burger/static/css/main.d6f0d3dd.css.map",
+    "main.7aef927b.css.map": "/YP-react-burger/static/css/main.7aef927b.css.map",
     "main.a6ae3667.js.map": "/YP-react-burger/static/js/main.a6ae3667.js.map",
     "488.6cfa5c5a.chunk.js.map": "/YP-react-burger/static/js/488.6cfa5c5a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d6f0d3dd.css",
+    "static/css/main.7aef927b.css",
     "static/js/main.a6ae3667.js"
   ]
 }
