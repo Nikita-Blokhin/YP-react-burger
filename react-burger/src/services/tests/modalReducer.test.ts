@@ -1,14 +1,6 @@
-import { IIngredient } from '../../types'
 import * as types from '../actions'
-import { modalReducer } from '../reducers/modalReducer'
+import { modalInitialState, modalReducer } from '../reducers/modalReducer'
 import { mockIngredients } from './constructorReducer.test'
-
-const initialState = {
-    isModalDetail: false,
-    isModalOrder: false,
-    ingredientDetail: null as IIngredient | null,
-    title: '',
-}
 
 describe('modalReducer', () => {
     it('проверка исходного состояния', () => {
@@ -16,17 +8,17 @@ describe('modalReducer', () => {
             modalReducer(undefined, {
                 type: types.INITIAL_STATE,
             })
-        ).toEqual(initialState)
+        ).toEqual(modalInitialState)
     })
 
     it('проверка MODAL_OPEN_INGREDIENT', () => {
         expect(
-            modalReducer(initialState, {
+            modalReducer(modalInitialState, {
                 type: types.MODAL_OPEN_INGREDIENT,
                 ingredientDetail: mockIngredients[0],
             })
         ).toEqual({
-            ...initialState,
+            ...modalInitialState,
             isModalDetail: true,
             ingredientDetail: mockIngredients[0],
         })
@@ -34,23 +26,23 @@ describe('modalReducer', () => {
 
     it('проверка MODAL_OPEN_ORDER', () => {
         expect(
-            modalReducer(initialState, {
+            modalReducer(modalInitialState, {
                 type: types.MODAL_OPEN_ORDER,
             })
         ).toEqual({
-            ...initialState,
+            ...modalInitialState,
             isModalOrder: true,
         })
     })
 
     it('проверка MODAL_OPEN_ORDER_INFO', () => {
         expect(
-            modalReducer(initialState, {
+            modalReducer(modalInitialState, {
                 type: types.MODAL_OPEN_ORDER_INFO,
                 title: 'test',
             })
         ).toEqual({
-            ...initialState,
+            ...modalInitialState,
             isModalOrder: true,
             title: 'test',
         })
@@ -60,7 +52,7 @@ describe('modalReducer', () => {
         expect(
             modalReducer(
                 {
-                    ...initialState,
+                    ...modalInitialState,
                     isModalDetail: true,
                     ingredientDetail: mockIngredients[0],
                 },
@@ -68,6 +60,6 @@ describe('modalReducer', () => {
                     type: types.MODAL_CLOSE,
                 }
             )
-        ).toEqual(initialState)
+        ).toEqual(modalInitialState)
     })
 })

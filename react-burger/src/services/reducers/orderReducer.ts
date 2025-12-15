@@ -5,7 +5,7 @@ import {
 } from '../actions/orderActions'
 import { IOrder, TOrderActions } from '../../types/Order'
 
-const orderInitialState = {
+export const orderInitialState = {
     order: null as IOrder | null,
     orderRequest: false,
     orderFailed: false,

@@ -7,7 +7,7 @@ import {
 } from '../actions/constructorActions'
 import { POST_ORDER_SUCCESS } from '../actions/orderActions'
 
-const constructorInitialState = {
+export const constructorInitialState = {
     ingredientsConstructor: [] as IIngredient[],
 }
 

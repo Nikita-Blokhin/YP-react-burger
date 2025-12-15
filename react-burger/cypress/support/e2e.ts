@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 import '@4tw/cypress-drag-drop'
 
+import { BURGER_CONSTRUCTOR, INGREDIENT_CARD } from './constants'
+
 declare global {
     namespace Cypress {
         interface Chainable {
@@ -36,19 +38,17 @@ Cypress.Commands.add('addBunToConstructor', (name: string) => {
         timeout: 10000,
     }).trigger('dragstart')
 
-    cy.get('[data-testid="burger-constructor"]').trigger('drop', {
+    cy.get(BURGER_CONSTRUCTOR).trigger('drop', {
         force: true,
     })
 })
 
 Cypress.Commands.add('dragIngredientToConstructor', (index: number) => {
-    cy.get('[data-testid="ingredient-card"]')
-        .eq(index)
-        .drag('[data-testid="burger-constructor"]')
+    cy.get(INGREDIENT_CARD).eq(index).drag(BURGER_CONSTRUCTOR)
 })
 
 Cypress.Commands.add('getIngredient', (name: string) => {
-    return cy.contains('[data-testid="ingredient-card"]', name)
+    return cy.contains(INGREDIENT_CARD, name)
 })
 
 Cypress.Commands.add('shouldHaveCounter', (name: string, count: number) => {

@@ -1,12 +1,6 @@
 import { IOrder } from '../../types'
 import * as types from '../actions'
-import { orderReducer } from '../reducers/orderReducer'
-
-const initialState = {
-    order: null,
-    orderRequest: false,
-    orderFailed: false,
-}
+import { orderInitialState, orderReducer } from '../reducers/orderReducer'
 
 export const mockOrder: IOrder = {
     _id: '1',
@@ -24,34 +18,34 @@ describe('orderReducer', () => {
             orderReducer(undefined, {
                 type: types.INITIAL_STATE,
             })
-        ).toEqual(initialState)
+        ).toEqual(orderInitialState)
     })
 
     it('проверка POST_ORDER_REQUEST', () => {
         expect(
-            orderReducer(initialState, {
+            orderReducer(orderInitialState, {
                 type: types.POST_ORDER_REQUEST,
             })
-        ).toEqual({ ...initialState, orderRequest: true })
+        ).toEqual({ ...orderInitialState, orderRequest: true })
     })
 
     it('проверка POST_ORDER_SUCCESS', () => {
         expect(
-            orderReducer(initialState, {
+            orderReducer(orderInitialState, {
                 type: types.POST_ORDER_SUCCESS,
                 order: { order: mockOrder },
             })
-        ).toEqual({ ...initialState, order: mockOrder })
+        ).toEqual({ ...orderInitialState, order: mockOrder })
     })
 
     it('проверка POST_ORDER_FAILED', () => {
         expect(
             orderReducer(
-                { ...initialState, order: mockOrder },
+                { ...orderInitialState, order: mockOrder },
                 {
                     type: types.POST_ORDER_FAILED,
                 }
             )
-        ).toEqual({ ...initialState, orderFailed: true })
+        ).toEqual({ ...orderInitialState, orderFailed: true })
     })
 })

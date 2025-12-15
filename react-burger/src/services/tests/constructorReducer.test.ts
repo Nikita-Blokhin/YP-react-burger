@@ -1,4 +1,7 @@
-import { constructorReducer } from '../reducers/constructorReducer'
+import {
+    constructorReducer,
+    constructorInitialState,
+} from '../reducers/constructorReducer'
 import * as types from '../actions'
 import { IIngredient } from '../../types'
 
@@ -55,7 +58,7 @@ describe('constructorReducer', () => {
             constructorReducer(undefined, {
                 type: types.INITIAL_STATE,
             })
-        ).toEqual(initialState)
+        ).toEqual(constructorInitialState)
     })
 
     it('проверка ADD_INGREDIENT_CONSTRUCTOR', () => {

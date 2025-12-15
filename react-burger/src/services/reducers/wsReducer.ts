@@ -30,7 +30,7 @@ type TWSState = {
     error?: string
 }
 
-const initialState: TWSState = {
+export const initialState: TWSState = {
     wsConnected: false,
     messages: [],
     allOrders: [],

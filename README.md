@@ -14,7 +14,7 @@
 
 -   `npm run start` — запуск версии для разработчика
 
--   `npm run build` — cборка стабильной версии
+-   `npm run build` — cборка стабильной версии (если деплой на github pages, то скопируй index.html в папке build и сохрани там же под названием 404.html)
 
 -   `npm run test` — запуск jest тестов
 

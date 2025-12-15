@@ -1,18 +1,6 @@
 import * as types from '../actions'
-import { wsReducer } from '../reducers/wsReducer'
+import { initialState, wsReducer } from '../reducers/wsReducer'
 import { mockOrder } from './orderReducer.test'
-
-const initialState = {
-    wsConnected: false,
-    messages: [],
-    allOrders: [],
-    selectedOrder: null,
-    allOrdersRequest: false,
-    allOrdersFailed: false,
-    total: 0,
-    totalToday: 0,
-    error: undefined,
-}
 
 describe('wsReducer', () => {
     it('проверка исходного состояния', () => {

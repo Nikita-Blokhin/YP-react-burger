@@ -1,4 +1,4 @@
-import { authReducer } from '../reducers/authReducer'
+import { authReducer, initialAuthState } from '../reducers/authReducer'
 import * as types from '../actions'
 
 const trueAuthState = {
@@ -24,12 +24,7 @@ describe('authReducer', () => {
             authReducer(undefined, {
                 type: types.INITIAL_STATE,
             })
-        ).toEqual({
-            user: null,
-            isAuthenticated: false,
-            isLoading: false,
-            error: false,
-        })
+        ).toEqual(initialAuthState)
     })
 
     it('проверка REGISTER_REQUEST', () => {

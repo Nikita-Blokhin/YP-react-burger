@@ -1,0 +1,5 @@
+export const API_URL = 'https://norma.education-services.ru/api/'
+export const BURGER_CONSTRUCTOR = '[data-testid="burger-constructor"]'
+export const INGREDIENT_CARD = '[data-testid="ingredient-card"]'
+export const MODAL = '[data-testid="modal"]'
+export const ORDER_BUTTON = '[data-testid="order-button"]'

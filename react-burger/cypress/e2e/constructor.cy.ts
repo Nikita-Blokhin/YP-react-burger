@@ -1,29 +1,27 @@
 /// <reference types="cypress" />
 
+import {
+    API_URL,
+    BURGER_CONSTRUCTOR,
+    INGREDIENT_CARD,
+    MODAL,
+    ORDER_BUTTON,
+} from '../support/constants'
+
 describe('Конструктор бургера', () => {
     beforeEach(() => {
-        cy.intercept(
-            'GET',
-            'https://norma.education-services.ru/api/ingredients',
-            { fixture: 'ingredients.json' }
-        ).as('getIngredients')
-        cy.intercept(
-            'POST',
-            'https://norma.education-services.ru/api/auth/login',
-            { fixture: 'user.json' }
-        ).as('login')
-        cy.intercept(
-            'GET',
-            'https://norma.education-services.ru/api/auth/user',
-            { fixture: 'user.json' }
-        ).as('getUser')
-        cy.intercept(
-            'POST',
-            'https://norma.education-services.ru/api/orders',
-            {
-                fixture: 'order.json',
-            }
-        ).as('createOrder')
+        cy.intercept('GET', `${API_URL}ingredients`, {
+            fixture: 'ingredients.json',
+        }).as('getIngredients')
+        cy.intercept('POST', `${API_URL}auth/login`, {
+            fixture: 'user.json',
+        }).as('login')
+        cy.intercept('GET', `${API_URL}auth/user`, {
+            fixture: 'user.json',
+        }).as('getUser')
+        cy.intercept('POST', `${API_URL}orders`, {
+            fixture: 'order.json',
+        }).as('createOrder')
 
         cy.visit('/')
         cy.waitForIngredients()
@@ -34,9 +32,7 @@ describe('Конструктор бургера', () => {
             const bunName = 'Краторная булка N-200i'
 
             cy.get('[data-testid="empty-constructor"]').should('exist')
-            cy.getIngredient(bunName).drag(
-                '[data-testid="burger-constructor"]'
-            )
+            cy.getIngredient(bunName).drag(BURGER_CONSTRUCTOR)
 
             cy.get('[data-testid="constructor-bun-top"]').should(
                 'contain',
@@ -56,9 +52,7 @@ describe('Конструктор бургера', () => {
             const bun1 = 'Флюоресцентная булка R2-D3'
 
             cy.addBunToConstructor(bun1)
-            cy.getIngredient(sauceName).drag(
-                '[data-testid="burger-constructor"]'
-            )
+            cy.getIngredient(sauceName).drag(BURGER_CONSTRUCTOR)
 
             cy.get('[data-testid="constructor-fillings"]').should(
                 'contain',
@@ -91,7 +85,7 @@ describe('Конструктор бургера', () => {
             const ingredientName = 'Говяжий метеорит (отбивная)'
 
             cy.getIngredient(ingredientName).click()
-            cy.get('[data-testid="modal"]').should('exist')
+            cy.get(MODAL).should('exist')
             cy.contains('Детали ингредиента').should('exist')
             cy.get('[data-testid="ingredient-name"]').should(
                 'contain',
@@ -99,14 +93,14 @@ describe('Конструктор бургера', () => {
             )
 
             cy.get('[data-testid="modal-close-button"]').click()
-            cy.get('[data-testid="modal"]').should('not.exist')
+            cy.get(MODAL).should('not.exist')
         })
 
         it('Закрыть клавишей ESC', () => {
-            cy.get('[data-testid="ingredient-card"]').first().click()
-            cy.get('[data-testid="modal"]').should('exist')
+            cy.get(INGREDIENT_CARD).first().click()
+            cy.get(MODAL).should('exist')
             cy.get('body').type('{esc}')
-            cy.get('[data-testid="modal"]').should('not.exist')
+            cy.get(MODAL).should('not.exist')
         })
     })
 
@@ -116,7 +110,7 @@ describe('Конструктор бургера', () => {
             cy.addBunToConstructor(bun1)
             cy.get('[data-ingredient-type="sauce"]')
                 .first()
-                .drag('[data-testid="burger-constructor"]')
+                .drag(BURGER_CONSTRUCTOR)
 
             cy.get('[data-testid="total-price"]')
                 .invoke('text')
@@ -124,12 +118,12 @@ describe('Конструктор бургера', () => {
         })
 
         it('Проверка неактивной кнопки', () => {
-            cy.get('[data-testid="order-button"]').should('be.disabled')
+            cy.get(ORDER_BUTTON).should('be.disabled')
         })
 
         it('Перенос на /login если неавторизован', () => {
             cy.addBunToConstructor(bun1)
-            cy.get('[data-testid="order-button"]').click()
+            cy.get(ORDER_BUTTON).click()
             cy.url().should('include', '/login')
         })
 
@@ -139,9 +133,9 @@ describe('Конструктор бургера', () => {
             cy.addBunToConstructor(bun1)
             cy.get('[data-ingredient-type="main"]')
                 .first()
-                .drag('[data-testid="burger-constructor"]')
+                .drag(BURGER_CONSTRUCTOR)
 
-            cy.get('[data-testid="order-button"]').click()
+            cy.get(ORDER_BUTTON).click()
             cy.wait('@createOrder')
 
             cy.get('[data-testid="order-details"]').should('exist')
@@ -151,7 +145,7 @@ describe('Конструктор бургера', () => {
         it('Закрытие окна заказа', () => {
             cy.loginUser()
             cy.addBunToConstructor(bun1)
-            cy.get('[data-testid="order-button"]').click()
+            cy.get(ORDER_BUTTON).click()
             cy.wait('@createOrder')
 
             cy.get('[data-testid="modal-close-button"]').click()
