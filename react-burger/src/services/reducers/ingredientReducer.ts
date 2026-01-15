@@ -5,7 +5,7 @@ import {
 } from '../actions/ingredientActions'
 import { IIngredient, TIngredientActions } from '../../types/Ingredient'
 
-const ingredientsInitialState = {
+export const ingredientsInitialState = {
     ingredients: [] as IIngredient[],
     ingredientsRequest: false,
     ingredientsFailed: false,
@@ -30,7 +30,7 @@ export const ingredientsReducer = (
                 ...state,
                 ingredientsFailed: true,
                 ingredientsRequest: false,
-                ingredients: [],
+                ingredients: [] as IIngredient[],
             }
         default:
             return state

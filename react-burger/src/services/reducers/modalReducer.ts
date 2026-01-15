@@ -7,7 +7,7 @@ import {
     MODAL_OPEN_ORDER_INFO,
 } from '../actions/modalActions'
 
-const modalInitialState = {
+export const modalInitialState = {
     isModalDetail: false,
     isModalOrder: false,
     ingredientDetail: null as IIngredient | null,

@@ -22,7 +22,7 @@ import {
 import type { IUser } from '../../types/User'
 import { TAuthActions } from '../../types/Auth'
 
-interface IAuthState {
+export interface IAuthState {
     user: IUser | null
     isAuthenticated: boolean
     isLoading: boolean

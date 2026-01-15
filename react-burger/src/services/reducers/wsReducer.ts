@@ -27,10 +27,10 @@ type TWSState = {
     total: number
     totalToday: number
 
-    error?: Event
+    error?: string
 }
 
-const initialState: TWSState = {
+export const initialState: TWSState = {
     wsConnected: false,
     messages: [],
     allOrders: [],
@@ -94,7 +94,6 @@ export const wsReducer = (state = initialState, action: TWSActions) => {
                 ...state,
                 allOrdersRequest: false,
                 allOrdersFailed: true,
-                // allOrders: [],
             }
 
         case GET_ORDER_BY_ID_REQUEST:

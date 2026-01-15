@@ -14,6 +14,7 @@ import {
     WS_CLOSE,
 } from '../services/actions/wsAction'
 import { IOrder } from './Order'
+import { IInitialState } from './Services'
 
 export interface IMessageResponse {
     message: string
@@ -31,7 +32,7 @@ export interface IWSConnectionSuccessAction {
 
 export interface IWSConnectionErrorAction {
     readonly type: typeof WS_CONNECTION_ERROR
-    readonly payload: Event
+    readonly payload: string
 }
 
 export interface IWSConnectionClosedAction {
@@ -103,3 +104,4 @@ export type TWSActions =
     | IGetOrderByIdRequestAction
     | IGetOrderByIdSuccestAction
     | IGetOrderByIdFailedAction
+    | IInitialState

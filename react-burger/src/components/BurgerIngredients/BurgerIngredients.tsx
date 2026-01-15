@@ -24,7 +24,7 @@ const BurgerIngredients = () => {
         (state) => state.ingredients.ingredientsFailed
     )
     const constructorIngredients = useAppSelector(
-        (state) => state.constructor.ingredientsConstructor
+        (state) => state.burgerConstructor.ingredientsConstructor
     )
 
     const [currentTab, setCurrentTab] = useState<string>('bun')

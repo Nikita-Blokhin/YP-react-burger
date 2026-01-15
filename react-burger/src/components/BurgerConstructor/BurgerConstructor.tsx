@@ -26,7 +26,7 @@ const BurgerConstructor = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const ingredients = useAppSelector(
-        (state) => state.constructor.ingredientsConstructor
+        (state) => state.burgerConstructor.ingredientsConstructor
     )
     const isModal = useAppSelector((state) => state.modal.isModalOrder)
     const isAuthenticated = useAppSelector(
@@ -108,10 +108,18 @@ const BurgerConstructor = () => {
     }
 
     return (
-        <div className={styles.container} ref={dropRef} style={dropAreaStyle}>
+        <div
+            className={styles.container}
+            ref={dropRef}
+            style={dropAreaStyle}
+            data-testid="burger-constructor"
+        >
             {isModal && <OrderDetails />}
             {fillings?.length === 0 && !bun && (
-                <div className={styles.emptyState}>
+                <div
+                    className={styles.emptyState}
+                    data-testid="empty-constructor"
+                >
                     <p className={styles.emptyText}>
                         Выберите ингредиенты для создания бургера
                     </p>
@@ -120,7 +128,10 @@ const BurgerConstructor = () => {
 
             <div className={styles.constructorList}>
                 {bun && (
-                    <div className={clsx(styles.bunContainer, styles.bun)}>
+                    <div
+                        className={clsx(styles.bunContainer, styles.bun)}
+                        data-testid="constructor-bun-top"
+                    >
                         <ConstructorElement
                             type="top"
                             isLocked={true}
@@ -131,7 +142,10 @@ const BurgerConstructor = () => {
                     </div>
                 )}
 
-                <div className={styles.fillingsContainer}>
+                <div
+                    className={styles.fillingsContainer}
+                    data-testid="constructor-fillings"
+                >
                     {fillings?.map((ingredient: IIngredient, index) => (
                         <ConstructorIngredient
                             key={ingredient.uniqueId}
@@ -150,6 +164,7 @@ const BurgerConstructor = () => {
                             styles.bottom,
                             styles.bun
                         )}
+                        data-testid="constructor-bun-bottom"
                     >
                         <ConstructorElement
                             type="bottom"
@@ -163,7 +178,7 @@ const BurgerConstructor = () => {
             </div>
 
             <div className={styles.orderSection}>
-                <div className={styles.totalPrice}>
+                <div className={styles.totalPrice} data-testid="total-price">
                     <span className={styles.price}>{totalPrice}</span>
                     <CurrencyIcon type="primary" />
                 </div>
@@ -173,6 +188,7 @@ const BurgerConstructor = () => {
                     size="large"
                     onClick={handleOrder}
                     disabled={ingredients?.length === 0 || isPostOrderLoaded}
+                    data-testid="order-button"
                 >
                     {isPostOrderLoaded ? 'Оформление...' : 'Оформить заказ'}
                 </Button>

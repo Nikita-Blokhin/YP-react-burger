@@ -2,15 +2,15 @@ import type { Middleware, MiddlewareAPI, Dispatch, Action } from 'redux'
 import type {
     TWSActions,
     IOrdersResponse,
-    IState,
+    TState,
     TWSStoreActions,
 } from '../../types'
 
 export const socketMiddleware =
     (
         WSStoreActions: TWSStoreActions
-    ): Middleware<{}, IState, Dispatch<Action<string>>> =>
-    (storeAPI: MiddlewareAPI<Dispatch<TWSActions>, IState>) => {
+    ): Middleware<{}, TState, Dispatch<Action<string>>> =>
+    (storeAPI: MiddlewareAPI<Dispatch<TWSActions>, TState>) => {
         let socket: WebSocket | null = null
 
         return (next: (action: unknown) => unknown) => {
@@ -36,7 +36,7 @@ export const socketMiddleware =
                     socket.onerror = (event) => {
                         storeAPI.dispatch({
                             type: WSStoreActions.onError,
-                            payload: event,
+                            payload: 'WS закрыт с ошибкой',
                         })
                     }
 
@@ -54,7 +54,6 @@ export const socketMiddleware =
                     socket.onclose = (event) => {
                         storeAPI.dispatch({
                             type: WSStoreActions.onClose,
-                            payload: event,
                         })
                     }
                 }

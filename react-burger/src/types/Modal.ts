@@ -5,6 +5,7 @@ import {
     MODAL_OPEN_ORDER_INFO,
 } from '../services/actions/modalActions'
 import { IIngredient } from './Ingredient'
+import { IInitialState } from './Services'
 
 export interface IModalContentType {
     isModal: null | 'order' | 'ingredient'
@@ -36,3 +37,4 @@ export type TModalActions =
     | IModalOpenIngredient
     | IModalOpenOrder
     | IModalClose
+    | IInitialState

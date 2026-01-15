@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../hooks/reducerHook'
 import { getIngredients } from '../services/actions/ingredientActions'
+import placeholderImage from '../assets/images/placeholder.svg'
 
 import styles from './IngredientPage.module.css'
 
@@ -40,7 +41,7 @@ const IngredientPage = () => {
             <div className={styles.content}>
                 <h1 className={styles.title}>Детали ингредиента</h1>
                 <img
-                    src={ingredient.image_large || '/images/placeholder.svg'}
+                    src={ingredient.image_large || placeholderImage}
                     alt={ingredient.name}
                     className={styles.ingredientImage}
                 />

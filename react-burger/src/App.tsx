@@ -144,7 +144,7 @@ const App = () => {
     }, [dispatch])
 
     return (
-        <Router>
+        <Router basename={'/YP-react-burger'}>
             <div className={styles.App}>
                 <AppHeader />
                 <AppRoutes />

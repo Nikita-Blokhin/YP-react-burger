@@ -10,13 +10,13 @@
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
         "module": "esnext",
-        "ignoreDeprecations": "6.0",
         "moduleResolution": "node",
+        "ignoreDeprecations": "6.0",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "react-jsx",
-        "types": ["node", "react", "jest"]
+        "types": ["jest"]
     },
     "include": ["src"]
 }

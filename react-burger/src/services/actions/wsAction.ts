@@ -1,9 +1,9 @@
 import type { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
-import type { IState } from '../../types/Services'
 import type { IOrder } from '../../types/Order'
 import { request } from '../../utils'
 import { TWSStoreActions } from '../../types/Ws'
+import { RootState } from '../../hooks/reducerHook'
 
 export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START'
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' =
@@ -42,11 +42,11 @@ export interface IGetOrderAction {
     order?: IOrder
 }
 
-export type TAPIAction = IGetOrderAction
+type TAPIAction = IGetOrderAction
 
 export const getOrder =
-    (orderNum: string): ThunkAction<void, IState, unknown, TAPIAction> =>
-    async (dispatch: ThunkDispatch<IState, unknown, TAPIAction>) => {
+    (orderNum: string): ThunkAction<void, RootState, unknown, TAPIAction> =>
+    async (dispatch: ThunkDispatch<RootState, unknown, TAPIAction>) => {
         dispatch({
             type: GET_ORDER_BY_ID_REQUEST,
         })

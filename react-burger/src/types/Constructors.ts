@@ -6,6 +6,7 @@ import {
 } from '../services/actions/constructorActions'
 import { POST_ORDER_SUCCESS } from '../services/actions/orderActions'
 import { IIngredient } from './Ingredient'
+import { IInitialState } from './Services'
 
 export interface IGetIngredientsConstructor {
     readonly type: typeof GET_INGREDIENTS_CONSTRUCTOR
@@ -37,3 +38,4 @@ export type TConstructorActions =
     | IMoveIngredientConstructor
     | IDeleteIngredientConstructor
     | IConstructorPostOrderSucces
+    | IInitialState

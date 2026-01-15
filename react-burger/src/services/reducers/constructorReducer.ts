@@ -7,7 +7,7 @@ import {
 } from '../actions/constructorActions'
 import { POST_ORDER_SUCCESS } from '../actions/orderActions'
 
-const constructorInitialState = {
+export const constructorInitialState = {
     ingredientsConstructor: [] as IIngredient[],
 }
 
@@ -16,7 +16,7 @@ export const constructorReducer = (
     action: TConstructorActions
 ) => {
     if (state.ingredientsConstructor === undefined)
-        state.ingredientsConstructor = []
+        state.ingredientsConstructor = [] as IIngredient[]
     switch (action.type) {
         case ADD_INGREDIENT_CONSTRUCTOR: {
             const ingredient = action.ingredient!
@@ -40,6 +40,8 @@ export const constructorReducer = (
             }
         }
         case MOVE_INGREDIENT_CONSTRUCTOR: {
+            if (state.ingredientsConstructor[action.dragIndex].type === 'bun')
+                return state
             const fillings = state.ingredientsConstructor.filter(
                 (item) => item.type !== 'bun'
             )
@@ -71,7 +73,7 @@ export const constructorReducer = (
             return { ...state, ingredientsConstructor: newIngredients }
         }
         case POST_ORDER_SUCCESS:
-            return { ...state, ingredientsConstructor: [] }
+            return { ...state, ingredientsConstructor: [] as IIngredient[] }
         default:
             return state
     }
